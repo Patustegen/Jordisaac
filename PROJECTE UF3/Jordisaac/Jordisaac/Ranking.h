@@ -3,6 +3,7 @@
 class Ranking :
     public Scene
 {
+public:
 	//! Handles the drawing of the scene
 	void render();
 

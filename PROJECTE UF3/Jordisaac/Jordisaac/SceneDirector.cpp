@@ -33,22 +33,11 @@ void SceneDirector::init(){
 	Ranking	*rank		= new Ranking();
 	PauseMenu	*pause	= new PauseMenu();
 
-	mVectorScenes[MAIN] = main;
-	mVectorScenes[OPTIONS] = options;
-	mVectorScenes[SAVE_LOAD] = save;
-	mVectorScenes[INTRO] = intro;
-	mVectorScenes[GAME] = game;
-	mVectorScenes[GAMEOVER] = gameover;
+	mVectorScenes[PORTADA] = portada;
 
-	main->init();
-	options->init();
-	save->init();
-	config->init();
-	intro->init();
-	game->init();
-	gameover->init();
+	portada->load();
 
-	mCurrScene = MAIN;
+	mCurrScene = PORTADA;
 }
 
 void SceneDirector::changeScene(SceneEnum next_scene, bool reinit){

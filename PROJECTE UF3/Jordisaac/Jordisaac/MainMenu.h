@@ -3,6 +3,7 @@
 class MainMenu :
     public Scene
 {
+public:
 	//! Handles the drawing of the scene
 	void render();
 
@@ -11,5 +12,7 @@ class MainMenu :
 
 	//! Loads Scene Assets.
 	void load();
+private:
+	int bgImage;
 };
 

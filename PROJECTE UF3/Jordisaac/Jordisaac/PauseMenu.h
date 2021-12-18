@@ -3,6 +3,7 @@
 class PauseMenu :
     public Scene
 {
+public:
 	//! Handles the drawing of the scene
 	void render();
 

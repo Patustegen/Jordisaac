@@ -4,6 +4,7 @@
 class Portada :
     public Scene
 {
+public:
 	//! Handles the drawing of the scene
 	void render();
 
@@ -15,5 +16,6 @@ class Portada :
 
 private:
 	int bgImage;
+	int alpha;
 };
 
