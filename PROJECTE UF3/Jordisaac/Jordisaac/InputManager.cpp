@@ -1,0 +1,106 @@
+#include "InputManager.h"
+
+InputManager* InputManager::pInstance = NULL;
+
+InputManager::InputManager()
+{
+	controller = NULL;
+	focus = SDL_TRUE;
+	events.resize(0);
+}
+
+void InputManager::openController()
+{
+	for (int i = 0; i < SDL_NumJoysticks(); ++i) {
+		if (SDL_IsGameController(i)) {
+			controller = SDL_GameControllerOpen(i);
+			if (controller) {
+				break;
+			}
+			else {
+				fprintf(stderr, "Could not open gamecontroller %i: %s\n", i, SDL_GetError());
+			}
+		}
+	}
+}
+
+std::vector<inputs> InputManager::getInput()
+{
+	events.resize(0);
+	while (SDL_PollEvent(&test_event))
+	{
+		if (test_event.window.event == SDL_WINDOWEVENT_FOCUS_LOST)
+		{
+			focus = SDL_FALSE;
+		}
+		else if (test_event.window.event == SDL_WINDOWEVENT_FOCUS_GAINED)
+		{
+			focus = SDL_TRUE;
+		}
+		if (focus)
+		{
+			switch (test_event.type) {
+			case SDL_QUIT:
+				SDL_Log("Program quit after %i ticks", test_event.quit.timestamp);
+				break;
+			case SDL_KEYDOWN:
+				if (test_event.key.keysym.scancode == SDL_SCANCODE_ESCAPE)
+				{
+					events.push_back(QUIT);
+				}
+
+				if (test_event.key.keysym.scancode == SDL_SCANCODE_LEFT)
+				{
+					events.push_back(SHOOTLEFT);
+				}
+				else if (test_event.key.keysym.scancode == SDL_SCANCODE_RIGHT)
+				{
+					events.push_back(SHOOTRIGHT);
+				}
+				else if (test_event.key.keysym.scancode == SDL_SCANCODE_UP)
+				{
+					events.push_back(SHOOTUP);
+				}
+				else if (test_event.key.keysym.scancode == SDL_SCANCODE_DOWN)
+				{
+					events.push_back(SHOOTDOWN);
+				}
+
+				if (test_event.key.keysym.scancode == SDL_SCANCODE_W)
+				{
+					events.push_back(GOUP);
+				}
+				else if (test_event.key.keysym.scancode == SDL_SCANCODE_S)
+				{
+					events.push_back(GODOWN);
+				}
+				else if (test_event.key.keysym.scancode == SDL_SCANCODE_A)
+				{
+					events.push_back(GOLEFT);
+				}
+				else if (test_event.key.keysym.scancode == SDL_SCANCODE_D)
+				{
+					events.push_back(GORIGHT);
+				}
+
+				if (test_event.key.keysym.scancode == SDL_SCANCODE_SPACE)
+				{
+					events.push_back(USEITEM);
+				}
+
+				if (test_event.key.keysym.scancode == SDL_SCANCODE_Q)
+				{
+					events.push_back(USECONS);
+				}
+
+				if (test_event.key.keysym.scancode == SDL_SCANCODE_E)
+				{
+					events.push_back(USEBOMB);
+				}
+				break;
+				
+			}
+		}
+	}
+	return events;
+}
