@@ -34,8 +34,14 @@ void SceneDirector::init(){
 	PauseMenu	*pause	= new PauseMenu();
 
 	mVectorScenes[PORTADA] = portada;
+	mVectorScenes[MAIN] = main;
+	mVectorScenes[GAME] = game;
+	mVectorScenes[OPTIONS] = options;
+	mVectorScenes[RANK] = rank;
+	mVectorScenes[PAUSE] = pause;
 
 	portada->load();
+	main->load();
 
 	mCurrScene = PORTADA;
 }

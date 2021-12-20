@@ -16,6 +16,7 @@ int main(int argc, char* args[]) {
 	{
 		iVideo->clearScreen(0);
 
+		iInputM->getInput();
 		iSceneD->getCurrentScene()->update();
 
 		iSceneD->getCurrentScene()->render();

@@ -1,5 +1,11 @@
 #pragma once
 #include "Scene.h"
+
+enum sPause
+{
+	P_OPTIONS, RESUME, EXIT
+};
+
 class PauseMenu :
     public Scene
 {
@@ -12,5 +18,9 @@ public:
 
 	//! Loads Scene Assets.
 	void load();
+
+	void init();
+private:
+	sPause selected;
 };
 

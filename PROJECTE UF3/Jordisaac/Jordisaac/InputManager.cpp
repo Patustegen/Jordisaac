@@ -4,9 +4,14 @@ InputManager* InputManager::pInstance = NULL;
 
 InputManager::InputManager()
 {
-	controller = NULL;
+	controller = nullptr;
 	focus = SDL_TRUE;
 	events.resize(0);
+	test_event = new SDL_Event();
+}
+
+InputManager::~InputManager()
+{
 }
 
 void InputManager::openController()
@@ -24,83 +29,88 @@ void InputManager::openController()
 	}
 }
 
-std::vector<inputs> InputManager::getInput()
+void InputManager::getInput()
 {
 	events.resize(0);
-	while (SDL_PollEvent(&test_event))
+	while (SDL_PollEvent(test_event))
 	{
-		if (test_event.window.event == SDL_WINDOWEVENT_FOCUS_LOST)
+		if (test_event->window.event == SDL_WINDOWEVENT_FOCUS_LOST)
 		{
 			focus = SDL_FALSE;
 		}
-		else if (test_event.window.event == SDL_WINDOWEVENT_FOCUS_GAINED)
+		else if (test_event->window.event == SDL_WINDOWEVENT_FOCUS_GAINED)
 		{
 			focus = SDL_TRUE;
 		}
 		if (focus)
 		{
-			switch (test_event.type) {
+			switch (test_event->type) {
 			case SDL_QUIT:
-				SDL_Log("Program quit after %i ticks", test_event.quit.timestamp);
+				SDL_Log("Program quit after %i ticks", test_event->quit.timestamp);
+				SDL_Quit();
 				break;
 			case SDL_KEYDOWN:
-				if (test_event.key.keysym.scancode == SDL_SCANCODE_ESCAPE)
+				if (test_event->key.keysym.scancode == SDL_SCANCODE_ESCAPE)
 				{
 					events.push_back(QUIT);
 				}
 
-				if (test_event.key.keysym.scancode == SDL_SCANCODE_LEFT)
+				if (test_event->key.keysym.scancode == SDL_SCANCODE_LEFT)
 				{
 					events.push_back(SHOOTLEFT);
 				}
-				else if (test_event.key.keysym.scancode == SDL_SCANCODE_RIGHT)
+				else if (test_event->key.keysym.scancode == SDL_SCANCODE_RIGHT)
 				{
 					events.push_back(SHOOTRIGHT);
 				}
-				else if (test_event.key.keysym.scancode == SDL_SCANCODE_UP)
+				else if (test_event->key.keysym.scancode == SDL_SCANCODE_UP)
 				{
 					events.push_back(SHOOTUP);
 				}
-				else if (test_event.key.keysym.scancode == SDL_SCANCODE_DOWN)
+				else if (test_event->key.keysym.scancode == SDL_SCANCODE_DOWN)
 				{
 					events.push_back(SHOOTDOWN);
 				}
 
-				if (test_event.key.keysym.scancode == SDL_SCANCODE_W)
+				if (test_event->key.keysym.scancode == SDL_SCANCODE_W)
 				{
 					events.push_back(GOUP);
 				}
-				else if (test_event.key.keysym.scancode == SDL_SCANCODE_S)
+				else if (test_event->key.keysym.scancode == SDL_SCANCODE_S)
 				{
 					events.push_back(GODOWN);
 				}
-				else if (test_event.key.keysym.scancode == SDL_SCANCODE_A)
+				else if (test_event->key.keysym.scancode == SDL_SCANCODE_A)
 				{
 					events.push_back(GOLEFT);
 				}
-				else if (test_event.key.keysym.scancode == SDL_SCANCODE_D)
+				else if (test_event->key.keysym.scancode == SDL_SCANCODE_D)
 				{
 					events.push_back(GORIGHT);
 				}
 
-				if (test_event.key.keysym.scancode == SDL_SCANCODE_SPACE)
+				if (test_event->key.keysym.scancode == SDL_SCANCODE_SPACE)
 				{
 					events.push_back(USEITEM);
 				}
 
-				if (test_event.key.keysym.scancode == SDL_SCANCODE_Q)
+				if (test_event->key.keysym.scancode == SDL_SCANCODE_Q)
 				{
 					events.push_back(USECONS);
 				}
 
-				if (test_event.key.keysym.scancode == SDL_SCANCODE_E)
+				if (test_event->key.keysym.scancode == SDL_SCANCODE_E)
 				{
 					events.push_back(USEBOMB);
+				}
+
+				if (test_event->key.keysym.scancode == SDL_SCANCODE_RETURN)
+				{
+					events.push_back(ENTER);
 				}
 				break;
 				
 			}
 		}
 	}
-	return events;
 }

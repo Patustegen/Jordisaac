@@ -3,12 +3,12 @@
 #include <iostream>
 #include <vector>
 
-enum inputs { QUIT, GOUP, GORIGHT, GODOWN, GOLEFT, SHOOTUP, SHOOTRIGHT, SHOOTDOWN, SHOOTLEFT, USEBOMB, USEITEM, USECONS };
+enum inputs { QUIT, GOUP, GORIGHT, GODOWN, GOLEFT, SHOOTUP, SHOOTRIGHT, SHOOTDOWN, SHOOTLEFT, USEBOMB, USEITEM, USECONS, ENTER };
 
 class InputManager
 {
 	static InputManager* pInstance;
-	SDL_Event test_event;
+	SDL_Event* test_event;
 	SDL_GameController* controller;
 	bool focus;
 	std::vector<inputs> events;
@@ -17,7 +17,8 @@ protected:
 public:
 	~InputManager();
 	void openController();
-	std::vector<inputs> getInput();
+	void getInput();
+	std::vector<inputs> getEvents() { return events; };
 	static InputManager* getInstance()
 	{
 		if (pInstance == NULL) pInstance = new InputManager();

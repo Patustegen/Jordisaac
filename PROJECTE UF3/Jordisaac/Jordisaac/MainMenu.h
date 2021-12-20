@@ -1,5 +1,11 @@
 #pragma once
 #include "Scene.h"
+
+enum selected
+{
+	NEWGAME, CONTINUE, S_RANKING, STATS, S_OPTIONS
+};
+
 class MainMenu :
     public Scene
 {
@@ -12,7 +18,11 @@ public:
 
 	//! Loads Scene Assets.
 	void load();
+
+	void init();
 private:
 	int bgImage;
+	int selector;
+	selected menuSelected;
 };
 
