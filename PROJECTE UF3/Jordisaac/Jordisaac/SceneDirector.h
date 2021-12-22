@@ -21,7 +21,11 @@ class SceneDirector
 		
 		void changeScene(SceneEnum next_scene, bool reinit = true);
 
+		void changeLastScene(SceneEnum next_scene, bool reinit = true);
+
 		SceneEnum getCurrSceneEnum(){return mCurrScene;};
+
+		SceneEnum getLastSceneEnum(){return mLastScene;};
 
 		Scene* getCurrentScene(){return mVectorScenes[mCurrScene];};
 		
@@ -34,6 +38,7 @@ class SceneDirector
 
 		std::vector<Scene*>	mVectorScenes;
 		SceneEnum		mCurrScene;
+		SceneEnum		mLastScene;
 };
 
 #endif

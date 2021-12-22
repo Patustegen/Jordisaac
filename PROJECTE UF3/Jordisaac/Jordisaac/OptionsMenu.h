@@ -1,5 +1,8 @@
 #pragma once
 #include "Scene.h"
+
+enum sOption {CONTROLS, SFX, MUSIC, GAMMA};
+
 class OptionsMenu :
     public Scene
 {
@@ -12,5 +15,7 @@ public:
 
 	//! Loads Scene Assets.
 	void load();
+private:
+	sOption selected;
 };
 

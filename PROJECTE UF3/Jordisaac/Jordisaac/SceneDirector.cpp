@@ -43,10 +43,18 @@ void SceneDirector::init(){
 	portada->load();
 	main->load();
 
+	mLastScene = PORTADA;
 	mCurrScene = PORTADA;
 }
 
 void SceneDirector::changeScene(SceneEnum next_scene, bool reinit){
 	mVectorScenes[next_scene]->setReInit(reinit);
+	mCurrScene = next_scene;
+}
+
+void SceneDirector::changeLastScene(SceneEnum next_scene, bool reinit)
+{
+	mVectorScenes[next_scene]->setReInit(reinit);
+	mLastScene = mCurrScene;
 	mCurrScene = next_scene;
 }

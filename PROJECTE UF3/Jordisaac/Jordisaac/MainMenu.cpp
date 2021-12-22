@@ -25,7 +25,7 @@ void MainMenu::update()
 				iSceneD->changeScene(RANK);
 				break;
 			case S_OPTIONS:
-				iSceneD->changeScene(OPTIONS);
+				iSceneD->changeLastScene(OPTIONS);
 				break;
 			default:
 				break;

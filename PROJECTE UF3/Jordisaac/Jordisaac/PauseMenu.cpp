@@ -53,7 +53,7 @@ void PauseMenu::update()
 			switch (selected)
 			{
 			case P_OPTIONS:
-				iSceneD->changeScene(OPTIONS);
+				iSceneD->changeLastScene(OPTIONS);
 				break;
 			case RESUME:
 				iSceneD->changeScene(GAME);
