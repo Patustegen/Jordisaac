@@ -22,7 +22,7 @@ int main(int argc, char* args[]) {
 		iSceneD->getCurrentScene()->render();
 
 		iVideo->updateScreen();
-		currentTime = SDL_GetTicks();
+		currentTime = iVideo->getTicks();
 		deltaTime = currentTime - lastTime;
 		if (deltaTime < (int)msFrame) {
 			iVideo->waitTime((int)msFrame - deltaTime);

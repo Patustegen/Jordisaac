@@ -18,6 +18,7 @@ public:
 	void clearScreen(unsigned int color_key);
 	void updateScreen();
 	void waitTime(int ms);
+	int getTicks() { return SDL_GetTicks(); };
 	SDL_Renderer* getRenderer() { return gRenderer; };
 	void close();
 };
