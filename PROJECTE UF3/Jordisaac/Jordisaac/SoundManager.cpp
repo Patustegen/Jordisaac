@@ -19,6 +19,7 @@ Uint32 SoundManager::updateFirstFreeSlotGraphic()
 Sint32 SoundManager::addAudio(const char* file)
 {
 	Mix_Chunk* n = Mix_LoadWAV(file);
+	std::cout << Mix_GetError();
 	if (n == NULL)
 	{
 		return -1;
@@ -48,7 +49,16 @@ SoundManager::~SoundManager()
 
 Sint32 SoundManager::loadAndGetSoundID(const char* file)
 {
-	return Sint32();
+	std::map<std::string, Sint32>::iterator it = mIDMap.find(file);
+	if (it == mIDMap.end())
+	{
+		if (addAudio(file) == -1)
+		{
+			return -1;
+		}
+	}
+	it = mIDMap.find(file);
+	return it->second;
 }
 
 std::string SoundManager::getSoundPathByID(Sint32 ID)

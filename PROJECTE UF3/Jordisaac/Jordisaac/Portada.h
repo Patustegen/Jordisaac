@@ -14,8 +14,11 @@ public:
 	//! Loads Scene Assets.
 	void load();
 
+	void init();
+
 private:
 	int bgImage;
+	int bgMusic;
 	int alpha;
 };
 

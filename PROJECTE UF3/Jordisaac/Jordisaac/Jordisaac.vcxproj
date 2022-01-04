@@ -72,8 +72,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>D:\JP\PROJECTE UF3\Jordisaac\PROJECTE UF3\SDL\include;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\JP\PROJECTE UF3\Jordisaac\PROJECTE UF3\SDL\lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>Z:\PROJECTE UF3\Jordisaac\PROJECTE UF3\SDL\include;$(IncludePath)</IncludePath>
+    <LibraryPath>Z:\PROJECTE UF3\Jordisaac\PROJECTE UF3\SDL\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -146,12 +146,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Audio.cpp" />
+    <ClCompile Include="BaseCharacter.cpp" />
+    <ClCompile Include="BaseCollision.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="OptionsMenu.cpp" />
     <ClCompile Include="PauseMenu.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="Portada.cpp" />
     <ClCompile Include="Ranking.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
@@ -163,11 +166,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Audio.h" />
+    <ClInclude Include="BaseCharacter.h" />
+    <ClInclude Include="BaseCollision.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="OptionsMenu.h" />
     <ClInclude Include="PauseMenu.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="Portada.h" />
     <ClInclude Include="Ranking.h" />
     <ClInclude Include="ResourceManager.h" />

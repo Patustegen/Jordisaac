@@ -12,6 +12,7 @@ int main(int argc, char* args[]) {
 	unsigned int lastTime = 0, currentTime, deltaTime;
 	float msFrame = 1 / (FPS / 1000.0f);
 
+	//iSceneD->getCurrentScene()->init();
 	while (true)
 	{
 		iVideo->clearScreen(0);
