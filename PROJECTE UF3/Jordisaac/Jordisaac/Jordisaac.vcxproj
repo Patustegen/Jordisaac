@@ -148,6 +148,7 @@
     <ClCompile Include="Audio.cpp" />
     <ClCompile Include="BaseCharacter.cpp" />
     <ClCompile Include="BaseCollision.cpp" />
+    <ClCompile Include="ChooseCharacter.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="main.cpp" />
@@ -168,6 +169,7 @@
     <ClInclude Include="Audio.h" />
     <ClInclude Include="BaseCharacter.h" />
     <ClInclude Include="BaseCollision.h" />
+    <ClInclude Include="ChooseCharacter.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="MainMenu.h" />

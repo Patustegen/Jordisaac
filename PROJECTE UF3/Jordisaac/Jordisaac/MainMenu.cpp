@@ -16,7 +16,7 @@ void MainMenu::update()
 			switch (menuSelected)
 			{
 			case NEWGAME:
-				iSceneD->changeScene(GAME);
+				iSceneD->changeScene(CHARACTER);
 				break;
 			case CONTINUE:
 				iSceneD->changeScene(GAME);

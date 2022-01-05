@@ -6,6 +6,7 @@
 #include "OptionsMenu.h"
 #include "Ranking.h"
 #include "PauseMenu.h"
+#include "ChooseCharacter.h"
 
 SceneDirector* SceneDirector::pInstance = NULL;
 
@@ -27,21 +28,24 @@ void SceneDirector::init(){
 	mVectorScenes.resize(NUM_SCENES);
 
 	Portada	*portada		= new Portada();
-	MainMenu	*main	= new MainMenu();
+	MainMenu	*mainM	= new MainMenu();
 	Game	*game		= new Game();
+	ChooseCharacter	*charac		= new ChooseCharacter();
 	OptionsMenu	*options		= new OptionsMenu();
 	Ranking	*rank		= new Ranking();
 	PauseMenu	*pause	= new PauseMenu();
 
 	mVectorScenes[PORTADA] = portada;
-	mVectorScenes[MAIN] = main;
+	mVectorScenes[MAIN] = mainM;
 	mVectorScenes[GAME] = game;
+	mVectorScenes[CHARACTER] = charac;
 	mVectorScenes[OPTIONS] = options;
 	mVectorScenes[RANK] = rank;
 	mVectorScenes[PAUSE] = pause;
 
 	portada->load();
-	main->load();
+	mainM->load();
+	charac->load();
 
 	mLastScene = PORTADA;
 	mCurrScene = PORTADA;
@@ -52,9 +56,9 @@ void SceneDirector::changeScene(SceneEnum next_scene, bool reinit){
 	mCurrScene = next_scene;
 }
 
-void SceneDirector::changeLastScene(SceneEnum next_scene, bool reinit)
+void SceneDirector::changeLastScene(SceneEnum last_scene, bool reinit)
 {
-	mVectorScenes[next_scene]->setReInit(reinit);
+	mVectorScenes[last_scene]->setReInit(reinit);
 	mLastScene = mCurrScene;
-	mCurrScene = next_scene;
+	mCurrScene = last_scene;
 }

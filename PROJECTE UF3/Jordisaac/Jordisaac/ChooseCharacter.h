@@ -1,6 +1,9 @@
 #pragma once
 #include "Scene.h"
-class Game :
+
+enum CHARACTERS {ISAAC, MAGDALENE, CAIN, SAMSON};
+
+class ChooseCharacter :
     public Scene
 {
 public:
@@ -14,5 +17,9 @@ public:
 	void load();
 
 	void init();
+
+private:
+	CHARACTERS aCharacter;
+	int bgImage;
 };
 
