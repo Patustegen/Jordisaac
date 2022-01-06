@@ -18,6 +18,7 @@ void Game::update()
 
 void Game::load()
 {
+
 }
 
 void Game::init()
