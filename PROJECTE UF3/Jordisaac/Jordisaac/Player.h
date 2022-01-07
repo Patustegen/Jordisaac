@@ -1,15 +1,23 @@
 #pragma once
 #include "BaseCharacter.h"
-
-enum STATE {IDLE, MOVING, HURT, DEATH, USING};
-enum LOOKING {UP, RIGHT, DOWN, LEFT};
+#include "enums.h"
 
 class Player :
     public BaseCharacter
 {
 private:
     STATE state;
-    LOOKING looking;
+    LOOKING lHead;
+    LOOKING lBody;
+    SDL_Rect Head;
+    int pHead;
+    int pMisc;
+    int frame;
+    bool shooting;
 public:
+    void render();
+    void update();
+    Player();
+    ~Player();
 };
 

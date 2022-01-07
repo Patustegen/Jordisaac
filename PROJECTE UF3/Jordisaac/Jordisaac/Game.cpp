@@ -3,17 +3,12 @@
 
 void Game::render()
 {
+	player->render();
 }
 
 void Game::update()
 {
-	for (int i = 0; i < iInputM->getEvents().size(); i++)
-	{
-		if (iInputM->getEvents()[i] == QUIT)
-		{
-			iSceneD->changeScene(PAUSE);
-		}
-	}
+	player->update();
 }
 
 void Game::load()
@@ -23,5 +18,5 @@ void Game::load()
 
 void Game::init()
 {
-
+	player = new Player();
 }

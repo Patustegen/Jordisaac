@@ -4,8 +4,8 @@ class BaseCollision
 {
 protected:
 	int gID;
-	SDL_Rect* col;
-	SDL_Rect* paint;
+	SDL_Rect col;
+	SDL_Rect paint;
 public:
 	void init();
 	void update();

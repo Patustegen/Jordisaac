@@ -2,5 +2,5 @@
 
 SDL_Rect* BaseCollision::getCol()
 {
-    return col;
+    return &col;
 }

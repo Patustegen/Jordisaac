@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "Scene.h"
+#include "enums.h"
 
 //! Enum Scenes.
 /*! All the Scenes in the game. */
@@ -31,7 +32,7 @@ class SceneDirector
 		
 		CHARACTERS getSelectedCharacter() { return pCharacter; };
 
-		CHARACTERS setSelectedCharacter(CHARACTERS nCharacter) { pCharacter = nCharacter; };
+		void setSelectedCharacter(CHARACTERS nCharacter) { pCharacter = nCharacter; };
 
 		//! Gets pointer to instance
 		static SceneDirector* getInstance();

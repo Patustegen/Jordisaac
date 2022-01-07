@@ -1,7 +1,6 @@
 #pragma once
 #include "Scene.h"
-
-enum CHARACTERS {ISAAC, MAGDALENE, CAIN, SAMSON};
+#include "enums.h"
 
 class ChooseCharacter :
     public Scene
