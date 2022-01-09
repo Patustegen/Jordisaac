@@ -8,6 +8,10 @@ void Player::render()
 
 void Player::update()
 {
+	if (state == DEAD)
+	{
+
+	}
 	for (int i = 0; i < iInputM->getEvents().size(); i++)
 	{
 		switch (iInputM->getEvents()[i])

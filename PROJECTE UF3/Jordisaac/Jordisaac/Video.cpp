@@ -13,14 +13,14 @@ Video::Video() {
 }
 Video::~Video() {
 }
-void Video::renderGraphic(int img, int posX, int posY, int width, int height, int gx, int gy) {
+void Video::renderGraphic(int img, int posX, int posY, int width, int height, int gx, int gy, float wScale, float hScale) {
 	SDL_Rect r, rectAux;
 	r.x = gx;
 	r.y = gy;
 	r.w = width;
 	r.h = height;
-	rectAux.h = height;
-	rectAux.w = width;
+	rectAux.h = height * hScale;
+	rectAux.w = width * wScale;
 	rectAux.x = posX;
 	rectAux.y = posY;
 	SDL_Texture* origin = ResourceManager::getInstance()->getGraphicByID(img);

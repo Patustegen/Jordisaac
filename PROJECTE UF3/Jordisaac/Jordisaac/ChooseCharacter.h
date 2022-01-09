@@ -17,8 +17,12 @@ public:
 
 	void init();
 
+	ChooseCharacter();
 private:
 	CHARACTERS aCharacter;
+	CHARACTERS bCharacter;
+	CHARACTERS nCharacter;
 	int bgImage;
+	int characs;
 };
 
