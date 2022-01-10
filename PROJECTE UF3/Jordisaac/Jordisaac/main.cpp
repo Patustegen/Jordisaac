@@ -27,6 +27,7 @@ int main(int argc, char* args[]) {
 		deltaTime = currentTime - lastTime;
 		if (deltaTime < (int)msFrame) {
 			iVideo->waitTime((int)msFrame - deltaTime);
+			iVideo->waitTime(100);
 		}
 		lastTime = currentTime;
 	}

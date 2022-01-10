@@ -12,47 +12,125 @@ void Player::update()
 	{
 
 	}
-	for (int i = 0; i < iInputM->getEvents().size(); i++)
+	else
 	{
-		switch (iInputM->getEvents()[i])
+		if (state == MOVING)
 		{
-		case QUIT:
-			iSceneD->changeScene(PAUSE);
-			break;
-		case GOUP:
-			lBody = UP;
-			break;
-		case GORIGHT:
-			lBody = RIGHT;
-			break;
-		case GODOWN:
+			frame++;
+			if ((lBody == UP || lBody == DOWN) && frame > 4)
+			{
+				frame = 0;
+			}
+			else if ((lBody == LEFT || lBody == RIGHT) && frame > 9)
+			{
+				frame = 0;
+			}
+		}
+		for (int i = 0; i < iInputM->getEvents().size(); i++)
+		{
+			switch (iInputM->getEvents()[i])
+			{
+			case QUIT:
+				iSceneD->changeScene(PAUSE);
+				break;
+			case GOUP:
+				state = MOVING;
+				lBody = UP;
+				break;
+			case GORIGHT:
+				state = MOVING;
+				lBody = RIGHT;
+				break;
+			case GODOWN:
+				state = MOVING;
+				lBody = DOWN;
+				break;
+			case GOLEFT:
+				state = MOVING;
+				lBody = LEFT;
+				break;
+			case SHOOTUP:
+				shooting = true;
+				lHead = UP;
+				break;
+			case SHOOTRIGHT:
+				shooting = true;
+				lHead = RIGHT;
+				break;
+			case SHOOTDOWN:
+				shooting = true;
+				lHead = DOWN;
+				break;
+			case SHOOTLEFT:
+				shooting = true;
+				lHead = LEFT;
+				break;
+			case STOPUP:
+				if (lBody == UP)
+				{
+					state = IDLE;
+				}
+				break;
+			case STOPRIGHT:
+				if (lBody == RIGHT)
+				{
+					state = IDLE;
+				}
+				break;
+			case STOPDOWN:
+				if (lBody == DOWN)
+				{
+					state = IDLE;
+				}
+				break;
+			case STOPLEFT:
+				if (lBody == LEFT)
+				{
+					state = IDLE;
+				}
+				break;
+			case STOPSUP:
+				if (lHead == UP)
+				{
+					shooting = false;
+				}
+				break;
+			case STOPSRIGHT:
+				if (lHead == RIGHT)
+				{
+					shooting = false;
+				}
+				break;
+			case STOPSDOWN:
+				if (lHead == DOWN)
+				{
+					shooting = false;
+				}
+				break;
+			case STOPSLEFT:
+				if (lHead == LEFT)
+				{
+					shooting = false;
+				}
+				break;
+			case USEBOMB:
+				break;
+			case USEITEM:
+				break;
+			case USECONS:
+				break;
+			default:
+				break;
+			}
+		}
+		if (state == IDLE)
+		{
 			lBody = DOWN;
-			break;
-		case GOLEFT:
-			lBody = LEFT;
-			break;
-		case SHOOTUP:
-			lHead = UP;
-			break;
-		case SHOOTRIGHT:
-			lHead = RIGHT;
-			break;
-		case SHOOTDOWN:
+			frame = 0;
+		}
+		if (!shooting)
+		{
 			lHead = DOWN;
-			break;
-		case SHOOTLEFT:
-			lHead = LEFT;
-			break;
-		case USEBOMB:
-			break;
-		case USEITEM:
-			break;
-		case USECONS:
-			break;
-		case ENTER:
-			break;
-		default:
-			break;
 		}
 	}
 }

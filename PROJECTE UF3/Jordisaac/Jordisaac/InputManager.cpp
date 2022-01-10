@@ -49,6 +49,41 @@ void InputManager::getInput()
 				SDL_Log("Program quit after %i ticks", test_event->quit.timestamp);
 				SDL_Quit();
 				break;
+			case SDL_KEYUP:
+				if (test_event->key.keysym.scancode == SDL_SCANCODE_LEFT)
+				{
+					events.push_back(STOPSLEFT);
+				}
+				else if (test_event->key.keysym.scancode == SDL_SCANCODE_RIGHT)
+				{
+					events.push_back(STOPSRIGHT);
+				}
+				else if (test_event->key.keysym.scancode == SDL_SCANCODE_UP)
+				{
+					events.push_back(STOPSUP);
+				}
+				else if (test_event->key.keysym.scancode == SDL_SCANCODE_DOWN)
+				{
+					events.push_back(STOPSDOWN);
+				}
+
+				if (test_event->key.keysym.scancode == SDL_SCANCODE_W)
+				{
+					events.push_back(STOPUP);
+				}
+				else if (test_event->key.keysym.scancode == SDL_SCANCODE_S)
+				{
+					events.push_back(STOPDOWN);
+				}
+				else if (test_event->key.keysym.scancode == SDL_SCANCODE_A)
+				{
+					events.push_back(STOPLEFT);
+				}
+				else if (test_event->key.keysym.scancode == SDL_SCANCODE_D)
+				{
+					events.push_back(STOPRIGHT);
+				}
+				break;
 			case SDL_KEYDOWN:
 				if (test_event->key.keysym.scancode == SDL_SCANCODE_ESCAPE)
 				{
@@ -109,7 +144,6 @@ void InputManager::getInput()
 					events.push_back(ENTER);
 				}
 				break;
-				
 			}
 		}
 	}
