@@ -1,3 +1,4 @@
+#pragma once
 #include "sdl.h"
 #include "Utils.h"
 class Video
@@ -5,6 +6,8 @@ class Video
 	static Video* pInstance;
 	SDL_Window* gWindow;
 	SDL_Renderer* gRenderer;
+	unsigned int lastTime, currentTime, deltaTime;
+	float msFrame;
 protected:
 	Video();
 public:
@@ -19,6 +22,8 @@ public:
 	void updateScreen();
 	void waitTime(int ms);
 	int getTicks() { return SDL_GetTicks(); };
+	int getDeltaTime() { return deltaTime; };
+	void updateTime();
 	SDL_Renderer* getRenderer() { return gRenderer; };
 	void close();
 };

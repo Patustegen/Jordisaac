@@ -19,6 +19,7 @@ public:
 	void haltChannel(int channel = -1);
 	void pauseChannel(int channel = -1);
 	void resumeChannel(int channel = -1);
+	bool isPlaying(int channel) { return Mix_Playing(channel); };
 	int playAudio(Mix_Chunk* audio, int channel = -1, int repeat = 0);
 };
 

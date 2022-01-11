@@ -19,7 +19,6 @@ Uint32 SoundManager::updateFirstFreeSlotGraphic()
 Sint32 SoundManager::addAudio(const char* file)
 {
 	Mix_Chunk* n = Mix_LoadWAV(file);
-	std::cout << Mix_GetError();
 	if (n == NULL)
 	{
 		return -1;

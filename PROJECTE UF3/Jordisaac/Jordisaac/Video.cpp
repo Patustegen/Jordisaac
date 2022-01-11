@@ -4,6 +4,8 @@
 Video* Video::pInstance = NULL;
 
 Video::Video() {
+	msFrame = 1 / (FPS / 1000.0f);
+	lastTime = 0;
 	gWindow = NULL;
 	gRenderer = NULL;
 	SDL_Init(SDL_INIT_VIDEO);
@@ -34,6 +36,15 @@ void Video::updateScreen() {
 }
 void Video::waitTime(int ms) {
 	SDL_Delay(ms);
+}
+void Video::updateTime()
+{
+	currentTime = getTicks();
+	deltaTime = currentTime - lastTime;
+	if (deltaTime < (int)msFrame) {
+		waitTime((int)msFrame - deltaTime);
+	}
+	lastTime = currentTime;
 }
 void Video::close() {
 }

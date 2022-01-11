@@ -24,5 +24,7 @@ private:
 	CHARACTERS nCharacter;
 	int bgImage;
 	int characs;
+	bool selected;
+	int audio;
 };
 

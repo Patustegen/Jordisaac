@@ -13,74 +13,90 @@ void ChooseCharacter::render()
 
 void ChooseCharacter::update()
 {
-	for (int i = 0; i < iInputM->getEvents().size(); i++)
+	if (!selected)
 	{
-		if (iInputM->getEvents()[i] == ENTER)
+		for (int i = 0; i < iInputM->getEvents().size(); i++)
 		{
-			iSceneD->setSelectedCharacter(aCharacter);
-			iSceneD->changeScene(GAME);
-			iSceneD->getCurrentScene()->init();
-		}
-		else if (iInputM->getEvents()[i] == GOLEFT || iInputM->getEvents()[i] == SHOOTLEFT)
-		{
-			switch (aCharacter)
+			if (iInputM->getEvents()[i] == ENTER)
 			{
-			case ISAAC:
-				nCharacter = aCharacter;
-				aCharacter = bCharacter;
-				bCharacter = CAIN;
-				break;
-			case MAGDALENE:
-				nCharacter = aCharacter;
-				aCharacter = bCharacter;
-				bCharacter = SAMSON;
-				break;
-			case CAIN:
-				nCharacter = aCharacter;
-				aCharacter = bCharacter;
-				bCharacter = ISAAC;
-				break;
-			case SAMSON:
-				nCharacter = aCharacter;
-				aCharacter = bCharacter;
-				bCharacter = MAGDALENE;
-				break;
-			default:
-				break;
+				selected = true;
+				iAudio->haltChannel();
+				iAudio->playAudio(iSoundM->getSoundByID(audio),0);
+			}
+			else if (iInputM->getEvents()[i] == GOLEFT || iInputM->getEvents()[i] == SHOOTLEFT)
+			{
+				switch (aCharacter)
+				{
+				case ISAAC:
+					nCharacter = aCharacter;
+					aCharacter = bCharacter;
+					bCharacter = CAIN;
+					break;
+				case MAGDALENE:
+					nCharacter = aCharacter;
+					aCharacter = bCharacter;
+					bCharacter = SAMSON;
+					break;
+				case CAIN:
+					nCharacter = aCharacter;
+					aCharacter = bCharacter;
+					bCharacter = ISAAC;
+					break;
+				case SAMSON:
+					nCharacter = aCharacter;
+					aCharacter = bCharacter;
+					bCharacter = MAGDALENE;
+					break;
+				default:
+					break;
+				}
+			}
+			else if (iInputM->getEvents()[i] == GORIGHT || iInputM->getEvents()[i] == SHOOTRIGHT)
+			{
+				switch (aCharacter)
+				{
+				case ISAAC:
+					bCharacter = aCharacter;
+					aCharacter = nCharacter;
+					nCharacter = CAIN;
+					break;
+				case MAGDALENE:
+					bCharacter = aCharacter;
+					aCharacter = nCharacter;
+					nCharacter = SAMSON;
+					break;
+				case CAIN:
+					bCharacter = aCharacter;
+					aCharacter = nCharacter;
+					nCharacter = ISAAC;
+					break;
+				case SAMSON:
+					bCharacter = aCharacter;
+					aCharacter = nCharacter;
+					nCharacter = MAGDALENE;
+					break;
+				default:
+					break;
+				}
+			}
+			else if (iInputM->getEvents()[i] == QUIT)
+			{
+				if (iAudio->isPlaying(audio))
+				{
+
+				}
+				else
+				{
+					iSceneD->changeScene(MAIN);
+				}
 			}
 		}
-		else if (iInputM->getEvents()[i] == GORIGHT || iInputM->getEvents()[i] == SHOOTRIGHT)
-		{
-			switch (aCharacter)
-			{
-			case ISAAC:
-				bCharacter = aCharacter;
-				aCharacter = nCharacter;
-				nCharacter = CAIN;
-				break;
-			case MAGDALENE:
-				bCharacter = aCharacter;
-				aCharacter = nCharacter;
-				nCharacter = SAMSON;
-				break;
-			case CAIN:
-				bCharacter = aCharacter;
-				aCharacter = nCharacter;
-				nCharacter = ISAAC;
-				break;
-			case SAMSON:
-				bCharacter = aCharacter;
-				aCharacter = nCharacter;
-				nCharacter = MAGDALENE;
-				break;
-			default:
-				break;
-			}
-		}
-		else if (iInputM->getEvents()[i] == QUIT)
-		{
-			iSceneD->changeScene(MAIN);
-		}
+	}
+	else
+	{
+		iSceneD->setSelectedCharacter(aCharacter);
+		iSceneD->changeScene(GAME);
+		iSceneD->getCurrentScene()->init();
 	}
 }
 
@@ -92,6 +108,10 @@ void ChooseCharacter::load()
 
 void ChooseCharacter::init()
 {
+	aCharacter = ISAAC;
+	bCharacter = SAMSON;
+	nCharacter = MAGDALENE;
+	selected = false;
 }
 
 ChooseCharacter::ChooseCharacter()
@@ -99,6 +119,7 @@ ChooseCharacter::ChooseCharacter()
 	aCharacter = ISAAC;
 	bCharacter = SAMSON;
 	nCharacter = MAGDALENE;
+	selected = false;
 	bgImage = -1;
 	characs = -1;
 }
