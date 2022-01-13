@@ -34,6 +34,7 @@ class Scene
 
 	protected:
 		bool		mReinit;			/*!<  Reload when returning to scene*/
+		int alpha;
 };
 
 #endif

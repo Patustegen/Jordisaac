@@ -19,6 +19,5 @@ public:
 private:
 	int bgImage;
 	int bgMusic;
-	int alpha;
 };
 

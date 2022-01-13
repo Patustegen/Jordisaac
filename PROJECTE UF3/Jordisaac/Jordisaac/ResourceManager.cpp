@@ -123,6 +123,7 @@ Sint32 ResourceManager::addGraphic(const char* file)
 	}
 	if (mFirstFreeSlot == mGraphicsVector.size())
 	{
+		SDL_SetTextureBlendMode(n, SDL_BLENDMODE_BLEND);
 		mGraphicsVector.push_back(n);
 	}
 	else

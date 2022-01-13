@@ -5,6 +5,8 @@
 
 void ChooseCharacter::render()
 {
+	iResourceM->setAlphaGraphic(bgImage, alpha);
+	iResourceM->setAlphaGraphic(characs, alpha);
 	iVideo->renderGraphic(bgImage, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 	iVideo->renderGraphic(characs, SCREEN_WIDTH / 2 - CHAR_W * 2, SCREEN_HEIGHT / 2 - CHAR_H / 2 - 50, CHAR_W, CHAR_H, CHAR_W * bCharacter, 0, 0.75, 0.75);
 	iVideo->renderGraphic(characs, SCREEN_WIDTH / 2 + CHAR_W, SCREEN_HEIGHT / 2 - CHAR_H / 2 - 50, CHAR_W, CHAR_H, CHAR_W * nCharacter, 0, 0.75, 0.75);
@@ -81,22 +83,30 @@ void ChooseCharacter::update()
 			}
 			else if (iInputM->getEvents()[i] == QUIT)
 			{
-				if (iAudio->isPlaying(audio))
-				{
-
-				}
-				else
-				{
-					iSceneD->changeScene(MAIN);
-				}
+				iSceneD->changeScene(MAIN);
 			}
 		}
 	}
 	else
 	{
-		iSceneD->setSelectedCharacter(aCharacter);
-		iSceneD->changeScene(GAME);
-		iSceneD->getCurrentScene()->init();
+		if (iAudio->isPlaying(0))
+		{
+			if (alpha > 0)
+			{
+				alpha -= 4;
+
+			}
+			if (alpha < 0)
+			{
+				alpha = 0;
+			}
+		}
+		else
+		{
+			iSceneD->setSelectedCharacter(aCharacter);
+			iSceneD->changeScene(GAME);
+			iSceneD->getCurrentScene()->init();
+		}
 	}
 }
 
@@ -104,6 +114,7 @@ void ChooseCharacter::load()
 {
 	bgImage = iResourceM->loadAndGetGraphicID("Assets\\Menus\\whoami.png");
 	characs = iResourceM->loadAndGetGraphicID("Assets\\Characters\\Choose.png");
+	audio = iSoundM->loadAndGetSoundID("Assets\\Music\\game-start.mp3");
 }
 
 void ChooseCharacter::init()
@@ -112,6 +123,7 @@ void ChooseCharacter::init()
 	bCharacter = SAMSON;
 	nCharacter = MAGDALENE;
 	selected = false;
+	alpha = 255;
 }
 
 ChooseCharacter::ChooseCharacter()
@@ -122,4 +134,5 @@ ChooseCharacter::ChooseCharacter()
 	selected = false;
 	bgImage = -1;
 	characs = -1;
+	audio = -1;
 }

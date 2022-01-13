@@ -2,6 +2,7 @@
 
 Scene::Scene(){
 	mReinit = true;
+	alpha = 255;
 }
 
 Scene::~Scene(){

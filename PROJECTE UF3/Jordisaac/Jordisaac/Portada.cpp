@@ -38,10 +38,10 @@ void Portada::load()
 {
 	bgImage = iResourceM->loadAndGetGraphicID("Assets\\Menus\\splashmenu.png");
 	bgMusic = iSoundM->loadAndGetSoundID("Assets\\Music\\intro-theme.mp3");
-	alpha = 0;
 }
 
 void Portada::init()
 {
 	iAudio->playAudio(iSoundM->getSoundByID(bgMusic), 0, -1);
+	alpha = 0;
 }

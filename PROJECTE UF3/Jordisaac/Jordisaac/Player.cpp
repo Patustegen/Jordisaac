@@ -164,6 +164,8 @@ Player::Player()
 	case MAGDALENE:
 		break;
 	case CAIN:
+		pHead = iResourceM->loadAndGetGraphicID("Assets\\Characters\\CainHead.png");
+		pMisc = iResourceM->loadAndGetGraphicID("Assets\\Characters\\CainMisc.png");
 		break;
 	case SAMSON:
 		break;
