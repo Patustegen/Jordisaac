@@ -17,6 +17,7 @@ void MainMenu::update()
 			{
 			case NEWGAME:
 				iSceneD->changeScene(CHARACTER);
+				iSceneD->getCurrentScene()->init();
 				break;
 			case CONTINUE:
 				iSceneD->changeScene(GAME);
@@ -86,7 +87,20 @@ void MainMenu::load()
 
 void MainMenu::init()
 {
-	bgImage = NULL;
 	menuSelected = NEWGAME;
+	if (!iAudio->isPlaying(0))
+	{
+		iAudio->playAudio(iSoundM->getSoundByID(iSoundM->loadAndGetSoundID("Assets\\Music\\intro-theme.mp3")), 0,-1);
+	}
+}
+
+MainMenu::MainMenu()
+{
+	bgImage = NULL;
 	selector = NULL;
+	menuSelected = NEWGAME;
+}
+
+MainMenu::~MainMenu()
+{
 }

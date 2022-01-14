@@ -20,6 +20,9 @@ public:
 	void load();
 
 	void init();
+
+	MainMenu();
+	~MainMenu();
 private:
 	int bgImage;
 	int selector;

@@ -60,6 +60,7 @@ void PauseMenu::update()
 				break;
 			case EXIT:
 				iSceneD->changeScene(MAIN);
+				iSceneD->getCurrentScene()->init();
 				break;
 			default:
 				break;
