@@ -162,12 +162,24 @@ Player::Player()
 		pMisc = iResourceM->loadAndGetGraphicID("Assets\\Characters\\IsaacMisc.png");
 		break;
 	case MAGDALENE:
+		Head.w = 37;
+		Head.h = 32;
+		Head.x = paint.x - 10;
+		Head.y = paint.y - Head.h + 8;
+		pHead = iResourceM->loadAndGetGraphicID("Assets\\Characters\\MagdeleneHead.png");
+		pMisc = iResourceM->loadAndGetGraphicID("Assets\\Characters\\MagdeleneMisc.png");
 		break;
 	case CAIN:
 		pHead = iResourceM->loadAndGetGraphicID("Assets\\Characters\\CainHead.png");
 		pMisc = iResourceM->loadAndGetGraphicID("Assets\\Characters\\CainMisc.png");
 		break;
 	case SAMSON:
+		Head.w = 30;
+		Head.h = 27;
+		Head.x = paint.x - 6;
+		Head.y = paint.y - Head.h + 6;
+		pHead = iResourceM->loadAndGetGraphicID("Assets\\Characters\\SamsonHead.png");
+		pMisc = iResourceM->loadAndGetGraphicID("Assets\\Characters\\SamsonMisc.png");
 		break;
 	default:
 		break;
