@@ -16,12 +16,12 @@ void Player::update()
 	{
 		if (state == MOVING)
 		{
-			frame++;
-			if ((lBody == UP || lBody == DOWN) && frame > 4)
+			frame += iVideo->getDeltaTime();
+			if ((lBody == UP || lBody == DOWN) && frame > 400)
 			{
 				frame = 0;
 			}
-			else if ((lBody == LEFT || lBody == RIGHT) && frame > 9)
+			else if ((lBody == LEFT || lBody == RIGHT) && frame > 900)
 			{
 				frame = 0;
 			}
