@@ -28,7 +28,7 @@ void Video::renderGraphic(int img, int posX, int posY, int width, int height, in
 	SDL_Texture* origin = ResourceManager::getInstance()->getGraphicByID(img);
 	SDL_RenderCopy(gRenderer, origin, &r, &rectAux);
 }
-void Video::clearScreen(unsigned int color_key) {
+void Video::clearScreen() {
 	SDL_RenderClear(gRenderer);
 }
 void Video::updateScreen() {

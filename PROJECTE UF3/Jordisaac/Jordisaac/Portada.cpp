@@ -25,12 +25,9 @@ void Portada::update()
 	{
 		alpha = 255;
 	}
-	for (int i = 0; i < iInputM->getEvents().size(); i++)
+	if (iInputM->getEvents(ENTER))
 	{
-		if (iInputM->getEvents()[i] == ENTER)
-		{
-			iSceneD->changeScene(MAIN);
-		}
+		iSceneD->changeScene(MAIN);
 	}
 }
 

@@ -18,7 +18,7 @@ public:
 	}
 	~Video();
 	void renderGraphic(int img, int posX, int posY, int width, int height, int gx = 0, int gy = 0, float wScale = 1, float hScale = 1);
-	void clearScreen(unsigned int color_key);
+	void clearScreen();
 	void updateScreen();
 	void waitTime(int ms);
 	int getTicks() { return SDL_GetTicks(); };

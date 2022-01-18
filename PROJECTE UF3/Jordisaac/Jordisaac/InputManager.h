@@ -1,9 +1,8 @@
 #pragma once
 #include "SDL.h"
-#include <iostream>
-#include <vector>
 
-enum inputs { QUIT, GOUP, STOPUP, GORIGHT, STOPRIGHT, GODOWN, STOPDOWN, GOLEFT, STOPLEFT, SHOOTUP, STOPSUP, SHOOTRIGHT, STOPSRIGHT, SHOOTDOWN, STOPSDOWN, SHOOTLEFT, STOPSLEFT, USEBOMB, USEITEM, USECONS, ENTER };
+enum inputs { QUIT, GOUP, GORIGHT, GODOWN, GOLEFT, SHOOTUP, SHOOTRIGHT, SHOOTDOWN, SHOOTLEFT, USEBOMB, USEITEM, USECONS, ENTER,
+INPUTLENGHT};
 
 class InputManager
 {
@@ -11,14 +10,14 @@ class InputManager
 	SDL_Event* test_event;
 	SDL_GameController* controller;
 	bool focus;
-	std::vector<inputs> events;
+	bool events[INPUTLENGHT];
 protected:
 	InputManager();
 public:
 	~InputManager();
 	void openController();
 	void getInput();
-	std::vector<inputs> getEvents() { return events; };
+	bool getEvents(inputs input) { return events[input]; };
 	static InputManager* getInstance()
 	{
 		if (pInstance == NULL) pInstance = new InputManager();

@@ -13,7 +13,7 @@ int main(int argc, char* args[]) {
 	iSceneD->getCurrentScene()->init();
 	while (true)
 	{
-		iVideo->clearScreen(0);
+		iVideo->clearScreen();
 
 		iInputM->getInput();
 		iSceneD->getCurrentScene()->update();

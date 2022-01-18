@@ -8,6 +8,10 @@ void Game::render()
 
 void Game::update()
 {
+	if (iInputM->getEvents(QUIT)) 
+	{
+		iSceneD->changeScene(PAUSE);
+	}
 	player->update();
 }
 

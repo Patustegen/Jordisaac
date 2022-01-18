@@ -2,7 +2,7 @@
 
 void Player::render()
 {
-	iVideo->renderGraphic(gID, paint.x, paint.y, paint.w, paint.h, frame * paint.w, lBody * paint.h);
+	iVideo->renderGraphic(gID, paint.x, paint.y, paint.w, paint.h, (frame / 100) * paint.w, lBody * paint.h);
 	iVideo->renderGraphic(pHead, Head.x, Head.y, Head.w, Head.h, shooting * Head.w, lHead * Head.h);
 }
 
@@ -14,133 +14,72 @@ void Player::update()
 	}
 	else
 	{
+		if (cooldown > 0)
+		{
+			if (cooldown <= 400)
+			{
+				shooting = false;
+			}
+			cooldown -= iVideo->getDeltaTime();
+		}
+		if (iInputM->getEvents(GOUP)) lBody = UP;
+		if (iInputM->getEvents(GORIGHT)) lBody = RIGHT;
+		if (iInputM->getEvents(GODOWN)) lBody = DOWN;
+		if (iInputM->getEvents(GOLEFT)) lBody = LEFT;
+		if (iInputM->getEvents(SHOOTUP)) lHead = UP;
+		if (iInputM->getEvents(SHOOTRIGHT)) lHead = RIGHT;
+		if (iInputM->getEvents(SHOOTDOWN)) lHead = DOWN;
+		if (iInputM->getEvents(SHOOTLEFT)) lHead = LEFT;
+		if (iInputM->getEvents(USEBOMB));
+		if (iInputM->getEvents(USEITEM));
+		if (iInputM->getEvents(USECONS));
+		
+
+		if (!iInputM->getEvents(GOUP) && !iInputM->getEvents(GORIGHT) && !iInputM->getEvents(GODOWN) && !iInputM->getEvents(GOLEFT)) state = IDLE;
+		else state = MOVING;
+
+		if (!iInputM->getEvents(SHOOTUP) && !iInputM->getEvents(SHOOTRIGHT) && !iInputM->getEvents(SHOOTDOWN) && !iInputM->getEvents(SHOOTLEFT)) hstate = IDLE;
+		else hstate = MOVING;
+
 		if (state == MOVING)
 		{
 			frame += iVideo->getDeltaTime();
-			if ((lBody == UP || lBody == DOWN) && frame > 400)
-			{
-				frame = 0;
-			}
-			else if ((lBody == LEFT || lBody == RIGHT) && frame > 900)
+			if (frame > 900)
 			{
 				frame = 0;
 			}
 		}
-		for (int i = 0; i < iInputM->getEvents().size(); i++)
+		if (hstate == MOVING)
 		{
-			switch (iInputM->getEvents()[i])
+			if (cooldown <= 0)
 			{
-			case QUIT:
-				iSceneD->changeScene(PAUSE);
-				break;
-			case GOUP:
-				state = MOVING;
-				lBody = UP;
-				break;
-			case GORIGHT:
-				state = MOVING;
-				lBody = RIGHT;
-				break;
-			case GODOWN:
-				state = MOVING;
-				lBody = DOWN;
-				break;
-			case GOLEFT:
-				state = MOVING;
-				lBody = LEFT;
-				break;
-			case SHOOTUP:
 				shooting = true;
-				lHead = UP;
-				break;
-			case SHOOTRIGHT:
-				shooting = true;
-				lHead = RIGHT;
-				break;
-			case SHOOTDOWN:
-				shooting = true;
-				lHead = DOWN;
-				break;
-			case SHOOTLEFT:
-				shooting = true;
-				lHead = LEFT;
-				break;
-			case STOPUP:
-				if (lBody == UP)
-				{
-					state = IDLE;
-				}
-				break;
-			case STOPRIGHT:
-				if (lBody == RIGHT)
-				{
-					state = IDLE;
-				}
-				break;
-			case STOPDOWN:
-				if (lBody == DOWN)
-				{
-					state = IDLE;
-				}
-				break;
-			case STOPLEFT:
-				if (lBody == LEFT)
-				{
-					state = IDLE;
-				}
-				break;
-			case STOPSUP:
-				if (lHead == UP)
-				{
-					shooting = false;
-				}
-				break;
-			case STOPSRIGHT:
-				if (lHead == RIGHT)
-				{
-					shooting = false;
-				}
-				break;
-			case STOPSDOWN:
-				if (lHead == DOWN)
-				{
-					shooting = false;
-				}
-				break;
-			case STOPSLEFT:
-				if (lHead == LEFT)
-				{
-					shooting = false;
-				}
-				break;
-			case USEBOMB:
-				break;
-			case USEITEM:
-				break;
-			case USECONS:
-				break;
-			default:
-				break;
+				cooldown = 500;
 			}
 		}
+
+
 		if (state == IDLE)
 		{
 			lBody = DOWN;
 			frame = 0;
 		}
-		if (!shooting)
+		if (hstate == IDLE)
 		{
-			lHead = DOWN;
+			lHead = lBody;
 		}
 	}
 }
 
 Player::Player()
 {
+	state = IDLE;
+	hstate = IDLE;
 	lBody = DOWN;
 	lHead = DOWN;
 	shooting = false;
 	frame = 0;
+	cooldown = 0;
 	gID = iResourceM->loadAndGetGraphicID("Assets\\Characters\\Body.png");
 	col.w = 12;
 	col.h = 12;

@@ -1,4 +1,6 @@
 #include "InputManager.h"
+#include <iostream>
+#include <stdio.h>
 
 InputManager* InputManager::pInstance = NULL;
 
@@ -6,7 +8,10 @@ InputManager::InputManager()
 {
 	controller = nullptr;
 	focus = SDL_TRUE;
-	events.resize(0);
+	for (int i = 0; i < INPUTLENGHT; i++)
+	{
+		events[i] = false;
+	}
 	test_event = new SDL_Event();
 }
 
@@ -31,7 +36,6 @@ void InputManager::openController()
 
 void InputManager::getInput()
 {
-	events.resize(0);
 	while (SDL_PollEvent(test_event))
 	{
 		if (test_event->window.event == SDL_WINDOWEVENT_FOCUS_LOST)
@@ -50,98 +54,111 @@ void InputManager::getInput()
 				SDL_Quit();
 				break;
 			case SDL_KEYUP:
-				if (test_event->key.keysym.scancode == SDL_SCANCODE_LEFT)
+				if (test_event->key.keysym.scancode == SDL_SCANCODE_ESCAPE)
 				{
-					events.push_back(STOPSLEFT);
+					events[QUIT] = false;
+				}
+				else if (test_event->key.keysym.scancode == SDL_SCANCODE_LEFT)
+				{
+					events[SHOOTLEFT] = false;
 				}
 				else if (test_event->key.keysym.scancode == SDL_SCANCODE_RIGHT)
 				{
-					events.push_back(STOPSRIGHT);
+					events[SHOOTRIGHT] = false;
 				}
 				else if (test_event->key.keysym.scancode == SDL_SCANCODE_UP)
 				{
-					events.push_back(STOPSUP);
+					events[SHOOTUP] = false;
 				}
 				else if (test_event->key.keysym.scancode == SDL_SCANCODE_DOWN)
 				{
-					events.push_back(STOPSDOWN);
+					events[SHOOTDOWN] = false;
 				}
-
-				if (test_event->key.keysym.scancode == SDL_SCANCODE_W)
+				else if (test_event->key.keysym.scancode == SDL_SCANCODE_W)
 				{
-					events.push_back(STOPUP);
+					events[GOUP] = false;
 				}
 				else if (test_event->key.keysym.scancode == SDL_SCANCODE_S)
 				{
-					events.push_back(STOPDOWN);
+					events[GODOWN] = false;
 				}
 				else if (test_event->key.keysym.scancode == SDL_SCANCODE_A)
 				{
-					events.push_back(STOPLEFT);
+					events[GOLEFT] = false;
 				}
 				else if (test_event->key.keysym.scancode == SDL_SCANCODE_D)
 				{
-					events.push_back(STOPRIGHT);
+					events[GORIGHT] = false;
+				}
+				else if (test_event->key.keysym.scancode == SDL_SCANCODE_SPACE)
+				{
+					events[USEITEM] = false;
+				}
+				else if (test_event->key.keysym.scancode == SDL_SCANCODE_Q)
+				{
+					events[USECONS] = false;
+				}
+				else if (test_event->key.keysym.scancode == SDL_SCANCODE_E)
+				{
+					events[USEBOMB] = false;
+				}
+				else if (test_event->key.keysym.scancode == SDL_SCANCODE_RETURN)
+				{
+					events[ENTER] = false;
 				}
 				break;
 			case SDL_KEYDOWN:
 				if (test_event->key.keysym.scancode == SDL_SCANCODE_ESCAPE)
 				{
-					events.push_back(QUIT);
+					events[QUIT] = true;
 				}
-
-				if (test_event->key.keysym.scancode == SDL_SCANCODE_LEFT)
+				else if (test_event->key.keysym.scancode == SDL_SCANCODE_LEFT)
 				{
-					events.push_back(SHOOTLEFT);
+					events[SHOOTLEFT] = true;
 				}
 				else if (test_event->key.keysym.scancode == SDL_SCANCODE_RIGHT)
 				{
-					events.push_back(SHOOTRIGHT);
+					events[SHOOTRIGHT] = true;
 				}
 				else if (test_event->key.keysym.scancode == SDL_SCANCODE_UP)
 				{
-					events.push_back(SHOOTUP);
+					events[SHOOTUP] = true;
 				}
 				else if (test_event->key.keysym.scancode == SDL_SCANCODE_DOWN)
 				{
-					events.push_back(SHOOTDOWN);
+					events[SHOOTDOWN] = true;
 				}
-
-				if (test_event->key.keysym.scancode == SDL_SCANCODE_W)
+				else if (test_event->key.keysym.scancode == SDL_SCANCODE_W)
 				{
-					events.push_back(GOUP);
+					events[GOUP] = true;
 				}
 				else if (test_event->key.keysym.scancode == SDL_SCANCODE_S)
 				{
-					events.push_back(GODOWN);
+					events[GODOWN] = true;
 				}
 				else if (test_event->key.keysym.scancode == SDL_SCANCODE_A)
 				{
-					events.push_back(GOLEFT);
+					events[GOLEFT] = true;
 				}
 				else if (test_event->key.keysym.scancode == SDL_SCANCODE_D)
 				{
-					events.push_back(GORIGHT);
+					events[GORIGHT] = true;
 				}
-
-				if (test_event->key.keysym.scancode == SDL_SCANCODE_SPACE)
+				else if (test_event->key.keysym.scancode == SDL_SCANCODE_SPACE)
 				{
-					events.push_back(USEITEM);
+					events[USEITEM] = true;
 				}
-
-				if (test_event->key.keysym.scancode == SDL_SCANCODE_Q)
+				else if (test_event->key.keysym.scancode == SDL_SCANCODE_Q)
 				{
-					events.push_back(USECONS);
+					events[USECONS] = true;
 				}
-
-				if (test_event->key.keysym.scancode == SDL_SCANCODE_E)
+				else if (test_event->key.keysym.scancode == SDL_SCANCODE_E)
 				{
-					events.push_back(USEBOMB);
+					events[USEBOMB] = true;
 				}
-
-				if (test_event->key.keysym.scancode == SDL_SCANCODE_RETURN)
+				else if (test_event->key.keysym.scancode == SDL_SCANCODE_RETURN)
 				{
-					events.push_back(ENTER);
+					events[ENTER] = true;
 				}
 				break;
 			}

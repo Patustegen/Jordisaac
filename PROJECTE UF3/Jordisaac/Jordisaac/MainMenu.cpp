@@ -9,73 +9,70 @@ void MainMenu::render()
 
 void MainMenu::update()
 {
-	for (int i = 0; i < iInputM->getEvents().size(); i++)
+	if (iInputM->getEvents(ENTER))
 	{
-		if (iInputM->getEvents()[i] == ENTER)
+		switch (menuSelected)
 		{
-			switch (menuSelected)
-			{
-			case NEWGAME:
-				iSceneD->changeScene(CHARACTER);
-				iSceneD->getCurrentScene()->init();
-				break;
-			case CONTINUE:
-				iSceneD->changeScene(GAME);
-				break;
-			case S_RANKING:
-				iSceneD->changeScene(RANK);
-				break;
-			case S_OPTIONS:
-				iSceneD->changeLastScene(OPTIONS);
-				break;
-			default:
-				break;
-			}
+		case NEWGAME:
+			iSceneD->changeScene(CHARACTER);
+			iSceneD->getCurrentScene()->init();
+			break;
+		case CONTINUE:
+			iSceneD->changeScene(GAME);
+			break;
+		case S_RANKING:
+			iSceneD->changeScene(RANK);
+			break;
+		case S_OPTIONS:
+			iSceneD->changeLastScene(OPTIONS);
+			break;
+		default:
+			break;
 		}
-		else if (iInputM->getEvents()[i] == GOUP || iInputM->getEvents()[i] == SHOOTUP)
+	}
+	else if (iInputM->getEvents(GOUP) || iInputM->getEvents(SHOOTUP))
+	{
+		switch (menuSelected)
 		{
-			switch (menuSelected)
-			{
-			case NEWGAME:
-				menuSelected = S_OPTIONS;
-				break;
-			case CONTINUE:
-				menuSelected = NEWGAME;
-				break;
-			case S_RANKING:
-				menuSelected = CONTINUE;
-				break;
-			case S_OPTIONS:
-				menuSelected = S_RANKING;
-				break;
-			default:
-				break;
-			}
+		case NEWGAME:
+			menuSelected = S_OPTIONS;
+			break;
+		case CONTINUE:
+			menuSelected = NEWGAME;
+			break;
+		case S_RANKING:
+			menuSelected = CONTINUE;
+			break;
+		case S_OPTIONS:
+			menuSelected = S_RANKING;
+			break;
+		default:
+			break;
 		}
-		else if (iInputM->getEvents()[i] == GODOWN || iInputM->getEvents()[i] == SHOOTDOWN)
+	}
+	else if (iInputM->getEvents(GODOWN) || iInputM->getEvents(SHOOTDOWN))
+	{
+		switch (menuSelected)
 		{
-			switch (menuSelected)
-			{
-			case NEWGAME:
-				menuSelected = CONTINUE;
-				break;
-			case CONTINUE:
-				menuSelected = S_RANKING;
-				break;
-			case S_RANKING:
-				menuSelected = S_OPTIONS;
-				break;
-			case S_OPTIONS:
-				menuSelected = NEWGAME;
-				break;
-			default:
-				break;
-			}
+		case NEWGAME:
+			menuSelected = CONTINUE;
+			break;
+		case CONTINUE:
+			menuSelected = S_RANKING;
+			break;
+		case S_RANKING:
+			menuSelected = S_OPTIONS;
+			break;
+		case S_OPTIONS:
+			menuSelected = NEWGAME;
+			break;
+		default:
+			break;
 		}
-		else if (iInputM->getEvents()[i] == QUIT)
-		{
-			SDL_Quit();
-		}
+	}
+	else if (iInputM->getEvents(QUIT))
+	{
+		SDL_Quit();
 	}
 }
 

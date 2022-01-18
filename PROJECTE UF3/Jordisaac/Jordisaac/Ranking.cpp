@@ -7,12 +7,9 @@ void Ranking::render()
 
 void Ranking::update()
 {
-	for (int i = 0; i < iInputM->getEvents().size(); i++)
+	if (iInputM->getEvents(QUIT))
 	{
-		if (iInputM->getEvents()[i] == QUIT)
-		{
-			iSceneD->changeScene(MAIN);
-		}
+		iSceneD->changeScene(MAIN);
 	}
 }
 

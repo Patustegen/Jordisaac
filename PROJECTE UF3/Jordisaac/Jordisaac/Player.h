@@ -7,12 +7,14 @@ class Player :
 {
 private:
     STATE state;
+    STATE hstate;
     LOOKING lHead;
     LOOKING lBody;
     SDL_Rect Head;
     int pHead;
     int pMisc;
     int frame;
+    int cooldown;
     bool shooting;
 public:
     void render();

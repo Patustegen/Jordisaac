@@ -17,74 +17,71 @@ void ChooseCharacter::update()
 {
 	if (!selected)
 	{
-		for (int i = 0; i < iInputM->getEvents().size(); i++)
+		if (iInputM->getEvents(ENTER))
 		{
-			if (iInputM->getEvents()[i] == ENTER)
+			selected = true;
+			iAudio->haltChannel();
+			iAudio->playAudio(iSoundM->getSoundByID(audio),0);
+		}
+		else if (iInputM->getEvents(GOLEFT) || iInputM->getEvents(SHOOTLEFT))
+		{
+			switch (aCharacter)
 			{
-				selected = true;
-				iAudio->haltChannel();
-				iAudio->playAudio(iSoundM->getSoundByID(audio),0);
+			case ISAAC:
+				nCharacter = aCharacter;
+				aCharacter = bCharacter;
+				bCharacter = CAIN;
+				break;
+			case MAGDALENE:
+				nCharacter = aCharacter;
+				aCharacter = bCharacter;
+				bCharacter = SAMSON;
+				break;
+			case CAIN:
+				nCharacter = aCharacter;
+				aCharacter = bCharacter;
+				bCharacter = ISAAC;
+				break;
+			case SAMSON:
+				nCharacter = aCharacter;
+				aCharacter = bCharacter;
+				bCharacter = MAGDALENE;
+				break;
+			default:
+				break;
 			}
-			else if (iInputM->getEvents()[i] == GOLEFT || iInputM->getEvents()[i] == SHOOTLEFT)
+		}
+		else if (iInputM->getEvents(GORIGHT) || iInputM->getEvents(SHOOTRIGHT))
+		{
+			switch (aCharacter)
 			{
-				switch (aCharacter)
-				{
-				case ISAAC:
-					nCharacter = aCharacter;
-					aCharacter = bCharacter;
-					bCharacter = CAIN;
-					break;
-				case MAGDALENE:
-					nCharacter = aCharacter;
-					aCharacter = bCharacter;
-					bCharacter = SAMSON;
-					break;
-				case CAIN:
-					nCharacter = aCharacter;
-					aCharacter = bCharacter;
-					bCharacter = ISAAC;
-					break;
-				case SAMSON:
-					nCharacter = aCharacter;
-					aCharacter = bCharacter;
-					bCharacter = MAGDALENE;
-					break;
-				default:
-					break;
-				}
+			case ISAAC:
+				bCharacter = aCharacter;
+				aCharacter = nCharacter;
+				nCharacter = CAIN;
+				break;
+			case MAGDALENE:
+				bCharacter = aCharacter;
+				aCharacter = nCharacter;
+				nCharacter = SAMSON;
+				break;
+			case CAIN:
+				bCharacter = aCharacter;
+				aCharacter = nCharacter;
+				nCharacter = ISAAC;
+				break;
+			case SAMSON:
+				bCharacter = aCharacter;
+				aCharacter = nCharacter;
+				nCharacter = MAGDALENE;
+				break;
+			default:
+				break;
 			}
-			else if (iInputM->getEvents()[i] == GORIGHT || iInputM->getEvents()[i] == SHOOTRIGHT)
-			{
-				switch (aCharacter)
-				{
-				case ISAAC:
-					bCharacter = aCharacter;
-					aCharacter = nCharacter;
-					nCharacter = CAIN;
-					break;
-				case MAGDALENE:
-					bCharacter = aCharacter;
-					aCharacter = nCharacter;
-					nCharacter = SAMSON;
-					break;
-				case CAIN:
-					bCharacter = aCharacter;
-					aCharacter = nCharacter;
-					nCharacter = ISAAC;
-					break;
-				case SAMSON:
-					bCharacter = aCharacter;
-					aCharacter = nCharacter;
-					nCharacter = MAGDALENE;
-					break;
-				default:
-					break;
-				}
-			}
-			else if (iInputM->getEvents()[i] == QUIT)
-			{
-				iSceneD->changeScene(MAIN);
-			}
+		}
+		else if (iInputM->getEvents(QUIT))
+		{
+			iSceneD->changeScene(MAIN);
 		}
 	}
 	else
