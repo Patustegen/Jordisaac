@@ -22,5 +22,6 @@ void Game::load()
 
 void Game::init()
 {
+	iInputM->switchGameMode(true);
 	player = new Player();
 }

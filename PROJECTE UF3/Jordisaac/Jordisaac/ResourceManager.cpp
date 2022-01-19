@@ -86,9 +86,9 @@ void ResourceManager::printLoadedGraphics()
 	}
 }
 
-Sint32 ResourceManager::createGraphic(const char* name, Uint16 width, Uint16 height)
+Sint32 ResourceManager::createGraphic(const char* name, Uint16 width, Uint16 height, Uint32 R, Uint32 G, Uint32 B, Uint32 A)
 {
-	SDL_Surface* s = SDL_CreateRGBSurface(0, width, height, 32, 0, 0, 0, 0);
+	SDL_Surface* s = SDL_CreateRGBSurface(0, width, height, 32, R, G, B, A);
 	SDL_Texture* n = SDL_CreateTextureFromSurface(Video::getInstance()->getRenderer(),s);
 	if (n == NULL)
 	{

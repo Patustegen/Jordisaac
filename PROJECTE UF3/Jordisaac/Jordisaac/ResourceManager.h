@@ -86,7 +86,7 @@ public:
 		\param height Height for the graphic
 		\return -1 if there's an error when loading
 	*/
-	Sint32 createGraphic(const char* name, Uint16 width, Uint16 height);
+	Sint32 createGraphic(const char* name, Uint16 width, Uint16 height, Uint32 R = 0, Uint32 G = 0, Uint32 B = 0, Uint32 A = 0);
 
 	//! Gets Singleton instance
 	/*!

@@ -7,6 +7,7 @@ InputManager* InputManager::pInstance = NULL;
 InputManager::InputManager()
 {
 	controller = nullptr;
+	gameMode = false;
 	focus = SDL_TRUE;
 	for (int i = 0; i < INPUTLENGHT; i++)
 	{
@@ -36,6 +37,22 @@ void InputManager::openController()
 
 void InputManager::getInput()
 {
+	events[QUIT] = false;
+	events[USEITEM] = false;
+	events[USECONS] = false;
+	events[USEBOMB] = false;
+	events[ENTER] = false;
+	if (!gameMode)
+	{
+		events[SHOOTLEFT] = false;
+		events[SHOOTRIGHT] = false;
+		events[SHOOTUP] = false;
+		events[SHOOTDOWN] = false;
+		events[GOUP] = false;
+		events[GODOWN] = false;
+		events[GOLEFT] = false;
+		events[GORIGHT] = false;
+	}
 	while (SDL_PollEvent(test_event))
 	{
 		if (test_event->window.event == SDL_WINDOWEVENT_FOCUS_LOST)
@@ -54,11 +71,7 @@ void InputManager::getInput()
 				SDL_Quit();
 				break;
 			case SDL_KEYUP:
-				if (test_event->key.keysym.scancode == SDL_SCANCODE_ESCAPE)
-				{
-					events[QUIT] = false;
-				}
-				else if (test_event->key.keysym.scancode == SDL_SCANCODE_LEFT)
+				if (test_event->key.keysym.scancode == SDL_SCANCODE_LEFT)
 				{
 					events[SHOOTLEFT] = false;
 				}
@@ -89,22 +102,6 @@ void InputManager::getInput()
 				else if (test_event->key.keysym.scancode == SDL_SCANCODE_D)
 				{
 					events[GORIGHT] = false;
-				}
-				else if (test_event->key.keysym.scancode == SDL_SCANCODE_SPACE)
-				{
-					events[USEITEM] = false;
-				}
-				else if (test_event->key.keysym.scancode == SDL_SCANCODE_Q)
-				{
-					events[USECONS] = false;
-				}
-				else if (test_event->key.keysym.scancode == SDL_SCANCODE_E)
-				{
-					events[USEBOMB] = false;
-				}
-				else if (test_event->key.keysym.scancode == SDL_SCANCODE_RETURN)
-				{
-					events[ENTER] = false;
 				}
 				break;
 			case SDL_KEYDOWN:

@@ -14,6 +14,7 @@ private:
     int pHead;
     int pMisc;
     int frame;
+    int gFrame;
     int cooldown;
     bool shooting;
 public:

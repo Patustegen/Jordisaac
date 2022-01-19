@@ -11,6 +11,7 @@ class InputManager
 	SDL_GameController* controller;
 	bool focus;
 	bool events[INPUTLENGHT];
+	bool gameMode;
 protected:
 	InputManager();
 public:
@@ -18,6 +19,7 @@ public:
 	void openController();
 	void getInput();
 	bool getEvents(inputs input) { return events[input]; };
+	void switchGameMode(bool gm) { gameMode = gm; };
 	static InputManager* getInstance()
 	{
 		if (pInstance == NULL) pInstance = new InputManager();
