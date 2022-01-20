@@ -35,6 +35,7 @@ void Player::update()
 		if (iInputM->getEvents(USEITEM));
 		if (iInputM->getEvents(USECONS));
 		
+		mDiagonals = NONE;
 
 		if (!iInputM->getEvents(GOUP) && !iInputM->getEvents(GORIGHT) && !iInputM->getEvents(GODOWN) && !iInputM->getEvents(GOLEFT)) state = IDLE;
 		else if (iInputM->getEvents(GOUP) && !iInputM->getEvents(GORIGHT) && iInputM->getEvents(GODOWN) && !iInputM->getEvents(GOLEFT)) state = IDLE;
@@ -59,6 +60,30 @@ void Player::update()
 			lBody = DOWN;
 			state = MOVING;
 		}
+		else if (iInputM->getEvents(GOUP) && iInputM->getEvents(GORIGHT) && !iInputM->getEvents(GODOWN) && !iInputM->getEvents(GOLEFT)) 
+		{
+			mDiagonals = NE;
+			lBody = RIGHT;
+			state = MOVING;
+		}
+		else if (!iInputM->getEvents(GOUP) && iInputM->getEvents(GORIGHT) && iInputM->getEvents(GODOWN) && !iInputM->getEvents(GOLEFT)) 
+		{
+			mDiagonals = SE;
+			lBody = RIGHT;
+			state = MOVING;
+		}
+		else if (!iInputM->getEvents(GOUP) && !iInputM->getEvents(GORIGHT) && iInputM->getEvents(GODOWN) && iInputM->getEvents(GOLEFT)) 
+		{
+			mDiagonals = SW;
+			lBody = LEFT;
+			state = MOVING;
+		}
+		else if (iInputM->getEvents(GOUP) && !iInputM->getEvents(GORIGHT) && !iInputM->getEvents(GODOWN) && iInputM->getEvents(GOLEFT)) 
+		{
+			mDiagonals = NW;
+			lBody = LEFT;
+			state = MOVING;
+		}
 		else state = MOVING;
 
 		if (!iInputM->getEvents(SHOOTUP) && !iInputM->getEvents(SHOOTRIGHT) && !iInputM->getEvents(SHOOTDOWN) && !iInputM->getEvents(SHOOTLEFT)) hstate = IDLE;
@@ -71,6 +96,46 @@ void Player::update()
 			{
 				frame = 0;
 			}
+			switch (mDiagonals)
+			{
+			case NONE:
+				switch (lBody)
+				{
+				case DOWN:
+					col.y += 1;
+					break;
+				case RIGHT:
+					col.x += 1;
+					break;
+				case UP:
+					col.y -= 1;
+					break;
+				case LEFT:
+					col.x -= 1;
+					break;
+				default:
+					break;
+				}
+				break;
+			case NE:
+				col.y -= 1;
+				col.x += 1;
+				break;
+			case SE:
+				col.y += 1;
+				col.x += 1;
+				break;	 
+			case SW:	 
+				col.y += 1;
+				col.x -= 1;
+				break;	 
+			case NW:	 
+				col.y -= 1;
+				col.x -= 1;
+				break;
+			default:
+				break;
+			}
 		}
 		if (hstate == MOVING)
 		{
@@ -81,6 +146,26 @@ void Player::update()
 			}
 		}
 
+		paint.x = col.x - 6;
+		paint.y = col.y - 2;
+		switch (iSceneD->getSelectedCharacter())
+		{
+		case ISAAC:
+		case CAIN:
+			Head.x = paint.x - 10;
+			Head.y = paint.y - Head.h * 2 + 10;
+			break;
+		case MAGDALENE:
+			Head.x = paint.x - 20;
+			Head.y = paint.y - Head.h * 2 + 16;
+			break;
+		case SAMSON:
+			Head.x = paint.x - 12;
+			Head.y = paint.y - Head.h * 2 + 12;
+			break;
+		default:
+			break;
+		}
 
 		if (state == IDLE)
 		{
@@ -96,14 +181,23 @@ void Player::update()
 
 Player::Player()
 {
+	stats[DAMAGE] = 3.5;
+	stats[TEARS] = 0;
+	stats[RANGE] = 6.5;
+	stats[SHOT_SPEED] = 1;
+	stats[SPEED] = 1;
+	stats[LUCK] = 0;
+
 	state = IDLE;
 	hstate = IDLE;
 	lBody = DOWN;
 	lHead = DOWN;
+	mDiagonals = NONE;
+
 	shooting = false;
 	frame = 0;
 	cooldown = 0;
-	gID = iResourceM->loadAndGetGraphicID("Assets\\Characters\\Body.png");
+	
 	col.w = 24;
 	col.h = 24;
 	col.x = SCREEN_WIDTH / 2 - col.w / 2;
@@ -117,6 +211,7 @@ Player::Player()
 	Head.x = paint.x - 10;
 	Head.y = paint.y - Head.h * 2 + 10;
 
+	gID = iResourceM->loadAndGetGraphicID("Assets\\Characters\\Body.png");
 	gFrame = iResourceM->loadAndGetGraphicID("Assets\\Characters\\Frame.png");
 
 
@@ -127,6 +222,7 @@ Player::Player()
 		pMisc = iResourceM->loadAndGetGraphicID("Assets\\Characters\\IsaacMisc.png");
 		break;
 	case MAGDALENE:
+		stats[SPEED] = 0.85;
 		Head.w = 37;
 		Head.h = 32;
 		Head.x = paint.x - 20;
@@ -135,10 +231,16 @@ Player::Player()
 		pMisc = iResourceM->loadAndGetGraphicID("Assets\\Characters\\MagdeleneMisc.png");
 		break;
 	case CAIN:
+		stats[RANGE] = 4.5;
+		stats[SPEED] = 1.3;
 		pHead = iResourceM->loadAndGetGraphicID("Assets\\Characters\\CainHead.png");
 		pMisc = iResourceM->loadAndGetGraphicID("Assets\\Characters\\CainMisc.png");
 		break;
 	case SAMSON:
+		stats[RANGE] = 5;
+		stats[TEARS] = 0.1;
+		stats[SHOT_SPEED] = 1.31;
+		stats[SPEED] = 1.1;
 		Head.w = 30;
 		Head.h = 27;
 		Head.x = paint.x - 12;

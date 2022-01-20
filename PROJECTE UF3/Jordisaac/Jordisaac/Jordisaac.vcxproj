@@ -163,6 +163,7 @@
     <ClCompile Include="SceneDirector.cpp" />
     <ClCompile Include="Singletons.cpp" />
     <ClCompile Include="SoundManager.cpp" />
+    <ClCompile Include="UI.cpp" />
     <ClCompile Include="Video.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -184,6 +185,7 @@
     <ClInclude Include="SceneDirector.h" />
     <ClInclude Include="Singletons.h" />
     <ClInclude Include="SoundManager.h" />
+    <ClInclude Include="UI.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="Video.h" />
   </ItemGroup>
