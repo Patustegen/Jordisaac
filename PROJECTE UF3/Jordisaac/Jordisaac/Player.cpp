@@ -179,7 +179,7 @@ void Player::update()
 	}
 }
 
-Player::Player()
+void Player::init()
 {
 	stats[DAMAGE] = 3.5;
 	stats[TEARS] = 0;
@@ -187,6 +187,8 @@ Player::Player()
 	stats[SHOT_SPEED] = 1;
 	stats[SPEED] = 1;
 	stats[LUCK] = 0;
+	stats[LIFE_CAPACITY] = 6;
+	hp = 6;
 
 	state = IDLE;
 	hstate = IDLE;
@@ -197,7 +199,7 @@ Player::Player()
 	shooting = false;
 	frame = 0;
 	cooldown = 0;
-	
+
 	col.w = 24;
 	col.h = 24;
 	col.x = SCREEN_WIDTH / 2 - col.w / 2;
@@ -223,6 +225,8 @@ Player::Player()
 		break;
 	case MAGDALENE:
 		stats[SPEED] = 0.85;
+		stats[LIFE_CAPACITY] = 8;
+		hp = 8;
 		Head.w = 37;
 		Head.h = 32;
 		Head.x = paint.x - 20;
@@ -233,6 +237,8 @@ Player::Player()
 	case CAIN:
 		stats[RANGE] = 4.5;
 		stats[SPEED] = 1.3;
+		stats[LIFE_CAPACITY] = 4;
+		hp = 4;
 		pHead = iResourceM->loadAndGetGraphicID("Assets\\Characters\\CainHead.png");
 		pMisc = iResourceM->loadAndGetGraphicID("Assets\\Characters\\CainMisc.png");
 		break;
@@ -251,4 +257,38 @@ Player::Player()
 	default:
 		break;
 	}
+}
+
+Player::Player()
+{
+	//Stats
+	for (int i = 0; i < STAT_LENGHT; i++)
+	{
+		stats[i] = 0;
+	}
+
+	//States
+	state = IDLE;
+	hstate = IDLE;
+	lBody = DOWN;
+	lHead = DOWN;
+	mDiagonals = NONE;
+
+	//Variables
+	shooting = false;
+	frame = 0;
+	cooldown = 0;
+	hp = 6;
+	
+	//SDL_Rects
+	col = {0,0,0,0};
+	Head = {0,0,0,0};
+	paint = {0,0,0,0};
+
+	//Graphics
+	gID = -1;
+	gFrame = -1;
+	pHead = -1;
+	pMisc = -1;
+
 }

@@ -1,12 +1,15 @@
 #pragma once
 #include "Scene.h"
-#include "Player.h"
+#include "UI.h"
 class Game :
     public Scene
 {
 private:
 	Player* player;
+	UI* ui;
 public:
+	Game();
+
 	//! Handles the drawing of the scene
 	void render();
 

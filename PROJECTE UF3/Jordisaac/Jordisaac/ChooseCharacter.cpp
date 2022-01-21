@@ -102,6 +102,7 @@ void ChooseCharacter::update()
 		{
 			iSceneD->setSelectedCharacter(aCharacter);
 			iSceneD->changeScene(GAME);
+			iSceneD->getCurrentScene()->load();
 			iSceneD->getCurrentScene()->init();
 		}
 	}

@@ -4,7 +4,7 @@
 
 enum STATS
 {
-    DAMAGE, TEARS, RANGE, SHOT_SPEED, SPEED, LUCK,
+    DAMAGE, TEARS, RANGE, SHOT_SPEED, SPEED, LUCK, LIFE_CAPACITY,
     STAT_LENGHT
 };
 
@@ -31,6 +31,8 @@ private:
 public:
     void render();
     void update();
+    void init();
+    float getStat(int nStat) { return stats[nStat]; };
     Player();
     ~Player();
 };

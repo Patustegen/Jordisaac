@@ -1,9 +1,16 @@
 #include "Game.h"
 #include "Singletons.h"
 
+Game::Game()
+{
+	player = new Player();
+	ui = new UI();
+}
+
 void Game::render()
 {
 	player->render();
+	ui->render();
 }
 
 void Game::update()
@@ -17,11 +24,13 @@ void Game::update()
 
 void Game::load()
 {
-
+	ui->load();
 }
 
 void Game::init()
 {
 	iInputM->switchGameMode(true);
-	player = new Player();
+	ui->setPlayer(player);
+	player->init();
+	ui->init();
 }
