@@ -52,9 +52,11 @@ void PauseMenu::update()
 		{
 		case P_OPTIONS:
 			iSceneD->changeLastScene(OPTIONS);
+			iSceneD->getCurrentScene()->init();
 			break;
 		case RESUME:
 			iSceneD->changeScene(GAME);
+			iInputM->switchGameMode(true);
 			break;
 		case EXIT:
 			iSceneD->changeScene(MAIN);
@@ -73,4 +75,5 @@ void PauseMenu::load()
 void PauseMenu::init()
 {
 	selected = P_OPTIONS;
+	iInputM->switchGameMode(false);
 }

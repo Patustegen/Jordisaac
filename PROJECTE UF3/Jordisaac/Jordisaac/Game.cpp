@@ -9,6 +9,7 @@ Game::Game()
 
 void Game::render()
 {
+	iVideo->renderGraphic(bg, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 	player->render();
 	ui->render();
 }
@@ -18,6 +19,7 @@ void Game::update()
 	if (iInputM->getEvents(QUIT)) 
 	{
 		iSceneD->changeScene(PAUSE);
+		iSceneD->getCurrentScene()->init();
 	}
 	player->update();
 }
@@ -25,6 +27,7 @@ void Game::update()
 void Game::load()
 {
 	ui->load();
+	bg = iResourceM->loadAndGetGraphicID("Assets\\Rooms\\BasementDefault.png");
 }
 
 void Game::init()

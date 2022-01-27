@@ -89,7 +89,7 @@ void Player::update()
 		if (!iInputM->getEvents(SHOOTUP) && !iInputM->getEvents(SHOOTRIGHT) && !iInputM->getEvents(SHOOTDOWN) && !iInputM->getEvents(SHOOTLEFT)) hstate = IDLE;
 		else hstate = MOVING;
 
-		if (state == MOVING)
+		if (state != IDLE)
 		{
 			frame += iVideo->getDeltaTime();
 			if (frame > 900)
@@ -145,6 +145,15 @@ void Player::update()
 				cooldown = 500;
 			}
 		}
+
+
+
+
+
+
+
+
+
 
 		paint.x = col.x - 6;
 		paint.y = col.y - 2;
