@@ -7,6 +7,7 @@ int main(int argc, char* args[]) {
 	iAudio = Audio::getInstance();
 	iInputM = InputManager::getInstance();
 	iSceneD = SceneDirector::getInstance();
+	iRoomM = RoomManager::getInstance();
 
 	
 

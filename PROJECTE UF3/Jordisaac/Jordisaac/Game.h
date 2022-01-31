@@ -7,6 +7,7 @@ class Game :
 private:
 	Player* player;
 	UI* ui;
+	int bg;
 public:
 	Game();
 

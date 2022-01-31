@@ -6,3 +6,4 @@ SoundManager* iSoundM;
 Audio* iAudio;
 InputManager* iInputM;
 SceneDirector* iSceneD;
+RoomManager* iRoomM;

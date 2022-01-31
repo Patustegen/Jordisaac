@@ -51,6 +51,13 @@
     <ClCompile Include="Singletons.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
+    <ClCompile Include="Room.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="RoomManager.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseCharacter.h" />
@@ -106,6 +113,13 @@
     <ClInclude Include="Utils.h">
       <Filter>Engine</Filter>
     </ClInclude>
+    <ClInclude Include="Room.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="RoomManager.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Scenes">
