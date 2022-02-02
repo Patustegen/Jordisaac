@@ -3,6 +3,7 @@
 
 Game::Game()
 {
+	bg = -1;
 	player = new Player();
 	ui = new UI();
 }

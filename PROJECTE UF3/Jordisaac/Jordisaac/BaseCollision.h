@@ -1,15 +1,15 @@
 #pragma once
-#include "sdl.h"
+#include "Utils.h"
 class BaseCollision
 {
 protected:
 	int gID;
-	SDL_Rect col;
-	SDL_Rect paint;
+	Rect col;
+	Rect paint;
 public:
 	void init();
 	void update();
 	void render();
-	SDL_Rect* getCol();
+	Rect* getCol();
 };
 

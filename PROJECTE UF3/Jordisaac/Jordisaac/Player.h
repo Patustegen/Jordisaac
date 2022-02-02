@@ -17,7 +17,7 @@ private:
     LOOKING lHead;
     LOOKING lBody;
     DIAGONALS mDiagonals;
-    SDL_Rect Head;
+    Rect Head;
 
     float stats[STAT_LENGHT];
     bool shooting;

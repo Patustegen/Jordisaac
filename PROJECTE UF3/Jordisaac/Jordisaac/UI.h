@@ -13,7 +13,7 @@ enum HEART_TYPES
 class UI
 {
 private:
-	SDL_Rect rHearts;
+	Rect rHearts;
 	Player* mPlayer;
 	int gHeart;
 public:
