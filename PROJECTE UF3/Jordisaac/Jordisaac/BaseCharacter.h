@@ -1,5 +1,6 @@
 #pragma once
 #include "BaseCollision.h"
+#include <vector>
 class BaseCharacter :
     public BaseCollision
 {

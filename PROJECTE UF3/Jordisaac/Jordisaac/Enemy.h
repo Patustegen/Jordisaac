@@ -3,5 +3,8 @@
 class Enemy :
     public BaseCharacter
 {
+public:
+    Enemy();
+    ~Enemy();
 };
 

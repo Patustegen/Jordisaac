@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "Singletons.h"
 
 void Player::render()
 {
@@ -190,9 +191,9 @@ void Player::update()
 
 void Player::init()
 {
-	stats[DAMAGE] = 3.5;
+	stats[DAMAGE] = 3.5f;
 	stats[TEARS] = 0;
-	stats[RANGE] = 6.5;
+	stats[RANGE] = 6.5f;
 	stats[SHOT_SPEED] = 1;
 	stats[SPEED] = 1;
 	stats[LUCK] = 0;
@@ -233,7 +234,7 @@ void Player::init()
 		pMisc = iResourceM->loadAndGetGraphicID("Assets\\Characters\\IsaacMisc.png");
 		break;
 	case MAGDALENE:
-		stats[SPEED] = 0.85;
+		stats[SPEED] = 0.85f;
 		stats[LIFE_CAPACITY] = 8;
 		hp = 8;
 		Head.w = 37;
@@ -244,8 +245,8 @@ void Player::init()
 		pMisc = iResourceM->loadAndGetGraphicID("Assets\\Characters\\MagdeleneMisc.png");
 		break;
 	case CAIN:
-		stats[RANGE] = 4.5;
-		stats[SPEED] = 1.3;
+		stats[RANGE] = 4.5f;
+		stats[SPEED] = 1.3f;
 		stats[LIFE_CAPACITY] = 4;
 		hp = 4;
 		pHead = iResourceM->loadAndGetGraphicID("Assets\\Characters\\CainHead.png");
@@ -253,9 +254,9 @@ void Player::init()
 		break;
 	case SAMSON:
 		stats[RANGE] = 5;
-		stats[TEARS] = 0.1;
-		stats[SHOT_SPEED] = 1.31;
-		stats[SPEED] = 1.1;
+		stats[TEARS] = 0.1f;
+		stats[SHOT_SPEED] = 1.31f;
+		stats[SPEED] = 1.1f;
 		Head.w = 30;
 		Head.h = 27;
 		Head.x = paint.x - 12;

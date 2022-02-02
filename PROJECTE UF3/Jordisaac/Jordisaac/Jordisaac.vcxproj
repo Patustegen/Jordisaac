@@ -72,8 +72,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>Z:\PROJECTE UF3\Jordisaac\PROJECTE UF3\SDL\include;D:\JP\PROJECTE UF3\Jordisaac\PROJECTE UF3\SDL\include;$(IncludePath)</IncludePath>
-    <LibraryPath>Z:\PROJECTE UF3\Jordisaac\PROJECTE UF3\SDL\lib\x86;D:\JP\PROJECTE UF3\Jordisaac\PROJECTE UF3\SDL\lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\JP\PROJECTE UF3\Jordisaac\PROJECTE UF3\SDL\include;Z:\PROJECTE UF3\Jordisaac\PROJECTE UF3\SDL\include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\JP\PROJECTE UF3\Jordisaac\PROJECTE UF3\SDL\lib\x86;Z:\PROJECTE UF3\Jordisaac\PROJECTE UF3\SDL\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>

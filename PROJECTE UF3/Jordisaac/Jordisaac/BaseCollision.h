@@ -1,5 +1,5 @@
 #pragma once
-#include "Singletons.h"
+#include "sdl.h"
 class BaseCollision
 {
 protected:
