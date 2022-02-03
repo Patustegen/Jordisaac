@@ -34,6 +34,20 @@ void Video::clearScreen() {
 void Video::updateScreen() {
 	SDL_RenderPresent(gRenderer);
 }
+void Video::renderGraphicEx(int img, Rect* srcRect, double angle, float wScale, float hScale)
+{
+	SDL_Rect r, rectAux;
+	r.x = 0;
+	r.y = 0;
+	r.w = srcRect->w;
+	r.h = srcRect->h;
+	rectAux.h = srcRect->h * hScale;
+	rectAux.w = srcRect->w * hScale;
+	rectAux.x = srcRect->x;
+	rectAux.y = srcRect->y;
+	SDL_Texture* origin = ResourceManager::getInstance()->getGraphicByID(img);
+	SDL_RenderCopyEx(gRenderer, origin, &r, &rectAux, angle, NULL, SDL_FLIP_NONE);
+}
 void Video::waitTime(int ms) {
 	SDL_Delay(ms);
 }

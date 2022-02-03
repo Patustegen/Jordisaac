@@ -104,15 +104,31 @@ void Player::update()
 				{
 				case DOWN:
 					col.y += 1;
+					if (!iRoomM->getActualRoom()->roomWalkable(&col))
+					{
+						col.y -= 1;
+					}
 					break;
 				case RIGHT:
 					col.x += 1;
+					if (!iRoomM->getActualRoom()->roomWalkable(&col))
+					{
+						col.x -= 1;
+					}
 					break;
 				case UP:
 					col.y -= 1;
+					if (!iRoomM->getActualRoom()->roomWalkable(&col))
+					{
+						col.y += 1;
+					}
 					break;
 				case LEFT:
 					col.x -= 1;
+					if (!iRoomM->getActualRoom()->roomWalkable(&col))
+					{
+						col.x += 1;
+					}
 					break;
 				default:
 					break;
@@ -120,19 +136,51 @@ void Player::update()
 				break;
 			case NE:
 				col.y -= 1;
+				if (!iRoomM->getActualRoom()->roomWalkable(&col))
+				{
+					col.y += 1;
+				}
 				col.x += 1;
+				if (!iRoomM->getActualRoom()->roomWalkable(&col))
+				{
+					col.x -= 1;
+				}
 				break;
 			case SE:
 				col.y += 1;
+				if (!iRoomM->getActualRoom()->roomWalkable(&col))
+				{
+					col.y -= 1;
+				}
 				col.x += 1;
+				if (!iRoomM->getActualRoom()->roomWalkable(&col))
+				{
+					col.x -= 1;
+				}
 				break;	 
 			case SW:	 
 				col.y += 1;
+				if (!iRoomM->getActualRoom()->roomWalkable(&col))
+				{
+					col.y -= 1;
+				}
 				col.x -= 1;
+				if (!iRoomM->getActualRoom()->roomWalkable(&col))
+				{
+					col.x += 1;
+				}
 				break;	 
 			case NW:	 
 				col.y -= 1;
+				if (!iRoomM->getActualRoom()->roomWalkable(&col))
+				{
+					col.y += 1;
+				}
 				col.x -= 1;
+				if (!iRoomM->getActualRoom()->roomWalkable(&col))
+				{
+					col.x += 1;
+				}
 				break;
 			default:
 				break;

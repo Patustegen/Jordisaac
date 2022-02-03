@@ -1,6 +1,11 @@
 #pragma once
 #include "Room.h"
 
+struct pos {
+	int pY;
+	int pX;
+};
+
 class RoomManager
 {
 	static RoomManager* pInstance;

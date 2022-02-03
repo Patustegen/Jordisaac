@@ -10,7 +10,7 @@ Game::Game()
 
 void Game::render()
 {
-	iVideo->renderGraphic(bg, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+	iRoomM->getActualRoom()->render();
 	player->render();
 	ui->render();
 }
@@ -22,6 +22,7 @@ void Game::update()
 		iSceneD->changeScene(PAUSE);
 		iSceneD->getCurrentScene()->init();
 	}
+	iRoomM->getActualRoom()->update();
 	player->update();
 }
 
@@ -33,6 +34,7 @@ void Game::load()
 
 void Game::init()
 {
+	iRoomM->createNewLevel(1);
 	iInputM->switchGameMode(true);
 	ui->setPlayer(player);
 	player->init();
