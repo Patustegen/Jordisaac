@@ -8,6 +8,7 @@
 #define SOUTH 2
 #define EAST 3
 #define WEST 4
+#define SPAWN_POINT 150
 
 RoomManager* RoomManager::pInstance = NULL;
 
@@ -18,6 +19,32 @@ RoomManager::RoomManager()
 	Level.resize(0);
 	aRoom = 0;
 	srand((unsigned int)time(NULL));
+}
+
+void RoomManager::changeRoom(int aR, int nMove, Rect* nPos)
+{
+	aRoom = aR + nMove;
+	if (nMove == 10)
+	{
+		nPos->x = SCREEN_WIDTH / 2 - nPos->w;
+		nPos->y = SPAWN_POINT;
+	}
+	else if (nMove == -10)
+	{
+		nPos->x = SCREEN_WIDTH / 2 - nPos->w;
+		nPos->y = SCREEN_HEIGHT - SPAWN_POINT - nPos->h * 2;
+	}
+	else if (nMove == 1)
+	{
+		nPos->y = SCREEN_HEIGHT / 2 - nPos->h;
+		nPos->x = SCREEN_WIDTH - SPAWN_POINT - nPos->w * 2;
+	}
+	else if (nMove == -1)
+	{
+		nPos->y = SCREEN_HEIGHT / 2 - nPos->h;
+		nPos->x = SPAWN_POINT;
+	}
+	getActualRoom()->init();
 }
 
 void RoomManager::createNewLevel(int lDiff)

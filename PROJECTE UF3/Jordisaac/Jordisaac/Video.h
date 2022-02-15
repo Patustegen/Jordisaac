@@ -24,6 +24,8 @@ public:
 	void waitTime(int ms);
 	int getTicks() { return SDL_GetTicks(); };
 	int getDeltaTime() { return deltaTime; };
+	bool onCollision(Rect* a, Rect* b);
+	bool isInside(Rect* outside, Rect* inside);
 	void updateTime();
 	SDL_Renderer* getRenderer() { return gRenderer; };
 	void close();

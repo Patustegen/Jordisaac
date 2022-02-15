@@ -51,6 +51,14 @@ void Video::renderGraphicEx(int img, Rect* srcRect, double angle, float wScale, 
 void Video::waitTime(int ms) {
 	SDL_Delay(ms);
 }
+bool Video::isInside(Rect* outside, Rect* inside)
+{
+	if ((inside->x > outside->x && inside->y > outside->y) && ((inside->x + inside->w) < (outside->x + outside->w) && (inside->y + inside->h) < (outside->y + outside->h)))
+	{
+		return true;
+	}
+	return false;
+}
 void Video::updateTime()
 {
 	currentTime = getTicks();
@@ -61,5 +69,11 @@ void Video::updateTime()
 	lastTime = currentTime;
 }
 void Video::close() {
+}
+bool Video::onCollision(Rect* a, Rect* b) 
+{
+	SDL_Rect A{ a->x,a->y,a->w,a->h };
+	SDL_Rect B{ b->x,b->y,b->w,b->h };
+	return SDL_HasIntersection(&A, &B);
 }
 

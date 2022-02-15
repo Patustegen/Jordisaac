@@ -11,6 +11,7 @@ struct Door
 {
 	Rect col;
 	double angle;
+	int idChange;
 };
 
 class Room
@@ -23,11 +24,15 @@ private:
 	int bg;
 	int oDoor;
 	int cDoor;
+
+
+	int frame;
 public:
 	void init();
-	void update();
+	void update(Rect* pCol);
 	void render();
 	bool roomWalkable(Rect* col);
+	std::vector<Door> getDoorVect() { return colDoor; };
 	Room(int nDoors, int roomID);
 	~Room();
 };

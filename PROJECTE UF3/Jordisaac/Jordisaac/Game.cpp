@@ -22,7 +22,7 @@ void Game::update()
 		iSceneD->changeScene(PAUSE);
 		iSceneD->getCurrentScene()->init();
 	}
-	iRoomM->getActualRoom()->update();
+	iRoomM->getActualRoom()->update(player->getCol());
 	player->update();
 }
 
