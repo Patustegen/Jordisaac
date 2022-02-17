@@ -2,7 +2,7 @@
 #include "Singletons.h"
 #include "AttackFly.h"
 
-#define DOOR_MARGIN 24
+#define DOOR_MARGIN 30
 
 void Room::init()
 {
@@ -49,7 +49,7 @@ void Room::render()
 		if (completed)
 		{
 			iVideo->renderGraphicEx(oDoor, &colDoor.at(i).col, colDoor.at(i).angle, 2.0f, 2.0f);
-			//iVideo->renderGraphicEx(frame, &colDoor.at(i).col, colDoor.at(i).angle, 2.0f, 2.0f);
+			iVideo->renderGraphicEx(frame, &colDoor.at(i).col, colDoor.at(i).angle, 2.0f, 2.0f);
 		}
 		else
 		{
@@ -113,11 +113,15 @@ Room::Room(int nDoors, int roomID)
 	if (nDoors & 0x08)
 	{
 		Door nDoor;
-		nDoor.col = { 0, SCREEN_HEIGHT / 2 - DOOR_H - DOOR_MARGIN, DOOR_W, DOOR_H };
+		nDoor.col = { DOOR_MARGIN, SCREEN_HEIGHT / 2 - DOOR_H, DOOR_W, DOOR_H };
 		nDoor.angle = 270.0;
 		nDoor.idChange = 1;
 		colDoor.push_back(nDoor);
 	}
+}
+
+Room::Room()
+{
 }
 
 Room::~Room()

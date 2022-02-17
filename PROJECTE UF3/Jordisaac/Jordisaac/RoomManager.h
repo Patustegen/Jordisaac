@@ -9,7 +9,7 @@ struct pos {
 class RoomManager
 {
 	static RoomManager* pInstance;
-	std::vector<Room*> Level;
+	std::vector<Room> Level;
 	int aRoom;
 protected:
 	RoomManager();
@@ -20,7 +20,7 @@ public:
 		return pInstance;
 	}
 	~RoomManager();
-	Room* getActualRoom() { return Level.at(aRoom); };
+	Room* getActualRoom();
 	void changeRoom(int aR, int nMove, Rect* nPos);
 	void createNewLevel(int lDiff);
 };

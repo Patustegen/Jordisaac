@@ -21,6 +21,17 @@ RoomManager::RoomManager()
 	srand((unsigned int)time(NULL));
 }
 
+Room* RoomManager::getActualRoom()
+{
+	for (int i = 0; i < Level.size(); i++)
+	{
+		if (Level[i].getRoomID() == aRoom)
+		{
+			return &Level[i];
+		}
+	}
+}
+
 void RoomManager::changeRoom(int aR, int nMove, Rect* nPos)
 {
 	aRoom = aR + nMove;
@@ -182,7 +193,7 @@ void RoomManager::createNewLevel(int lDiff)
 			if (mapaLogic[X][Y] != 0)
 			{
 				int roomID = X - 4 + ((Y - 4) * 10);
-				Room* nRoom = new Room(mapaLogic[X][Y], roomID);
+				Room nRoom(mapaLogic[X][Y], roomID);
 				Level.push_back(nRoom);
 			}
 		}

@@ -32,8 +32,10 @@ public:
 	void update(Rect* pCol);
 	void render();
 	bool roomWalkable(Rect* col);
+	int getRoomID() { return rID; };
 	std::vector<Door> getDoorVect() { return colDoor; };
 	Room(int nDoors, int roomID);
+	Room();
 	~Room();
 };
 
