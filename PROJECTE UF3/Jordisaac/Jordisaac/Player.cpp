@@ -97,94 +97,59 @@ void Player::update()
 			{
 				frame = 0;
 			}
+			float moveX = 0.0f;
+			float moveY = 0.0f;
 			switch (mDiagonals)
 			{
 			case NONE:
 				switch (lBody)
 				{
 				case DOWN:
-					col.y += 1;
-					if (!iRoomM->getActualRoom()->roomWalkable(&col))
-					{
-						col.y -= 1;
-					}
+					moveY = 2 * stats[SPEED];
 					break;
 				case RIGHT:
-					col.x += 1;
-					if (!iRoomM->getActualRoom()->roomWalkable(&col))
-					{
-						col.x -= 1;
-					}
+					moveX = 2 * stats[SPEED];
 					break;
 				case UP:
-					col.y -= 1;
-					if (!iRoomM->getActualRoom()->roomWalkable(&col))
-					{
-						col.y += 1;
-					}
+					moveY = -2 * stats[SPEED];
 					break;
 				case LEFT:
-					col.x -= 1;
-					if (!iRoomM->getActualRoom()->roomWalkable(&col))
-					{
-						col.x += 1;
-					}
+					moveX = -2 * stats[SPEED];
 					break;
 				default:
 					break;
 				}
 				break;
 			case NE:
-				col.y -= 1;
-				if (!iRoomM->getActualRoom()->roomWalkable(&col))
-				{
-					col.y += 1;
-				}
-				col.x += 1;
-				if (!iRoomM->getActualRoom()->roomWalkable(&col))
-				{
-					col.x -= 1;
-				}
+				moveY = -2 * stats[SPEED];
+				moveX = 2 * stats[SPEED];
 				break;
 			case SE:
-				col.y += 1;
-				if (!iRoomM->getActualRoom()->roomWalkable(&col))
-				{
-					col.y -= 1;
-				}
-				col.x += 1;
-				if (!iRoomM->getActualRoom()->roomWalkable(&col))
-				{
-					col.x -= 1;
-				}
+				moveY = 2 * stats[SPEED];
+				moveX = 2 * stats[SPEED];
 				break;	 
 			case SW:	 
-				col.y += 1;
-				if (!iRoomM->getActualRoom()->roomWalkable(&col))
-				{
-					col.y -= 1;
-				}
-				col.x -= 1;
-				if (!iRoomM->getActualRoom()->roomWalkable(&col))
-				{
-					col.x += 1;
-				}
+				moveY = 2 * stats[SPEED];
+				moveX = -2 * stats[SPEED];
 				break;	 
 			case NW:	 
-				col.y -= 1;
-				if (!iRoomM->getActualRoom()->roomWalkable(&col))
-				{
-					col.y += 1;
-				}
-				col.x -= 1;
-				if (!iRoomM->getActualRoom()->roomWalkable(&col))
-				{
-					col.x += 1;
-				}
+				moveY = -2 * stats[SPEED];
+				moveX = -2 * stats[SPEED];
 				break;
 			default:
 				break;
 			}
+			col.x += moveX;
+			if (!iRoomM->getActualRoom()->roomWalkable(&col))
+			{
+				col.x -= moveX;
+			}
+			col.y += moveY;
+			if (!iRoomM->getActualRoom()->roomWalkable(&col))
+			{
+				col.y -= moveY;
+			}
+			std::cout << moveX << "    " << moveY << std::endl;
 		}
 		if (hstate == MOVING)
 		{
@@ -203,7 +168,7 @@ void Player::update()
 
 
 
-
+		// Cap i cos es segueixen
 		paint.x = col.x - 6;
 		paint.y = col.y - 2;
 		switch (iSceneD->getSelectedCharacter())

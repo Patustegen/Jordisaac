@@ -1,10 +1,13 @@
 #include "Room.h"
 #include "Singletons.h"
+#include "AttackFly.h"
 
 #define DOOR_MARGIN 24
 
 void Room::init()
 {
+	AttackFly* nFly = new AttackFly();
+	enemies.push_back(nFly);
 }
 
 void Room::update(Rect* pCol)
@@ -13,7 +16,14 @@ void Room::update(Rect* pCol)
 	{
 		completed = true;
 	}
+	else
+	{
+		Enemy::setPPos(pCol);
+		for (int i = 0; i < enemies.size(); i++)
+		{
 
+		}
+	}
 
 	if (completed)
 	{

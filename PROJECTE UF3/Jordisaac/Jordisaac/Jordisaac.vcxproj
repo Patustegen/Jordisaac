@@ -145,6 +145,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AttackFly.cpp" />
     <ClCompile Include="Audio.cpp" />
     <ClCompile Include="BaseCharacter.cpp" />
     <ClCompile Include="BaseCollision.cpp" />
@@ -170,6 +171,7 @@
     <ClCompile Include="Video.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AttackFly.h" />
     <ClInclude Include="Audio.h" />
     <ClInclude Include="BaseCharacter.h" />
     <ClInclude Include="BaseCollision.h" />

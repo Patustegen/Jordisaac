@@ -58,6 +58,7 @@
       <Filter>Engine</Filter>
     </ClCompile>
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="AttackFly.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseCharacter.h" />
@@ -120,6 +121,7 @@
       <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="AttackFly.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Scenes">
