@@ -6,7 +6,6 @@ class Enemy :
 {
 protected:
     static Rect* pPos;
-    Rect col;
 public:
     virtual void init();
     virtual void update();

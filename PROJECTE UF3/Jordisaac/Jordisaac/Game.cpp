@@ -39,4 +39,5 @@ void Game::init()
 	ui->setPlayer(player);
 	player->init();
 	ui->init();
+	iRoomM->getActualRoom()->init();
 }

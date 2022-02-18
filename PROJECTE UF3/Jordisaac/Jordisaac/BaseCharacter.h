@@ -7,6 +7,7 @@ class BaseCharacter :
 protected:
     int hp;
     std::vector<int> sID;
+    int frame;
 public:
     int getHP() { return hp; };
 };

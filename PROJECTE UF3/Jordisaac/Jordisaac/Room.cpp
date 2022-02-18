@@ -6,7 +6,7 @@
 
 void Room::init()
 {
-	AttackFly* nFly = new AttackFly();
+	AttackFly* nFly = new AttackFly(450,250);
 	enemies.push_back(nFly);
 }
 
@@ -21,7 +21,7 @@ void Room::update(Rect* pCol)
 		Enemy::setPPos(pCol);
 		for (int i = 0; i < enemies.size(); i++)
 		{
-
+			enemies[i]->update();
 		}
 	}
 
@@ -54,6 +54,10 @@ void Room::render()
 		else
 		{
 			iVideo->renderGraphicEx(cDoor, &colDoor.at(i).col, colDoor.at(i).angle, 2.0f, 2.0f);
+		}
+		for (int i = 0; i < enemies.size(); i++)
+		{
+			enemies[i]->render();
 		}
 	}
 }
@@ -122,6 +126,13 @@ Room::Room(int nDoors, int roomID)
 
 Room::Room()
 {
+	bg = -1;
+	cDoor = -1;
+	oDoor = -1;
+	completed = false;
+	rID = 0;
+
+	frame = -1;
 }
 
 Room::~Room()

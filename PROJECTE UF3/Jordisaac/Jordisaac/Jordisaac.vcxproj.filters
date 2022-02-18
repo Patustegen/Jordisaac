@@ -57,8 +57,12 @@
     <ClCompile Include="RoomManager.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
-    <ClCompile Include="Enemy.cpp" />
-    <ClCompile Include="AttackFly.cpp" />
+    <ClCompile Include="AttackFly.cpp">
+      <Filter>Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Enemies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseCharacter.h" />
@@ -120,8 +124,12 @@
     <ClInclude Include="RoomManager.h">
       <Filter>Engine</Filter>
     </ClInclude>
-    <ClInclude Include="Enemy.h" />
-    <ClInclude Include="AttackFly.h" />
+    <ClInclude Include="AttackFly.h">
+      <Filter>Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Enemies</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Scenes">
@@ -129,6 +137,9 @@
     </Filter>
     <Filter Include="Engine">
       <UniqueIdentifier>{582a9f96-25c1-4f97-bdda-75ac68926e66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Enemies">
+      <UniqueIdentifier>{8ba65612-54e6-449e-b4e9-5c14a36f6518}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

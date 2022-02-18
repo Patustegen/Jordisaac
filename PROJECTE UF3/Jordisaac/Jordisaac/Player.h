@@ -22,7 +22,6 @@ private:
     float stats[STAT_LENGHT];
     bool shooting;
     int cooldown;
-    int frame;
 
     //ASSETS
     int pHead;
