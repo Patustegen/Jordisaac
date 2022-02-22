@@ -4,13 +4,22 @@
 
 #define DOOR_MARGIN 30
 
-void Room::init()
+void Room::init(Player* p)
 {
-	AttackFly* nFly = new AttackFly(450,250);
-	enemies.push_back(nFly);
+	_player = p;
+	for (int i = 0; i < 4; i++)
+	{
+		AttackFly* nFly = new AttackFly(rand()%400 + 200, rand()%200 + 200);
+		enemies.push_back(nFly);
+	}
+	movCharacters.push_back(_player);
+	for (int i = 0; i < enemies.size(); i++)
+	{
+		movCharacters.push_back(enemies[i]);
+	}
 }
 
-void Room::update(Rect* pCol)
+void Room::update()
 {
 	if (enemies.size() == 0)
 	{
@@ -18,20 +27,35 @@ void Room::update(Rect* pCol)
 	}
 	else
 	{
-		Enemy::setPPos(pCol);
+		_player->update();
 		for (int i = 0; i < enemies.size(); i++)
 		{
 			enemies[i]->update();
 		}
+		bool swapped = false;
+		do
+		{
+			swapped = true;
+			for (int i = 1; i < movCharacters.size(); i++)
+			{
+				if (movCharacters[i-1]->getCol()->y + movCharacters[i-1]->getCol()->h > movCharacters[i]->getCol()->y + movCharacters[i]->getCol()->h)
+				{
+					BaseCharacter* tmp = movCharacters[i - 1];
+					movCharacters[i - 1] = movCharacters[i];
+					movCharacters[i] = tmp;
+					swapped = false;
+				}
+			}
+		} while (!swapped);
 	}
 
 	if (completed)
 	{
 		for (int i = 0; i < colDoor.size(); i++)
 		{
-			if (iVideo->isInside(&colDoor[i].col,pCol))
+			if (iVideo->isInside(&colDoor[i].col, _player->getCol()))
 			{
-				iRoomM->changeRoom(rID,colDoor[i].idChange, pCol);
+				iRoomM->changeRoom(rID,colDoor[i].idChange, _player);
 			}
 		}
 	}
@@ -55,9 +79,9 @@ void Room::render()
 		{
 			iVideo->renderGraphicEx(cDoor, &colDoor.at(i).col, colDoor.at(i).angle, 2.0f, 2.0f);
 		}
-		for (int i = 0; i < enemies.size(); i++)
+		for (int i = 0; i < movCharacters.size(); i++)
 		{
-			enemies[i]->render();
+			movCharacters[i]->render();
 		}
 	}
 }
@@ -80,7 +104,9 @@ bool Room::roomWalkable(Rect* col)
 
 Room::Room(int nDoors, int roomID)
 {
+	_player = nullptr;
 	completed = false;
+	movCharacters.resize(0);
 	colDoor.resize(0);
 	rID = roomID;
 	bg = iResourceM->loadAndGetGraphicID("Assets\\Rooms\\BasementDefault.png");

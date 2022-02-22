@@ -32,30 +32,30 @@ Room* RoomManager::getActualRoom()
 	}
 }
 
-void RoomManager::changeRoom(int aR, int nMove, Rect* nPos)
+void RoomManager::changeRoom(int aR, int nMove, Player* p)
 {
 	aRoom = aR + nMove;
 	if (nMove == 10)
 	{
-		nPos->x = SCREEN_WIDTH / 2 - nPos->w;
-		nPos->y = SPAWN_POINT;
+		p->getCol()->x = SCREEN_WIDTH / 2 - p->getCol()->w;
+		p->getCol()->y = SPAWN_POINT;
 	}
 	else if (nMove == -10)
 	{
-		nPos->x = SCREEN_WIDTH / 2 - nPos->w;
-		nPos->y = SCREEN_HEIGHT - SPAWN_POINT - nPos->h * 2;
+		p->getCol()->x = SCREEN_WIDTH / 2 - p->getCol()->w;
+		p->getCol()->y = SCREEN_HEIGHT - SPAWN_POINT - p->getCol()->h * 2;
 	}
 	else if (nMove == 1)
 	{
-		nPos->y = SCREEN_HEIGHT / 2 - nPos->h;
-		nPos->x = SCREEN_WIDTH - SPAWN_POINT - nPos->w * 2;
+		p->getCol()->y = SCREEN_HEIGHT / 2 - p->getCol()->h;
+		p->getCol()->x = SCREEN_WIDTH - SPAWN_POINT - p->getCol()->w * 2;
 	}
 	else if (nMove == -1)
 	{
-		nPos->y = SCREEN_HEIGHT / 2 - nPos->h;
-		nPos->x = SPAWN_POINT;
+		p->getCol()->y = SCREEN_HEIGHT / 2 - p->getCol()->h;
+		p->getCol()->x = SPAWN_POINT;
 	}
-	getActualRoom()->init();
+	getActualRoom()->init(p);
 }
 
 void RoomManager::createNewLevel(int lDiff)

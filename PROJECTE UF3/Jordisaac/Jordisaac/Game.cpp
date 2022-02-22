@@ -11,7 +11,6 @@ Game::Game()
 void Game::render()
 {
 	iRoomM->getActualRoom()->render();
-	player->render();
 	ui->render();
 }
 
@@ -22,8 +21,7 @@ void Game::update()
 		iSceneD->changeScene(PAUSE);
 		iSceneD->getCurrentScene()->init();
 	}
-	player->update();
-	iRoomM->getActualRoom()->update(player->getCol());
+	iRoomM->getActualRoom()->update();
 }
 
 void Game::load()
@@ -39,5 +37,5 @@ void Game::init()
 	ui->setPlayer(player);
 	player->init();
 	ui->init();
-	iRoomM->getActualRoom()->init();
+	iRoomM->getActualRoom()->init(player);
 }

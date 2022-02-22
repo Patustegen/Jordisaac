@@ -9,7 +9,7 @@ protected:
 public:
 	void init();
 	void update();
-	void render();
+	virtual void render();
 	Rect* getCol();
 };
 

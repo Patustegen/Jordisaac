@@ -21,7 +21,7 @@ public:
 	}
 	~RoomManager();
 	Room* getActualRoom();
-	void changeRoom(int aR, int nMove, Rect* nPos);
+	void changeRoom(int aR, int nMove, Player* p);
 	void createNewLevel(int lDiff);
 };
 
