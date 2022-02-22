@@ -34,11 +34,11 @@ void Video::clearScreen() {
 void Video::updateScreen() {
 	SDL_RenderPresent(gRenderer);
 }
-void Video::renderGraphicEx(int img, Rect* srcRect, double angle, float wScale, float hScale)
+void Video::renderGraphicEx(int img, Rect* srcRect, double angle, float wScale, float hScale, int gx, int gy)
 {
 	SDL_Rect r, rectAux;
-	r.x = 0;
-	r.y = 0;
+	r.x = gx;
+	r.y = gy;
 	r.w = srcRect->w;
 	r.h = srcRect->h;
 	rectAux.h = srcRect->h * hScale;

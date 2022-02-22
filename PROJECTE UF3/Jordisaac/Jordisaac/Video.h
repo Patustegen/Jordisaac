@@ -18,7 +18,7 @@ public:
 	}
 	~Video();
 	void renderGraphic(int img, int posX, int posY, int width, int height, int gx = 0, int gy = 0, float wScale = 1, float hScale = 1);
-	void renderGraphicEx(int img, Rect* srcRect, double angle, float wScale = 1, float hScale = 1);
+	void renderGraphicEx(int img, Rect* srcRect, double angle, float wScale = 1, float hScale = 1, int gx = 0, int gy = 0);
 	void clearScreen();
 	void updateScreen();
 	void waitTime(int ms);

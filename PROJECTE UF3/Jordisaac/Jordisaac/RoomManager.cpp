@@ -60,6 +60,8 @@ void RoomManager::changeRoom(int aR, int nMove, Player* p)
 
 void RoomManager::createNewLevel(int lDiff)
 {
+	Level.resize(0);
+	aRoom = 0;
 	int maxRooms = min(20, (int)(rand()%2 + 5 + floor(lDiff * 10 / 3)));
 	
 

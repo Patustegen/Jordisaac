@@ -7,10 +7,14 @@
 void Room::init(Player* p)
 {
 	_player = p;
-	for (int i = 0; i < 4; i++)
+	if (rID != 0)
 	{
-		AttackFly* nFly = new AttackFly(rand()%400 + 200, rand()%200 + 200);
-		enemies.push_back(nFly);
+		int max = rand() % 3 + 2;
+		for (int i = 0; i < max; i++)
+		{
+			AttackFly* nFly = new AttackFly(rand()%400 + 200, rand()%200 + 200);
+			enemies.push_back(nFly);
+		}
 	}
 	movCharacters.push_back(_player);
 	for (int i = 0; i < enemies.size(); i++)
@@ -25,30 +29,7 @@ void Room::update()
 	{
 		completed = true;
 	}
-	else
-	{
-		_player->update();
-		for (int i = 0; i < enemies.size(); i++)
-		{
-			enemies[i]->update();
-		}
-		bool swapped = false;
-		do
-		{
-			swapped = true;
-			for (int i = 1; i < movCharacters.size(); i++)
-			{
-				if (movCharacters[i-1]->getCol()->y + movCharacters[i-1]->getCol()->h > movCharacters[i]->getCol()->y + movCharacters[i]->getCol()->h)
-				{
-					BaseCharacter* tmp = movCharacters[i - 1];
-					movCharacters[i - 1] = movCharacters[i];
-					movCharacters[i] = tmp;
-					swapped = false;
-				}
-			}
-		} while (!swapped);
-	}
-
+	_player->update();
 	if (completed)
 	{
 		for (int i = 0; i < colDoor.size(); i++)
@@ -61,7 +42,25 @@ void Room::update()
 	}
 	else
 	{
-
+		for (int i = 0; i < enemies.size(); i++)
+		{
+			enemies[i]->update();
+		}
+		bool swapped = false;
+		do
+		{
+			swapped = true;
+			for (int i = 1; i < movCharacters.size(); i++)
+			{
+				if (movCharacters[i - 1]->getCol()->y + movCharacters[i - 1]->getCol()->h > movCharacters[i]->getCol()->y + movCharacters[i]->getCol()->h)
+				{
+					BaseCharacter* tmp = movCharacters[i - 1];
+					movCharacters[i - 1] = movCharacters[i];
+					movCharacters[i] = tmp;
+					swapped = false;
+				}
+			}
+		} while (!swapped);
 	}
 }
 
@@ -70,15 +69,8 @@ void Room::render()
 	iVideo->renderGraphic(bg, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 	for (int i = 0; i < colDoor.size(); i++)
 	{
-		if (completed)
-		{
-			iVideo->renderGraphicEx(oDoor, &colDoor.at(i).col, colDoor.at(i).angle, 2.0f, 2.0f);
-			iVideo->renderGraphicEx(frame, &colDoor.at(i).col, colDoor.at(i).angle, 2.0f, 2.0f);
-		}
-		else
-		{
-			iVideo->renderGraphicEx(cDoor, &colDoor.at(i).col, colDoor.at(i).angle, 2.0f, 2.0f);
-		}
+		iVideo->renderGraphicEx(oDoor, &colDoor.at(i).col, colDoor.at(i).angle, 2.0f, 2.0f, colDoor.at(i).col.w * completed);
+		iVideo->renderGraphicEx(frame, &colDoor.at(i).col, colDoor.at(i).angle, 2.0f, 2.0f);
 		for (int i = 0; i < movCharacters.size(); i++)
 		{
 			movCharacters[i]->render();
@@ -137,7 +129,7 @@ Room::Room(int nDoors, int roomID)
 		Door nDoor;
 		nDoor.col = { SCREEN_WIDTH - DOOR_W * 2 - DOOR_MARGIN, SCREEN_HEIGHT / 2 - DOOR_H, DOOR_W, DOOR_H };
 		nDoor.angle = 90.0;
-		nDoor.idChange = -1;
+		nDoor.idChange = 1;
 		colDoor.push_back(nDoor);
 	}
 	if (nDoors & 0x08)
@@ -145,7 +137,7 @@ Room::Room(int nDoors, int roomID)
 		Door nDoor;
 		nDoor.col = { DOOR_MARGIN, SCREEN_HEIGHT / 2 - DOOR_H, DOOR_W, DOOR_H };
 		nDoor.angle = 270.0;
-		nDoor.idChange = 1;
+		nDoor.idChange = -1;
 		colDoor.push_back(nDoor);
 	}
 }
