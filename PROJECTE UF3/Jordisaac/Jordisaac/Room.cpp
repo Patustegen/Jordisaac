@@ -14,6 +14,7 @@ void Room::init(Player* p)
 		{
 			AttackFly* nFly = new AttackFly(rand()%400 + 200, rand()%200 + 200);
 			enemies.push_back(nFly);
+			nFly->setPlayer(p);
 		}
 	}
 	movCharacters.push_back(_player);

@@ -5,7 +5,6 @@ class AttackFly :
 {
 private:
     STATE state;
-    Rect* pPos;
 public:
     void init();
     void update();

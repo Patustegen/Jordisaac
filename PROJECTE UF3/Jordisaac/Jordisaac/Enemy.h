@@ -1,16 +1,16 @@
 #pragma once
 #include "BaseCharacter.h"
-#include "enums.h"
+#include "Player.h"
 class Enemy :
     public BaseCharacter
 {
 protected:
-    static Rect* pPos;
+    Player* pPos;
 public:
     virtual void init();
     virtual void update();
     virtual void render();
-    static void setPPos(Rect* nPos) { pPos = nPos; };
+    void setPlayer(Player* nPlayer) { pPos = nPlayer; };
     Enemy();
     ~Enemy();
 };

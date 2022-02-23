@@ -14,6 +14,85 @@ void AttackFly::update()
 		frame = 0;
 	}
 
+	float deltaMove = iVideo->getDeltaTime() / 4.25f;
+
+	float realX;
+	float realY;
+	float decimX = std::modf(deltaMove, &realX);
+	float decimY = std::modf(deltaMove, &realY);
+	if (col.restX + decimX >= 1)
+	{
+		realX += 1;
+	}
+	else if (col.restX + decimX <= -1)
+	{
+		realX -= 1;
+	}
+	col.x += realX;
+
+	if (col.x + (col.w / 2) < pPos->getCol()->x + (pPos->getCol()->w / 2))
+	{
+		col.x += realX;
+		if (col.restX + decimX >= 1)
+		{
+			col.restX -= 1;
+		}
+		else if (col.restX + decimX <= -1)
+		{
+			col.restX += 1;
+		}
+		col.restX += decimX;
+	}
+	else if (col.x + (col.w / 2) > pPos->getCol()->x + (pPos->getCol()->w / 2))
+	{
+		col.x -= realX;
+		if (col.restX + decimX >= 1)
+		{
+			col.restX -= 1;
+		}
+		else if (col.restX + decimX <= -1)
+		{
+			col.restX += 1;
+		}
+		col.restX -= decimX;
+	}
+
+	if (col.restY + decimY >= 1)
+	{
+		realY += 1;
+	}
+	else if (col.restY + decimY <= -1)
+	{
+		realY -= 1;
+	}
+	col.y += realY;
+
+	if (col.y + (col.h / 2) < pPos->getCol()->y + (pPos->getCol()->h / 2))
+	{
+		col.y += realY;
+		if (col.restY + decimY >= 1)
+		{
+			col.restY -= 1;
+		}
+		else if (col.restY + decimY <= -1)
+		{
+			col.restY += 1;
+		}
+		col.restY += decimY;
+	}
+	else if (col.y + (col.h / 2) > pPos->getCol()->y + (pPos->getCol()->h / 2))
+	{
+		col.y -= realY;
+		if (col.restY + decimY >= 1)
+		{
+			col.restY -= 1;
+		}
+		else if (col.restY + decimY <= -1)
+		{
+			col.restY += 1;
+		}
+		col.restY -= decimY;
+	}
 
 	paint.x = col.x - 10;
 	paint.y= col.y - 14;

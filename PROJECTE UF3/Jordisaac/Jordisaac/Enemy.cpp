@@ -1,6 +1,5 @@
 #include "Enemy.h"
 
-Rect* Enemy::pPos = nullptr;
 
 void Enemy::init()
 {

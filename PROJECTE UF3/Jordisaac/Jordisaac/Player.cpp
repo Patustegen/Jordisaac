@@ -99,57 +99,105 @@ void Player::update()
 			}
 			float moveX = 0.0f;
 			float moveY = 0.0f;
+
+			float deltaMove = iVideo->getDeltaTime() / 8.5f;
+			float deltaMoveDiagonal = iVideo->getDeltaTime() / 12.0f;
 			switch (mDiagonals)
 			{
 			case NONE:
 				switch (lBody)
 				{
 				case DOWN:
-					moveY = 2 * stats[SPEED];
+					moveY = deltaMove * stats[SPEED];
 					break;
 				case RIGHT:
-					moveX = 2 * stats[SPEED];
+					moveX = deltaMove * stats[SPEED];
 					break;
 				case UP:
-					moveY = -2 * stats[SPEED];
+					moveY = -(deltaMove * stats[SPEED]);
 					break;
 				case LEFT:
-					moveX = -2 * stats[SPEED];
+					moveX = -(deltaMove * stats[SPEED]);
 					break;
 				default:
 					break;
 				}
 				break;
 			case NE:
-				moveY = -2 * stats[SPEED];
-				moveX = 2 * stats[SPEED];
+				moveY = -(deltaMoveDiagonal * stats[SPEED]);
+				moveX = deltaMoveDiagonal * stats[SPEED];
 				break;
 			case SE:
-				moveY = 2 * stats[SPEED];
-				moveX = 2 * stats[SPEED];
+				moveY = deltaMoveDiagonal * stats[SPEED];
+				moveX = deltaMoveDiagonal * stats[SPEED];
 				break;	 
 			case SW:	 
-				moveY = 2 * stats[SPEED];
-				moveX = -2 * stats[SPEED];
+				moveY = deltaMoveDiagonal * stats[SPEED];
+				moveX = -(deltaMoveDiagonal * stats[SPEED]);
 				break;	 
 			case NW:	 
-				moveY = -2 * stats[SPEED];
-				moveX = -2 * stats[SPEED];
+				moveY = -(deltaMoveDiagonal * stats[SPEED]);
+				moveX = -(deltaMoveDiagonal * stats[SPEED]);
 				break;
 			default:
 				break;
 			}
-			col.x += moveX;
+			float realX;
+			float realY;
+			float decimX = std::modf(moveX, &realX);
+			float decimY = std::modf(moveY, &realY);
+			if (col.restX + decimX >= 1)
+			{
+				realX += 1;
+			}
+			else if (col.restX + decimX <= -1)
+			{
+				realX -= 1;
+			}
+			col.x += realX;
 			if (!iRoomM->getActualRoom()->roomWalkable(&col))
 			{
-				col.x -= moveX;
+				col.x -= realX;
 			}
-			col.y += moveY;
+			else
+			{
+				if (col.restX + decimX >= 1)
+				{
+					col.restX -= 1;
+				}
+				else if (col.restX + decimX <= -1)
+				{
+					col.restX += 1;
+				}
+				col.restX += decimX;
+			}
+
+			if (col.restY + decimY >= 1)
+			{
+				realY += 1;
+			}
+			else if (col.restY + decimY <= -1)
+			{
+				realY -= 1;
+			}
+			col.y += realY;
 			if (!iRoomM->getActualRoom()->roomWalkable(&col))
 			{
-				col.y -= moveY;
+				col.y -= realY;
 			}
-			std::cout << moveX << "    " << moveY << std::endl;
+			else
+			{
+				if (col.restY + decimY >= 1)
+				{
+					col.restY -= 1;
+				}
+				else if (col.restY + decimY <= -1)
+				{
+					col.restY += 1;
+				}
+				col.restY += decimY;
+			}
+			std::cout << moveX << "    " << moveY << "                        " << col.restX << "    " << col.restY << "                        " << col.x << "    " << col.y << std::endl;
 		}
 		if (hstate == MOVING)
 		{

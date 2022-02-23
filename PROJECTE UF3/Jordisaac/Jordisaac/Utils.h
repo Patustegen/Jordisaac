@@ -8,4 +8,6 @@ struct Rect
 	int y;
 	int w;
 	int h;
+	float restX = 0.0f;
+	float restY = 0.0f;
 };
