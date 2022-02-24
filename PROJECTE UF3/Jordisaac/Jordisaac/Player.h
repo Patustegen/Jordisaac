@@ -18,6 +18,7 @@ private:
     LOOKING lBody;
     DIAGONALS mDiagonals;
     Rect Head;
+    Rect Misc;
 
     float stats[STAT_LENGHT];
     bool shooting;
@@ -32,6 +33,7 @@ public:
     void update();
     void init();
     float getStat(int nStat) { return stats[nStat]; };
+    bool getHurt();
     Player();
     ~Player();
 };

@@ -3,16 +3,27 @@
 
 void Player::render()
 {
-	iVideo->renderGraphic(gID, paint.x, paint.y, paint.w, paint.h, (frame / 100) * paint.w, lBody * paint.h,2,2);
-	iVideo->renderGraphic(pHead, Head.x, Head.y, Head.w, Head.h, shooting * Head.w, lHead * Head.h,2,2);
-	iVideo->renderGraphic(gFrame, col.x, col.y, col.w, col.h);
+	if (state == IDLE || state == MOVING)
+	{
+		iVideo->renderGraphic(gID, paint.x, paint.y, paint.w, paint.h, (frame / 100) * paint.w, lBody * paint.h,2,2);
+		iVideo->renderGraphic(pHead, Head.x, Head.y, Head.w, Head.h, shooting * Head.w, lHead * Head.h,2,2);
+	}
+	else 
+	{
+		iVideo->renderGraphic(pMisc , Misc.x, Misc.y, Misc.w, Misc.h, (frame / 200) * Misc.w, 3 * Misc.h, 2, 2);
+	}
+	//iVideo->renderGraphic(gFrame, col.x, col.y, col.w, col.h);
 }
 
 void Player::update()
 {
 	if (state == DEAD)
 	{
-
+		frame += iVideo->getDeltaTime();
+		if (frame >= 400)
+		{
+			frame = 400;
+		}
 	}
 	else
 	{
@@ -44,48 +55,78 @@ void Player::update()
 		else if (iInputM->getEvents(GOUP) && iInputM->getEvents(GORIGHT) && iInputM->getEvents(GODOWN) && !iInputM->getEvents(GOLEFT)) 
 		{
 			lBody = RIGHT;
-			state = MOVING;
+			if (state != HURT )
+			{
+				state = MOVING;
+			}
 		}
 		else if (iInputM->getEvents(GOUP) && !iInputM->getEvents(GORIGHT) && iInputM->getEvents(GODOWN) && iInputM->getEvents(GOLEFT)) 
 		{
 			lBody = LEFT;
-			state = MOVING;
+			if (state != HURT)
+			{
+				state = MOVING;
+			}
 		}
 		else if (iInputM->getEvents(GOUP) && iInputM->getEvents(GORIGHT) && !iInputM->getEvents(GODOWN) && iInputM->getEvents(GOLEFT)) 
 		{
 			lBody = UP;
-			state = MOVING;
+			if (state != HURT)
+			{
+				state = MOVING;
+			}
 		}
 		else if (!iInputM->getEvents(GOUP) && iInputM->getEvents(GORIGHT) && iInputM->getEvents(GODOWN) && iInputM->getEvents(GOLEFT)) 
 		{
 			lBody = DOWN;
-			state = MOVING;
+			if (state != HURT)
+			{
+				state = MOVING;
+			}
 		}
 		else if (iInputM->getEvents(GOUP) && iInputM->getEvents(GORIGHT) && !iInputM->getEvents(GODOWN) && !iInputM->getEvents(GOLEFT)) 
 		{
 			mDiagonals = NE;
 			lBody = RIGHT;
-			state = MOVING;
+			if (state != HURT)
+			{
+				state = MOVING;
+			}
 		}
 		else if (!iInputM->getEvents(GOUP) && iInputM->getEvents(GORIGHT) && iInputM->getEvents(GODOWN) && !iInputM->getEvents(GOLEFT)) 
 		{
 			mDiagonals = SE;
 			lBody = RIGHT;
-			state = MOVING;
+			if (state != HURT)
+			{
+				state = MOVING;
+			}
 		}
 		else if (!iInputM->getEvents(GOUP) && !iInputM->getEvents(GORIGHT) && iInputM->getEvents(GODOWN) && iInputM->getEvents(GOLEFT)) 
 		{
 			mDiagonals = SW;
 			lBody = LEFT;
-			state = MOVING;
+			if (state != HURT)
+			{
+				state = MOVING;
+			}
 		}
 		else if (iInputM->getEvents(GOUP) && !iInputM->getEvents(GORIGHT) && !iInputM->getEvents(GODOWN) && iInputM->getEvents(GOLEFT)) 
 		{
 			mDiagonals = NW;
 			lBody = LEFT;
-			state = MOVING;
+			if (state != HURT)
+			{
+				state = MOVING;
+			}
 		}
-		else state = MOVING;
+		else
+		{
+			if (state != HURT)
+			{
+				state = MOVING;
+			}
+		}
 
 		if (!iInputM->getEvents(SHOOTUP) && !iInputM->getEvents(SHOOTRIGHT) && !iInputM->getEvents(SHOOTDOWN) && !iInputM->getEvents(SHOOTLEFT)) hstate = IDLE;
 		else hstate = MOVING;
@@ -93,9 +134,19 @@ void Player::update()
 		if (state != IDLE)
 		{
 			frame += iVideo->getDeltaTime();
-			if (frame > 900)
+			if (state == MOVING)
 			{
-				frame = 0;
+				if (frame > 900)
+				{
+					frame = 0;
+				}
+			}
+			else if (state == HURT)
+			{
+				if (frame >= 200)
+				{
+					frame = 200;
+				}
 			}
 			float moveX = 0.0f;
 			float moveY = 0.0f;
@@ -197,7 +248,6 @@ void Player::update()
 				}
 				col.restY += decimY;
 			}
-			std::cout << moveX << "    " << moveY << "                        " << col.restX << "    " << col.restY << "                        " << col.x << "    " << col.y << std::endl;
 		}
 		if (hstate == MOVING)
 		{
@@ -247,6 +297,8 @@ void Player::update()
 		{
 			lHead = lBody;
 		}
+		Misc.x = Head.x;
+		Misc.y = Head.y;
 	}
 }
 
@@ -283,6 +335,10 @@ void Player::init()
 	paint.y = col.y - 2;
 	Head.x = paint.x - 10;
 	Head.y = paint.y - Head.h * 2 + 10;
+	Misc.x = Head.x;
+	Misc.y = Head.y;
+	Misc.w = 34;
+	Misc.h = 33;
 
 	gID = iResourceM->loadAndGetGraphicID("Assets\\Characters\\Body.png");
 	gFrame = iResourceM->loadAndGetGraphicID("Assets\\Characters\\Frame.png");
@@ -302,6 +358,8 @@ void Player::init()
 		Head.h = 32;
 		Head.x = paint.x - 20;
 		Head.y = paint.y - Head.h * 2 + 16;
+		Misc.w = 40;
+		Misc.h = 37;
 		pHead = iResourceM->loadAndGetGraphicID("Assets\\Characters\\MagdeleneHead.png");
 		pMisc = iResourceM->loadAndGetGraphicID("Assets\\Characters\\MagdeleneMisc.png");
 		break;
@@ -320,6 +378,8 @@ void Player::init()
 		stats[SPEED] = 1.1f;
 		Head.w = 30;
 		Head.h = 27;
+		Misc.w = 38;
+		Misc.h = 39;
 		Head.x = paint.x - 12;
 		Head.y = paint.y - Head.h * 2 + 12;
 		pHead = iResourceM->loadAndGetGraphicID("Assets\\Characters\\SamsonHead.png");
@@ -328,6 +388,30 @@ void Player::init()
 	default:
 		break;
 	}
+}
+
+bool Player::getHurt()
+{
+	switch (state)
+	{
+	case IDLE:
+	case MOVING:
+		hp--;
+		frame = 0;
+		if (hp == 0)
+		{
+			state = DEAD;
+		}
+		else
+		{
+			state = HURT;
+		}
+		return true;
+		break;
+	default:
+		break;
+	}
+	return false;
 }
 
 Player::Player()
@@ -351,10 +435,11 @@ Player::Player()
 	cooldown = 0;
 	hp = 6;
 	
-	//SDL_Rects
+	//Rects
 	col = {0,0,0,0};
 	Head = {0,0,0,0};
 	paint = {0,0,0,0};
+	Misc = { 0,0,0,0 };
 
 	//Graphics
 	gID = -1;

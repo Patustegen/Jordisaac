@@ -9,12 +9,15 @@ void Room::init(Player* p)
 	_player = p;
 	if (rID != 0)
 	{
-		int max = rand() % 3 + 2;
-		for (int i = 0; i < max; i++)
+		if (!completed)
 		{
-			AttackFly* nFly = new AttackFly(rand()%400 + 200, rand()%200 + 200);
-			nFly->setPlayer(p);
-			enemies.push_back(nFly);
+			int max = rand() % 3 + 2;
+			for (int i = 0; i < max; i++)
+			{
+				AttackFly* nFly = new AttackFly(rand()%400 + 200, rand()%200 + 200);
+				nFly->setPlayer(p);
+				enemies.push_back(nFly);
+			}
 		}
 	}
 	movCharacters.push_back(_player);
@@ -26,10 +29,6 @@ void Room::init(Player* p)
 
 void Room::update()
 {
-	if (enemies.size() == 0)
-	{
-		completed = true;
-	}
 	_player->update();
 	if (completed)
 	{
@@ -46,8 +45,24 @@ void Room::update()
 		for (int i = 0; i < enemies.size(); i++)
 		{
 			enemies[i]->update();
+			if (iVideo->onCollision(_player->getCol(),enemies[i]->getCol()))
+			{
+				if (_player->getHurt()) 
+				{
+					delete enemies[i];
+					enemies.erase(enemies.begin()+i);
+					i--;
+				}
+			}
 		}
+		
 		bool swapped = false;
+		movCharacters.resize(0);
+		movCharacters.push_back(_player);
+		for (int i = 0; i < enemies.size(); i++)
+		{
+			movCharacters.push_back(enemies[i]);
+		}
 		do
 		{
 			swapped = true;
@@ -62,6 +77,12 @@ void Room::update()
 				}
 			}
 		} while (!swapped);
+		if (enemies.size() == 0)
+		{
+			completed = true;
+			movCharacters.resize(0);
+			movCharacters.push_back(_player);
+		}
 	}
 }
 
@@ -71,7 +92,7 @@ void Room::render()
 	for (int i = 0; i < colDoor.size(); i++)
 	{
 		iVideo->renderGraphicEx(oDoor, &colDoor.at(i).col, colDoor.at(i).angle, 2.0f, 2.0f, colDoor.at(i).col.w * completed);
-		iVideo->renderGraphicEx(frame, &colDoor.at(i).col, colDoor.at(i).angle, 2.0f, 2.0f);
+		//iVideo->renderGraphicEx(frame, &colDoor.at(i).col, colDoor.at(i).angle, 2.0f, 2.0f);
 		for (int i = 0; i < movCharacters.size(); i++)
 		{
 			movCharacters[i]->render();

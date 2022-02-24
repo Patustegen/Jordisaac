@@ -39,7 +39,7 @@ void UI::render()
 		}
 		else
 		{
-			iVideo->renderGraphic(gHeart, rHearts.x, rHearts.y, rHearts.w, rHearts.h, (int)(rHearts.w * 1.5f));
+			iVideo->renderGraphic(gHeart, rHearts.x, rHearts.y, rHearts.w, rHearts.h, rHearts.w * 2, 0, 1.5f, 1.5f);
 		}
 		life -= 2;
 		if (i == 5)
