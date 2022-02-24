@@ -13,8 +13,8 @@ void Room::init(Player* p)
 		for (int i = 0; i < max; i++)
 		{
 			AttackFly* nFly = new AttackFly(rand()%400 + 200, rand()%200 + 200);
-			enemies.push_back(nFly);
 			nFly->setPlayer(p);
+			enemies.push_back(nFly);
 		}
 	}
 	movCharacters.push_back(_player);

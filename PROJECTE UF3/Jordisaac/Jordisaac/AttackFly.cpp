@@ -14,12 +14,29 @@ void AttackFly::update()
 		frame = 0;
 	}
 
-	float deltaMove = iVideo->getDeltaTime() / 4.25f;
-
+	float deltaMove = iVideo->getDeltaTime() / 17.0f;
+	float moveX = 0.0f;
+	float moveY = 0.0f;
+	if (col.x + (col.w / 2) < pPos->getCol()->x + (pPos->getCol()->w / 2))
+	{
+		moveX = deltaMove;
+	}
+	else if (col.x + (col.w / 2) > pPos->getCol()->x + (pPos->getCol()->w / 2))
+	{
+		moveX = -deltaMove;
+	}
+	if (col.y + (col.h / 2) < pPos->getCol()->y + (pPos->getCol()->h / 2))
+	{
+		moveY = deltaMove;
+	}
+	else if (col.y + (col.h / 2) > pPos->getCol()->y + (pPos->getCol()->h / 2))
+	{
+		moveY = -deltaMove;
+	}
 	float realX;
 	float realY;
-	float decimX = std::modf(deltaMove, &realX);
-	float decimY = std::modf(deltaMove, &realY);
+	float decimX = std::modf(moveX, &realX);
+	float decimY = std::modf(moveY, &realY);
 	if (col.restX + decimX >= 1)
 	{
 		realX += 1;
@@ -32,7 +49,6 @@ void AttackFly::update()
 
 	if (col.x + (col.w / 2) < pPos->getCol()->x + (pPos->getCol()->w / 2))
 	{
-		col.x += realX;
 		if (col.restX + decimX >= 1)
 		{
 			col.restX -= 1;
@@ -45,7 +61,6 @@ void AttackFly::update()
 	}
 	else if (col.x + (col.w / 2) > pPos->getCol()->x + (pPos->getCol()->w / 2))
 	{
-		col.x -= realX;
 		if (col.restX + decimX >= 1)
 		{
 			col.restX -= 1;
@@ -69,7 +84,6 @@ void AttackFly::update()
 
 	if (col.y + (col.h / 2) < pPos->getCol()->y + (pPos->getCol()->h / 2))
 	{
-		col.y += realY;
 		if (col.restY + decimY >= 1)
 		{
 			col.restY -= 1;
@@ -82,7 +96,6 @@ void AttackFly::update()
 	}
 	else if (col.y + (col.h / 2) > pPos->getCol()->y + (pPos->getCol()->h / 2))
 	{
-		col.y -= realY;
 		if (col.restY + decimY >= 1)
 		{
 			col.restY -= 1;
