@@ -91,7 +91,7 @@ void Room::render()
 	iVideo->renderGraphic(bg, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 	for (int i = 0; i < colDoor.size(); i++)
 	{
-		iVideo->renderGraphicEx(oDoor, &colDoor.at(i).col, colDoor.at(i).angle, 2.0f, 2.0f, colDoor.at(i).col.w * completed);
+		iVideo->renderGraphicEx(gDoor, &colDoor.at(i).paint, colDoor.at(i).angle, 2.0f, 2.0f, colDoor.at(i).paint.w * completed);
 		//iVideo->renderGraphicEx(frame, &colDoor.at(i).col, colDoor.at(i).angle, 2.0f, 2.0f);
 		for (int i = 0; i < movCharacters.size(); i++)
 		{
@@ -116,6 +116,22 @@ bool Room::roomWalkable(Rect* col)
 	return true;
 }
 
+bool Room::colWalkable(Rect* col)
+{
+	int touches = -1;
+	for (int i = 0; i < enemies.size(); i++)
+	{
+		if (col->x != enemies[i]->getCol()->x && col->y != enemies[i]->getCol()->y)
+		{
+			if (iVideo->onCollision(col, enemies[i]->getCol()))
+			{
+				return false;
+			}
+		}
+	}
+	return true;
+}
+
 Room::Room(int nDoors, int roomID)
 {
 	_player = nullptr;
@@ -124,8 +140,7 @@ Room::Room(int nDoors, int roomID)
 	colDoor.resize(0);
 	rID = roomID;
 	bg = iResourceM->loadAndGetGraphicID("Assets\\Rooms\\BasementDefault.png");
-	oDoor = iResourceM->loadAndGetGraphicID("Assets\\Rooms\\defaultDoor.png");
-	cDoor = iResourceM->loadAndGetGraphicID("Assets\\Rooms\\defaultDoor.png");
+	gDoor = iResourceM->loadAndGetGraphicID("Assets\\Rooms\\defaultDoor.png");
 
 	frame = iResourceM->loadAndGetGraphicID("Assets\\Characters\\Frame.png");
 
@@ -133,7 +148,8 @@ Room::Room(int nDoors, int roomID)
 	if (nDoors & 0x01)
 	{
 		Door nDoor;
-		nDoor.col = { SCREEN_WIDTH / 2 - DOOR_W, DOOR_MARGIN, DOOR_W, DOOR_H };
+		nDoor.col = { SCREEN_WIDTH / 2 - DOOR_W, DOOR_MARGIN, DOOR_W * 2, DOOR_H * 2 };
+		nDoor.paint = { SCREEN_WIDTH / 2 - DOOR_W, DOOR_MARGIN, DOOR_W, DOOR_H };
 		nDoor.angle = 0.0;
 		nDoor.idChange = -10;
 		colDoor.push_back(nDoor);
@@ -141,7 +157,8 @@ Room::Room(int nDoors, int roomID)
 	if (nDoors & 0x02)
 	{
 		Door nDoor;
-		nDoor.col = { SCREEN_WIDTH / 2 - DOOR_W, SCREEN_HEIGHT - DOOR_H * 2 - DOOR_MARGIN, DOOR_W, DOOR_H };
+		nDoor.col = { SCREEN_WIDTH / 2 - DOOR_W, SCREEN_HEIGHT - DOOR_H * 2 - DOOR_MARGIN, DOOR_W * 2, DOOR_H * 2 };
+		nDoor.paint = { SCREEN_WIDTH / 2 - DOOR_W, SCREEN_HEIGHT - DOOR_H * 2 - DOOR_MARGIN, DOOR_W, DOOR_H };
 		nDoor.angle = 180.0;
 		nDoor.idChange = 10;
 		colDoor.push_back(nDoor);
@@ -149,7 +166,8 @@ Room::Room(int nDoors, int roomID)
 	if (nDoors & 0x04)
 	{
 		Door nDoor;
-		nDoor.col = { SCREEN_WIDTH - DOOR_W * 2 - DOOR_MARGIN, SCREEN_HEIGHT / 2 - DOOR_H, DOOR_W, DOOR_H };
+		nDoor.col = { SCREEN_WIDTH - DOOR_W * 2 - DOOR_MARGIN, SCREEN_HEIGHT / 2 - DOOR_H, DOOR_W * 2, DOOR_H * 2 };
+		nDoor.paint = { SCREEN_WIDTH - DOOR_W * 2 - DOOR_MARGIN, SCREEN_HEIGHT / 2 - DOOR_H, DOOR_W, DOOR_H };
 		nDoor.angle = 90.0;
 		nDoor.idChange = 1;
 		colDoor.push_back(nDoor);
@@ -157,7 +175,8 @@ Room::Room(int nDoors, int roomID)
 	if (nDoors & 0x08)
 	{
 		Door nDoor;
-		nDoor.col = { DOOR_MARGIN, SCREEN_HEIGHT / 2 - DOOR_H, DOOR_W, DOOR_H };
+		nDoor.col = { DOOR_MARGIN, SCREEN_HEIGHT / 2 - DOOR_H, DOOR_W * 2, DOOR_H * 2 };
+		nDoor.paint = { DOOR_MARGIN, SCREEN_HEIGHT / 2 - DOOR_H, DOOR_W, DOOR_H };
 		nDoor.angle = 270.0;
 		nDoor.idChange = -1;
 		colDoor.push_back(nDoor);
@@ -166,9 +185,9 @@ Room::Room(int nDoors, int roomID)
 
 Room::Room()
 {
+	_player = nullptr;
 	bg = -1;
-	cDoor = -1;
-	oDoor = -1;
+	gDoor = -1;
 	completed = false;
 	rID = 0;
 

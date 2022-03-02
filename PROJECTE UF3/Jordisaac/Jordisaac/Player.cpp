@@ -49,9 +49,30 @@ void Player::update()
 		
 		mDiagonals = NONE;
 
-		if (!iInputM->getEvents(GOUP) && !iInputM->getEvents(GORIGHT) && !iInputM->getEvents(GODOWN) && !iInputM->getEvents(GOLEFT)) state = IDLE;
-		else if (iInputM->getEvents(GOUP) && !iInputM->getEvents(GORIGHT) && iInputM->getEvents(GODOWN) && !iInputM->getEvents(GOLEFT)) state = IDLE;
-		else if (!iInputM->getEvents(GOUP) && iInputM->getEvents(GORIGHT) && !iInputM->getEvents(GODOWN) && iInputM->getEvents(GOLEFT)) state = IDLE;
+		if (!iInputM->getEvents(GOUP) && !iInputM->getEvents(GORIGHT) && !iInputM->getEvents(GODOWN) && !iInputM->getEvents(GOLEFT))
+		{
+			lBody = NO;
+			if (state != HURT)
+			{
+				state = IDLE;
+			}
+		}
+		else if (iInputM->getEvents(GOUP) && !iInputM->getEvents(GORIGHT) && iInputM->getEvents(GODOWN) && !iInputM->getEvents(GOLEFT))
+		{
+			lBody = NO;
+			if (state != HURT)
+			{
+				state = IDLE;
+			}
+		}
+		else if (!iInputM->getEvents(GOUP) && iInputM->getEvents(GORIGHT) && !iInputM->getEvents(GODOWN) && iInputM->getEvents(GOLEFT))
+		{
+			lBody = NO;
+			if (state != HURT)
+			{
+				state = IDLE;
+			}
+		}
 		else if (iInputM->getEvents(GOUP) && iInputM->getEvents(GORIGHT) && iInputM->getEvents(GODOWN) && !iInputM->getEvents(GOLEFT)) 
 		{
 			lBody = RIGHT;
@@ -143,9 +164,10 @@ void Player::update()
 			}
 			else if (state == HURT)
 			{
-				if (frame >= 200)
+				frame -= iVideo->getDeltaTime() / 2;
+				if (frame >= 300)
 				{
-					frame = 200;
+					state = IDLE;
 				}
 			}
 			float moveX = 0.0f;

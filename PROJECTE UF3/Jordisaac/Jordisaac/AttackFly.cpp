@@ -33,6 +33,13 @@ void AttackFly::update()
 	{
 		moveY = -deltaMove;
 	}
+
+	if (moveX != 0.0f && moveY != 0.0f)
+	{
+		moveX *= 0.7f;
+		moveY *= 0.7f;
+	}
+
 	float realX;
 	float realY;
 	float decimX = std::modf(moveX, &realX);
@@ -47,29 +54,36 @@ void AttackFly::update()
 	}
 	col.x += realX;
 
-	if (col.x + (col.w / 2) < pPos->getCol()->x + (pPos->getCol()->w / 2))
+	if (!iRoomM->getActualRoom()->roomWalkable(&col) || !iRoomM->getActualRoom()->colWalkable(&col))
 	{
-		if (col.restX + decimX >= 1)
-		{
-			col.restX -= 1;
-		}
-		else if (col.restX + decimX <= -1)
-		{
-			col.restX += 1;
-		}
-		col.restX += decimX;
+		col.x -= realX;
 	}
-	else if (col.x + (col.w / 2) > pPos->getCol()->x + (pPos->getCol()->w / 2))
+	else
 	{
-		if (col.restX + decimX >= 1)
+		if (col.x + (col.w / 2) < pPos->getCol()->x + (pPos->getCol()->w / 2))
 		{
-			col.restX -= 1;
+			if (col.restX + decimX >= 1)
+			{
+				col.restX -= 1;
+			}
+			else if (col.restX + decimX <= -1)
+			{
+				col.restX += 1;
+			}
+			col.restX += decimX;
 		}
-		else if (col.restX + decimX <= -1)
+		else if (col.x + (col.w / 2) > pPos->getCol()->x + (pPos->getCol()->w / 2))
 		{
-			col.restX += 1;
+			if (col.restX + decimX >= 1)
+			{
+				col.restX -= 1;
+			}
+			else if (col.restX + decimX <= -1)
+			{
+				col.restX += 1;
+			}
+			col.restX += decimX;
 		}
-		col.restX -= decimX;
 	}
 
 	if (col.restY + decimY >= 1)
@@ -82,29 +96,36 @@ void AttackFly::update()
 	}
 	col.y += realY;
 
-	if (col.y + (col.h / 2) < pPos->getCol()->y + (pPos->getCol()->h / 2))
+	if (!iRoomM->getActualRoom()->roomWalkable(&col) || !iRoomM->getActualRoom()->colWalkable(&col))
 	{
-		if (col.restY + decimY >= 1)
-		{
-			col.restY -= 1;
-		}
-		else if (col.restY + decimY <= -1)
-		{
-			col.restY += 1;
-		}
-		col.restY += decimY;
+		col.y -= realY;
 	}
-	else if (col.y + (col.h / 2) > pPos->getCol()->y + (pPos->getCol()->h / 2))
+	else 
 	{
-		if (col.restY + decimY >= 1)
+		if (col.y + (col.h / 2) < pPos->getCol()->y + (pPos->getCol()->h / 2))
 		{
-			col.restY -= 1;
+			if (col.restY + decimY >= 1)
+			{
+				col.restY -= 1;
+			}
+			else if (col.restY + decimY <= -1)
+			{
+				col.restY += 1;
+			}
+			col.restY += decimY;
 		}
-		else if (col.restY + decimY <= -1)
+		else if (col.y + (col.h / 2) > pPos->getCol()->y + (pPos->getCol()->h / 2))
 		{
-			col.restY += 1;
+			if (col.restY + decimY >= 1)
+			{
+				col.restY -= 1;
+			}
+			else if (col.restY + decimY <= -1)
+			{
+				col.restY += 1;
+			}
+			col.restY += decimY;
 		}
-		col.restY -= decimY;
 	}
 
 	paint.x = col.x - 10;

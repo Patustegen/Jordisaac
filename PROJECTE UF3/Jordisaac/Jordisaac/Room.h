@@ -11,6 +11,7 @@
 struct Door
 {
 	Rect col;
+	Rect paint;
 	double angle;
 	int idChange;
 };
@@ -25,8 +26,7 @@ private:
 	std::vector<BaseCharacter*> movCharacters;
 	std::vector<Door> colDoor;
 	int bg;
-	int oDoor;
-	int cDoor;
+	int gDoor;
 
 
 	int frame;
@@ -35,6 +35,7 @@ public:
 	void update();
 	void render();
 	bool roomWalkable(Rect* col);
+	bool colWalkable(Rect* col);
 	int getRoomID() { return rID; };
 	std::vector<Door> getDoorVect() { return colDoor; };
 	Room(int nDoors, int roomID);

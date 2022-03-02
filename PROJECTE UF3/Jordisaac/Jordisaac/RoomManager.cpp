@@ -8,7 +8,8 @@
 #define SOUTH 2
 #define EAST 3
 #define WEST 4
-#define SPAWN_POINT 150
+#define SPAWN_POINT_X 150
+#define SPAWN_POINT_Y 120
 
 RoomManager* RoomManager::pInstance = NULL;
 
@@ -38,22 +39,22 @@ void RoomManager::changeRoom(int aR, int nMove, Player* p)
 	if (nMove == 10)
 	{
 		p->getCol()->x = SCREEN_WIDTH / 2 - p->getCol()->w;
-		p->getCol()->y = SPAWN_POINT;
+		p->getCol()->y = SPAWN_POINT_Y;
 	}
 	else if (nMove == -10)
 	{
 		p->getCol()->x = SCREEN_WIDTH / 2 - p->getCol()->w;
-		p->getCol()->y = SCREEN_HEIGHT - SPAWN_POINT - p->getCol()->h * 2;
-	}
-	else if (nMove == 1)
-	{
-		p->getCol()->y = SCREEN_HEIGHT / 2 - p->getCol()->h;
-		p->getCol()->x = SCREEN_WIDTH - SPAWN_POINT - p->getCol()->w * 2;
+		p->getCol()->y = SCREEN_HEIGHT - SPAWN_POINT_Y - p->getCol()->h * 2;
 	}
 	else if (nMove == -1)
 	{
 		p->getCol()->y = SCREEN_HEIGHT / 2 - p->getCol()->h;
-		p->getCol()->x = SPAWN_POINT;
+		p->getCol()->x = SCREEN_WIDTH - SPAWN_POINT_X - p->getCol()->w * 2;
+	}
+	else if (nMove == 1)
+	{
+		p->getCol()->y = SCREEN_HEIGHT / 2 - p->getCol()->h;
+		p->getCol()->x = SPAWN_POINT_X;
 	}
 	getActualRoom()->init(p);
 }
