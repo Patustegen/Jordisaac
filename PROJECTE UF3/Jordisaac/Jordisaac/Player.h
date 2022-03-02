@@ -1,6 +1,7 @@
 #pragma once
 #include "BaseCharacter.h"
 #include "enums.h"
+#include "Bullet.h"
 
 enum STATS
 {
@@ -19,6 +20,7 @@ private:
     DIAGONALS mDiagonals;
     Rect Head;
     Rect Misc;
+    std::vector<Bullet*> bullets;
 
     float stats[STAT_LENGHT];
     bool shooting;

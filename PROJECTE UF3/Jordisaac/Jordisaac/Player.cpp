@@ -12,6 +12,11 @@ void Player::render()
 	{
 		iVideo->renderGraphic(pMisc , Misc.x, Misc.y, Misc.w, Misc.h, (frame / 200) * Misc.w, 3 * Misc.h, 2, 2);
 	}
+
+	for (int i = 0; i < bullets.size(); i++)
+	{
+		bullets[i]->render();
+	}
 	//iVideo->renderGraphic(gFrame, col.x, col.y, col.w, col.h);
 }
 
@@ -280,9 +285,22 @@ void Player::update()
 			}
 		}
 
+		if (shooting && cooldown == 500)
+		{
+			Bullet* nBullet = new Bullet(0.5, 0, &Head, lHead);
+			bullets.push_back(nBullet);
+		}
 
-
-
+		for (int i = 0; i < bullets.size(); i++)
+		{
+			bullets[i]->update();
+			if (!iRoomM->getActualRoom()->roomWalkable(bullets[i]->getCol()))
+			{
+				delete bullets[i];
+				bullets.erase(bullets.begin() + i);
+				i--;
+			}
+		}
 
 
 
@@ -344,6 +362,7 @@ void Player::init()
 	shooting = false;
 	frame = 0;
 	cooldown = 0;
+	bullets.resize(0);
 
 	col.w = 24;
 	col.h = 24;
@@ -456,6 +475,7 @@ Player::Player()
 	frame = 0;
 	cooldown = 0;
 	hp = 6;
+	bullets.resize(0);
 	
 	//Rects
 	col = {0,0,0,0};
