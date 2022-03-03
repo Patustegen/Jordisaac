@@ -7,3 +7,4 @@ Audio* iAudio;
 InputManager* iInputM;
 SceneDirector* iSceneD;
 RoomManager* iRoomM;
+BulletManager* iBulletM;

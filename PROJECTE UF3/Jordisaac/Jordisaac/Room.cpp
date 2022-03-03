@@ -25,11 +25,13 @@ void Room::init(Player* p)
 	{
 		movCharacters.push_back(enemies[i]);
 	}
+	iBulletM->init();
 }
 
 void Room::update()
 {
 	_player->update();
+	iBulletM->update();
 	if (completed)
 	{
 		for (int i = 0; i < colDoor.size(); i++)
@@ -93,11 +95,12 @@ void Room::render()
 	{
 		iVideo->renderGraphicEx(gDoor, &colDoor.at(i).paint, colDoor.at(i).angle, 2.0f, 2.0f, colDoor.at(i).paint.w * completed);
 		//iVideo->renderGraphicEx(frame, &colDoor.at(i).col, colDoor.at(i).angle, 2.0f, 2.0f);
-		for (int i = 0; i < movCharacters.size(); i++)
-		{
-			movCharacters[i]->render();
-		}
 	}
+	for (int i = 0; i < movCharacters.size(); i++)
+	{
+		movCharacters[i]->render();
+	}
+	iBulletM->render();
 }
 
 bool Room::roomWalkable(Rect* col)

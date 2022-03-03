@@ -8,6 +8,7 @@ int main(int argc, char* args[]) {
 	iInputM = InputManager::getInstance();
 	iSceneD = SceneDirector::getInstance();
 	iRoomM = RoomManager::getInstance();
+	iBulletM = BulletManager::getInstance();
 
 	
 
