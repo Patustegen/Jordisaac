@@ -11,6 +11,7 @@ private:
     int time;
 public:
     Bullet(float vel, int t, Rect* sp, LOOKING coord, DIAGONALS diagonals = NONE);
+    int getType() { return type; };
     void update();
     void render();
     void load();

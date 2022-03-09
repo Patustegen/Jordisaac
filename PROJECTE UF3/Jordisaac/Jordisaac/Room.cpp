@@ -135,6 +135,21 @@ bool Room::colWalkable(Rect* col)
 	return true;
 }
 
+bool Room::enemyCol(Rect* col)
+{
+	for (int i = 0; i < enemies.size(); i++)
+	{
+		if (iVideo->onCollision(col, enemies[i]->getCol())) return true;
+	}
+	return false;
+}
+
+bool Room::playerCol(Rect* col)
+{
+	if (iVideo->onCollision(col, _player->getCol())) return true;
+	return false;
+}
+
 Room::Room(int nDoors, int roomID)
 {
 	_player = nullptr;

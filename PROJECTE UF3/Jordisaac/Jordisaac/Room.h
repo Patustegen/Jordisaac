@@ -37,6 +37,8 @@ public:
 	bool roomWalkable(Rect* col);
 	bool colWalkable(Rect* col);
 	int getRoomID() { return rID; };
+	bool enemyCol(Rect* col);
+	bool playerCol(Rect* col);
 	std::vector<Door> getDoorVect() { return colDoor; };
 	Room(int nDoors, int roomID);
 	Room();

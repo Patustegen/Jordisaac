@@ -283,7 +283,7 @@ void Player::update()
 
 		if (shooting && cooldown == 500)
 		{
-			iBulletM->AddBullet(0.5f, 0, &Head, lHead);
+			iBulletM->AddBullet(0.5f, 1, &Head, lHead);
 		}
 
 
