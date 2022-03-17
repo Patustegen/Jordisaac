@@ -9,15 +9,30 @@ void Room::init(Player* p)
 	_player = p;
 	if (rID != 0)
 	{
-		if (!completed)
+		switch (roomType)
 		{
-			int max = rand() % 3 + 2;
-			for (int i = 0; i < max; i++)
+		case NORMAL:
+			if (!completed)
 			{
-				AttackFly* nFly = new AttackFly(rand()%400 + 200, rand()%200 + 200);
-				nFly->setPlayer(p);
-				enemies.push_back(nFly);
+				int max = rand() % 3 + 2;
+				for (int i = 0; i < max; i++)
+				{
+					AttackFly* nFly = new AttackFly(rand()%400 + 200, rand()%200 + 200);
+					nFly->setPlayer(p);
+					enemies.push_back(nFly);
+				}
 			}
+			break;
+		case BOSS:
+			if (!completed)
+			{
+				
+			}
+			break;
+		case GOLDEN:
+			break;
+		default:
+			break;
 		}
 	}
 	movCharacters.push_back(_player);
@@ -51,10 +66,14 @@ void Room::update()
 			{
 				if (_player->getHurt()) 
 				{
-					delete enemies[i];
-					enemies.erase(enemies.begin()+i);
-					i--;
+					enemies[i]->hurt();
 				}
+			}
+			if (enemies[i]->getHP() <= 0)
+			{
+				delete enemies[i];
+				enemies.erase(enemies.begin()+i);
+				i--;
 			}
 		}
 		
@@ -94,7 +113,6 @@ void Room::render()
 	for (int i = 0; i < colDoor.size(); i++)
 	{
 		iVideo->renderGraphicEx(gDoor, &colDoor.at(i).paint, colDoor.at(i).angle, 2.0f, 2.0f, colDoor.at(i).paint.w * completed);
-		//iVideo->renderGraphicEx(frame, &colDoor.at(i).col, colDoor.at(i).angle, 2.0f, 2.0f);
 	}
 	for (int i = 0; i < movCharacters.size(); i++)
 	{
@@ -135,11 +153,15 @@ bool Room::colWalkable(Rect* col)
 	return true;
 }
 
-bool Room::enemyCol(Rect* col)
+bool Room::enemyCol(Rect* col, int* enemyID)
 {
 	for (int i = 0; i < enemies.size(); i++)
 	{
-		if (iVideo->onCollision(col, enemies[i]->getCol())) return true;
+		if (iVideo->onCollision(col, enemies[i]->getCol())) 
+		{ 
+			*enemyID = i;
+			return true; 
+		}
 	}
 	return false;
 }
@@ -152,6 +174,8 @@ bool Room::playerCol(Rect* col)
 
 Room::Room(int nDoors, int roomID)
 {
+	int doorCount = 0;
+	roomType = NORMAL;
 	_player = nullptr;
 	completed = false;
 	movCharacters.resize(0);
@@ -160,11 +184,11 @@ Room::Room(int nDoors, int roomID)
 	bg = iResourceM->loadAndGetGraphicID("Assets\\Rooms\\BasementDefault.png");
 	gDoor = iResourceM->loadAndGetGraphicID("Assets\\Rooms\\defaultDoor.png");
 
-	frame = iResourceM->loadAndGetGraphicID("Assets\\Characters\\Frame.png");
 
 	enemies.resize(0);
 	if (nDoors & 0x01)
 	{
+		doorCount++;
 		Door nDoor;
 		nDoor.col = { SCREEN_WIDTH / 2 - DOOR_W, DOOR_MARGIN, DOOR_W * 2, DOOR_H * 2 };
 		nDoor.paint = { SCREEN_WIDTH / 2 - DOOR_W, DOOR_MARGIN, DOOR_W, DOOR_H };
@@ -174,6 +198,7 @@ Room::Room(int nDoors, int roomID)
 	}
 	if (nDoors & 0x02)
 	{
+		doorCount++;
 		Door nDoor;
 		nDoor.col = { SCREEN_WIDTH / 2 - DOOR_W, SCREEN_HEIGHT - DOOR_H * 2 - DOOR_MARGIN, DOOR_W * 2, DOOR_H * 2 };
 		nDoor.paint = { SCREEN_WIDTH / 2 - DOOR_W, SCREEN_HEIGHT - DOOR_H * 2 - DOOR_MARGIN, DOOR_W, DOOR_H };
@@ -183,6 +208,7 @@ Room::Room(int nDoors, int roomID)
 	}
 	if (nDoors & 0x04)
 	{
+		doorCount++;
 		Door nDoor;
 		nDoor.col = { SCREEN_WIDTH - DOOR_W * 2 - DOOR_MARGIN, SCREEN_HEIGHT / 2 - DOOR_H, DOOR_W * 2, DOOR_H * 2 };
 		nDoor.paint = { SCREEN_WIDTH - DOOR_W * 2 - DOOR_MARGIN, SCREEN_HEIGHT / 2 - DOOR_H, DOOR_W, DOOR_H };
@@ -192,12 +218,17 @@ Room::Room(int nDoors, int roomID)
 	}
 	if (nDoors & 0x08)
 	{
+		doorCount++;
 		Door nDoor;
 		nDoor.col = { DOOR_MARGIN, SCREEN_HEIGHT / 2 - DOOR_H, DOOR_W * 2, DOOR_H * 2 };
 		nDoor.paint = { DOOR_MARGIN, SCREEN_HEIGHT / 2 - DOOR_H, DOOR_W, DOOR_H };
 		nDoor.angle = 270.0;
 		nDoor.idChange = -1;
 		colDoor.push_back(nDoor);
+	}
+	if (doorCount == 1 && roomID != 0)
+	{
+		roomType = BOSS;
 	}
 }
 
@@ -208,8 +239,7 @@ Room::Room()
 	gDoor = -1;
 	completed = false;
 	rID = 0;
-
-	frame = -1;
+	roomType = NORMAL;
 }
 
 Room::~Room()

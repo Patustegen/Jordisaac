@@ -30,16 +30,21 @@ void BulletManager::update()
 	for (int i = 0; i < bullets.size(); i++)
 	{
 		bool touched = false;
+		int enemyID = -1;
 		bullets[i]->update();
 
 		if (!iRoomM->getActualRoom()->roomWalkable(bullets[i]->getCol())) touched = true;
 		if (bullets[i]->getType())
 		{
-			if (!iRoomM->getActualRoom()->enemyCol(bullets[i]->getCol())) touched = true;
+			if (iRoomM->getActualRoom()->enemyCol(bullets[i]->getCol(), &enemyID))
+			{
+				iRoomM->getActualRoom()->getEnemy(enemyID)->hurt();
+				touched = true;
+			}
 		}
 		else
 		{
-			if (!iRoomM->getActualRoom()->playerCol(bullets[i]->getCol())) touched = true;
+			if (iRoomM->getActualRoom()->playerCol(bullets[i]->getCol())) touched = true;
 		}
 		
 		if (touched)

@@ -10,5 +10,6 @@ protected:
     int frame;
 public:
     int getHP() { return hp; };
+    void hurt() { hp--; };
 };
 
