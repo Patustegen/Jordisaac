@@ -1,6 +1,7 @@
 #include "Room.h"
 #include "Singletons.h"
 #include "AttackFly.h"
+#include "Boss.h"
 
 #define DOOR_MARGIN 30
 
@@ -26,7 +27,9 @@ void Room::init(Player* p)
 		case BOSS:
 			if (!completed)
 			{
-				
+				Boss* nBboss = new Boss();
+				nBboss->getBoss()->init();
+				enemies.push_back(nBboss->getBoss());
 			}
 			break;
 		case GOLDEN:
