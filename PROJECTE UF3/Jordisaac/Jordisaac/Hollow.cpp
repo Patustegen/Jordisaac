@@ -7,6 +7,7 @@ Hollow::Hollow()
 	gBody = iResourceM->loadAndGetGraphicID("Assets\\Bosses\\hollowBody.png");
 	col = { 0,0,38,40,0,0 };
 	paint = { 0,0,38,40,0,0 };
+	hp = 32;
 }
 
 Hollow::~Hollow()
@@ -31,5 +32,5 @@ void Hollow::update()
 
 void Hollow::render()
 {
-	iVideo->renderGraphic(gID, paint.x, paint.y, paint.w, paint.h, frame * col.w, col.h);
+	iVideo->renderGraphic(gID, paint.x, paint.y, paint.w, paint.h, frame * col.w, col.h, 2.0f, 2.0f);
 }

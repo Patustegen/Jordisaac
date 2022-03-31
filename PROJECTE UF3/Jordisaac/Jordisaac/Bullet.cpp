@@ -1,12 +1,13 @@
 #include "Bullet.h"
 #include "Singletons.h"
 
-Bullet::Bullet(float vel, int t, Rect* sp, LOOKING coord, DIAGONALS diagonals)
+Bullet::Bullet(float vel, int t, float range, Rect* sp, LOOKING coord, DIAGONALS diagonals)
 {
-	time = 0;
+	initPos = { sp->x, sp->y };
 	type = t;
-	velocity = vel;
-	col = { 0, 0, 22, 22 };
+	maxMove = range * 50;
+	velocity = vel * 0.25f;
+	col = { 0, 0, 22, 22, 0, 0 };
 	paint = { 0, 0, 15, 15 };
 	switch (coord)
 	{
@@ -60,46 +61,59 @@ Bullet::Bullet(float vel, int t, Rect* sp, LOOKING coord, DIAGONALS diagonals)
 	default:
 		break;
 	}
+	destroy = false;
 	load();
 }
 
 void Bullet::update()
 {
+	float moveX = 0, moveY = 0;
 	switch (dir)
 	{
 	case N:
-		col.y -= velocity * iVideo->getDeltaTime();
+		col.restY -= velocity * iVideo->getDeltaTime();
 		break;
 	case N_E:
-		col.x += velocity * (iVideo->getDeltaTime() * 0.7f);
-		col.y -= velocity * (iVideo->getDeltaTime() * 0.7f);
+		col.restX += velocity * (iVideo->getDeltaTime() * 0.7f);
+		col.restY -= velocity * (iVideo->getDeltaTime() * 0.7f);
 		break;
 	case E:
-		col.x += velocity * iVideo->getDeltaTime();
+		col.restX += velocity * iVideo->getDeltaTime();
 		break;
 	case S_E:
-		col.x += velocity * (iVideo->getDeltaTime() * 0.7f);
-		col.y += velocity * (iVideo->getDeltaTime() * 0.7f);
+		col.restX += velocity * (iVideo->getDeltaTime() * 0.7f);
+		col.restY += velocity * (iVideo->getDeltaTime() * 0.7f);
 		break;
 	case S:
-		col.y += velocity * iVideo->getDeltaTime();
+		col.restY += velocity * iVideo->getDeltaTime();
 		break;
 	case S_W:
-		col.x -= velocity * (iVideo->getDeltaTime() * 0.7f);
-		col.y += velocity * (iVideo->getDeltaTime() * 0.7f);
+		col.restX -= velocity * (iVideo->getDeltaTime() * 0.7f);
+		col.restY += velocity * (iVideo->getDeltaTime() * 0.7f);
 		break;
 	case W:
-		col.x -= velocity * iVideo->getDeltaTime();
+		col.restX -= velocity * iVideo->getDeltaTime();
 		break;
 	case N_W:
-		col.x -= velocity * (iVideo->getDeltaTime() * 0.7f);
-		col.y -= velocity * (iVideo->getDeltaTime() * 0.7f);
+		col.restX -= velocity * (iVideo->getDeltaTime() * 0.7f);
+		col.restY -= velocity * (iVideo->getDeltaTime() * 0.7f);
 		break;
 	default:
 		break;
 	}
+	col.restX = std::modf(col.restX, &moveX);
+	col.restY = std::modf(col.restY, &moveY);
+	col.x += moveX;
+	col.y += moveY;
+
 	paint.x = col.x;
 	paint.y = col.y;
+
+
+	if ((col.x - initPos.x >= maxMove || initPos.x - col.x >= maxMove) || (col.y - initPos.y >= maxMove || initPos.y - col.y >= maxMove))
+	{
+		destroy = true;
+	}
 }
 
 void Bullet::render()

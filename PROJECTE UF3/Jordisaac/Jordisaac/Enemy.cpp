@@ -15,6 +15,7 @@ void Enemy::render()
 
 Enemy::Enemy()
 {
+	pPos = nullptr;
 }
 
 Enemy::~Enemy()

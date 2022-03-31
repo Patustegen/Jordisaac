@@ -1,7 +1,7 @@
 #include "Room.h"
 #include "Singletons.h"
 #include "AttackFly.h"
-#include "Boss.h"
+#include "Hollow.h"
 
 #define DOOR_MARGIN 30
 
@@ -27,9 +27,23 @@ void Room::init(Player* p)
 		case BOSS:
 			if (!completed)
 			{
-				Boss* nBboss = new Boss();
-				nBboss->getBoss()->init();
-				enemies.push_back(nBboss->getBoss());
+				int nboss = rand() % 3;
+				nboss = 0;
+				Boss* nBoss = nullptr;
+				switch (nboss)
+				{
+				case 0:
+					nBoss = new Hollow();
+					break;
+				case 1:
+					break;
+				case 2:
+					break;
+				default:
+					break;
+				}
+				nBoss->init();
+				enemies.push_back(nBoss);
 			}
 			break;
 		case GOLDEN:
@@ -50,6 +64,14 @@ void Room::update()
 {
 	_player->update();
 	iBulletM->update();
+
+	///////////////////////////////////////////////////////////
+	if (roomType != BOSS)
+	{
+		completed = true;
+	}
+	//////////////////////////////////////////////////////////
+
 	if (completed)
 	{
 		for (int i = 0; i < colDoor.size(); i++)
