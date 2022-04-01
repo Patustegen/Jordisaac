@@ -1,11 +1,12 @@
 #include "Hollow.h"
 #include "Singletons.h"
+#define PI 3.14159265
 
 Hollow::Hollow()
 {
 	gID = iResourceM->loadAndGetGraphicID("Assets\\Bosses\\hollowHead.png");
 	gBody = iResourceM->loadAndGetGraphicID("Assets\\Bosses\\hollowBody.png");
-	col = { 0,0,38,40,0,0 };
+	col = { 0,0,76,80,0,0 };
 	paint = { 0,0,38,40,0,0 };
 	hp = 32;
 	orientacio = NO;
@@ -36,10 +37,10 @@ void Hollow::update()
 
 	float vel = 0.35f * iVideo->getDeltaTime();
 	//VelX = Vel * cos(angle)
-	float velX = vel * cos(angle);
+	float velX = vel * cos(angle * PI / 180.0);
 
 	//VelY = Vel * sin(angle)
-	float velY = vel * sin(angle);
+	float velY = vel * sin(angle * PI / 180.0);
 
 	col.restX += velX;
 	col.restY += velY;
@@ -53,35 +54,40 @@ void Hollow::update()
 	if (col.x < ROOM_MARGIN_X)
 	{
 		col.x = ROOM_MARGIN_X;
-		angle = 180 - angle;
+
+		if (angle > 90 && angle <= 180) angle = (90 - (angle - 90)) + rand() % 10 -4;
+		else if (angle > 180 && angle < 270) angle = (270 + (270 - angle)) + rand() % 10 -4;
 		//angle = rand() % 360;
 	}
 	else if (col.x > SCREEN_WIDTH - ROOM_MARGIN_X - col.w) 
 	{
 		col.x = SCREEN_WIDTH - ROOM_MARGIN_X - col.w;
-		angle = 180 - angle;
+		
+		if (angle >= 0 && angle < 90) angle = (180 - angle) + rand() % 10 -4;
+		else if (angle > 270 && angle < 360) angle = (180 + (360 - angle)) + rand() % 10 -4;
 		//angle = rand() % 360;
 	}
 	if (col.y < ROOM_MARGIN_Y)
 	{
 		col.y = ROOM_MARGIN_Y;
-		angle = 360 - angle;
+		
+		if (angle > 180 && angle <= 270) angle = (180 - (angle - 180)) + rand() % 10 -4;
+		else if (angle > 270 && angle < 360) angle = (90 - (angle - 270)) + rand() % 10 -4;
 		//angle = rand() % 360;
 	}
 	else if (col.y > SCREEN_HEIGHT - ROOM_MARGIN_Y - col.h)
 	{
 		col.y = SCREEN_HEIGHT - ROOM_MARGIN_Y - col.h;
-		angle = 360 - angle;
+		
+		if (angle > 0 && angle <= 90) angle = (360 - angle) + rand() % 10 -4;
+		else if (angle > 90 && angle < 180) angle = (180 + (180 - angle)) + rand() % 10 -4;
 		//angle = rand() % 360;
 	}
 
-
-	//> <
-
-	if (angle > 315 || angle < 45) orientacio = RIGHT;
-	else if (angle <= 135 && angle >= 45) orientacio = DOWN;
-	else if (angle < 225 && angle > 135) orientacio = LEFT;
-	else if (angle <= 315 && angle >= 225) orientacio = UP;
+	if (angle < 112 && angle > 68) orientacio = DOWN;
+	else if (angle <= 68 || angle >= 338) orientacio = RIGHT;
+	else if (angle < 338 && angle > 248) orientacio = UP;
+	else if (angle <= 248 && angle >= 112) orientacio = LEFT;
 	std::cout << angle << std::endl;
 	paint.x = col.x;
 	paint.y = col.y;
