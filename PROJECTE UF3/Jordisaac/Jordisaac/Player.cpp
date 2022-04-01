@@ -30,7 +30,7 @@ void Player::update()
 	{
 		if (cooldown > 0)
 		{
-			if (cooldown <= 400)
+			if (cooldown <= (500 + stats[TEARS] * 100) -100)
 			{
 				shooting = false;
 			}
@@ -277,13 +277,13 @@ void Player::update()
 			if (cooldown <= 0)
 			{
 				shooting = true;
-				cooldown = 500;
+				cooldown = 500 + stats[TEARS] * 100;
 			}
 		}
 
-		if (shooting && cooldown == 500)
+		if (shooting && cooldown == 500 + stats[TEARS] * 100)
 		{
-			iBulletM->AddBullet(0.5f, 1, &Head, lHead);
+			iBulletM->AddBullet(stats[SHOT_SPEED], 1, stats[RANGE], &Head, lHead);
 		}
 
 
@@ -396,7 +396,7 @@ void Player::init()
 		break;
 	case SAMSON:
 		stats[RANGE] = 5;
-		stats[TEARS] = 0.1f;
+		stats[TEARS] = 1;
 		stats[SHOT_SPEED] = 1.31f;
 		stats[SPEED] = 1.1f;
 		Head.w = 30;
