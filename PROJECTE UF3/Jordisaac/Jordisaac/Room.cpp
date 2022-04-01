@@ -8,7 +8,7 @@
 void Room::init(Player* p)
 {
 	_player = p;
-	if (rID != 0)
+	//if (rID != 0)
 	{
 		switch (roomType)
 		{
@@ -251,7 +251,7 @@ Room::Room(int nDoors, int roomID)
 		nDoor.idChange = -1;
 		colDoor.push_back(nDoor);
 	}
-	if (doorCount == 1 && roomID != 0)
+	if (doorCount == 1 /* && roomID != 0*/)
 	{
 		roomType = BOSS;
 	}

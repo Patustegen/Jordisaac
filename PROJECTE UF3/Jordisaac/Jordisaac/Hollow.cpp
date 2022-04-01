@@ -41,11 +41,8 @@ void Hollow::update()
 	//VelY = Vel * sin(angle)
 	float velY = vel * sin(angle);
 
-	if (angle > 270 || angle < 90) col.restY -= velY;
-	else if (angle < 270 && angle > 90) col.restY += velY;
-	if (angle > 0 && angle < 180) col.restX += velX;
-	else if (angle < 360 && angle > 180) col.restX -= velX;
-	
+	col.restX += velX;
+	col.restY += velY;
 
 	col.restX = std::modf(col.restX, &moveX);
 	col.restY = std::modf(col.restY, &moveY);
@@ -56,37 +53,41 @@ void Hollow::update()
 	if (col.x < ROOM_MARGIN_X)
 	{
 		col.x = ROOM_MARGIN_X;
-		angle = 360 - angle;
+		angle = 180 - angle;
+		//angle = rand() % 360;
 	}
 	else if (col.x > SCREEN_WIDTH - ROOM_MARGIN_X - col.w) 
 	{
 		col.x = SCREEN_WIDTH - ROOM_MARGIN_X - col.w;
-		angle = 360 - angle;
+		angle = 180 - angle;
+		//angle = rand() % 360;
 	}
 	if (col.y < ROOM_MARGIN_Y)
 	{
 		col.y = ROOM_MARGIN_Y;
-		angle = 180 - angle;
+		angle = 360 - angle;
+		//angle = rand() % 360;
 	}
 	else if (col.y > SCREEN_HEIGHT - ROOM_MARGIN_Y - col.h)
 	{
 		col.y = SCREEN_HEIGHT - ROOM_MARGIN_Y - col.h;
-		angle = 180 - angle;
+		angle = 360 - angle;
+		//angle = rand() % 360;
 	}
 
 
 	//> <
 
-	if (angle > 315 || angle < 45) orientacio = UP;
-	else if (angle <= 135 && angle >= 45) orientacio = RIGHT;
-	else if (angle < 225 && angle > 135) orientacio = DOWN;
-	else if (angle <= 315 && angle >= 225) orientacio = LEFT;
-
+	if (angle > 315 || angle < 45) orientacio = RIGHT;
+	else if (angle <= 135 && angle >= 45) orientacio = DOWN;
+	else if (angle < 225 && angle > 135) orientacio = LEFT;
+	else if (angle <= 315 && angle >= 225) orientacio = UP;
+	std::cout << angle << std::endl;
 	paint.x = col.x;
 	paint.y = col.y;
 }
 
 void Hollow::render()
 {
-	iVideo->renderGraphicEx(gID, &paint, angle, 2.0f, 2.0f, (frame / 1000) * paint.w, paint.h * orientacio);
+	iVideo->renderGraphicEx(gID, &paint, 0, 2.0f, 2.0f, (frame / 1000) * paint.w, paint.h * orientacio);
 }
