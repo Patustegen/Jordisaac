@@ -2,12 +2,22 @@
 #include "Singletons.h"
 #define PI 3.14159265
 
-Hollow::Hollow()
+Hollow::Hollow(bool h)
 {
-	gID = iResourceM->loadAndGetGraphicID("Assets\\Bosses\\hollowHead.png");
-	gBody = iResourceM->loadAndGetGraphicID("Assets\\Bosses\\hollowBody.png");
-	col = { 0,0,76,80,0,0 };
-	paint = { 0,0,38,40,0,0 };
+	head = h;
+	rebotes = { 0,0,76,80,0,0 };
+	if (head)
+	{
+		gID = iResourceM->loadAndGetGraphicID("Assets\\Bosses\\hollowHead.png");
+		col = { 0,0,76,80,0,0 };
+		paint = { 0,0,38,40,0,0 };
+	}
+	else
+	{
+		gID = iResourceM->loadAndGetGraphicID("Assets\\Bosses\\hollowBody.png");
+		col = { 0,0,54,46,0,0 };
+		paint = { 0,0,27,23,0,0 };
+	}
 	hp = 32;
 	orientacio = NO;
 	angle = 0;
@@ -19,8 +29,18 @@ Hollow::~Hollow()
 
 void Hollow::init()
 {
-	col.x = SCREEN_WIDTH / 2 - col.w / 2;
-	col.y = SCREEN_HEIGHT / 2 - col.h / 2;
+	rebotes.x = SCREEN_WIDTH / 2 - rebotes.w / 2;
+	rebotes.y = SCREEN_HEIGHT / 2 - rebotes.h / 2;
+	if (head)
+	{
+		col.x = rebotes.x;
+		col.y = rebotes.y;
+	}
+	else
+	{
+		col.x = rebotes.x + 22;
+		col.y = rebotes.y + 34;
+	}
 	paint.x = col.x;
 	paint.y = col.y;
 	angle = rand() % 360;

@@ -156,7 +156,6 @@
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Hollow.cpp" />
-    <ClCompile Include="HollowBody.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
@@ -188,7 +187,6 @@
     <ClInclude Include="enums.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Hollow.h" />
-    <ClInclude Include="HollowBody.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="OptionsMenu.h" />

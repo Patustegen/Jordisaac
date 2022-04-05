@@ -1,14 +1,14 @@
 #pragma once
 #include "Boss.h"
-#include "enums.h"
 class Hollow :
     public Boss
 {
-    int gBody;
+    bool head;
     int angle;
+    Rect rebotes;
     LOOKING orientacio;
 public:
-    Hollow();
+    Hollow(bool h = false);
     ~Hollow();
     void init();
     void update();
