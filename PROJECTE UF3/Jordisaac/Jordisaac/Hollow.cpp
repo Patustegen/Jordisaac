@@ -38,12 +38,11 @@ void Hollow::init()
 	}
 	else
 	{
-		col.x = rebotes.x + 22;
-		col.y = rebotes.y + 34;
+		col.x = rebotes.x + 11;
+		col.y = rebotes.y + 17;
 	}
 	paint.x = col.x;
 	paint.y = col.y;
-	angle = rand() % 360;
 }
 
 void Hollow::update()
@@ -62,45 +61,45 @@ void Hollow::update()
 	//VelY = Vel * sin(angle)
 	float velY = vel * sin(angle * PI / 180.0);
 
-	col.restX += velX;
-	col.restY += velY;
+	rebotes.restX += velX;
+	rebotes.restY += velY;
 
-	col.restX = std::modf(col.restX, &moveX);
-	col.restY = std::modf(col.restY, &moveY);
-	col.x += moveX;
-	col.y += moveY;
+	rebotes.restX = std::modf(rebotes.restX, &moveX);
+	rebotes.restY = std::modf(rebotes.restY, &moveY);
+	rebotes.x += moveX;
+	rebotes.y += moveY;
 
 
-	if (col.x < ROOM_MARGIN_X)
+	if (rebotes.x < ROOM_MARGIN_X)
 	{
-		col.x = ROOM_MARGIN_X;
+		rebotes.x = ROOM_MARGIN_X;
 
-		if (angle > 90 && angle <= 180) angle = (90 - (angle - 90)) + rand() % 10 -4;
-		else if (angle > 180 && angle < 270) angle = (270 + (270 - angle)) + rand() % 10 -4;
+		if (angle > 90 && angle <= 180) angle = (90 - (angle - 90)) /*+ rand() % 10 -4*/;
+		else if (angle > 180 && angle < 270) angle = (270 + (270 - angle)) /*+ rand() % 10 -4*/;
 		//angle = rand() % 360;
 	}
-	else if (col.x > SCREEN_WIDTH - ROOM_MARGIN_X - col.w) 
+	else if (rebotes.x > SCREEN_WIDTH - ROOM_MARGIN_X - rebotes.w) 
 	{
-		col.x = SCREEN_WIDTH - ROOM_MARGIN_X - col.w;
+		rebotes.x = SCREEN_WIDTH - ROOM_MARGIN_X - rebotes.w;
 		
-		if (angle >= 0 && angle < 90) angle = (180 - angle) + rand() % 10 -4;
-		else if (angle > 270 && angle < 360) angle = (180 + (360 - angle)) + rand() % 10 -4;
+		if (angle >= 0 && angle < 90) angle = (180 - angle) /*+ rand() % 10 -4*/;
+		else if (angle > 270 && angle < 360) angle = (180 + (360 - angle)) /*+ rand() % 10 -4*/;
 		//angle = rand() % 360;
 	}
-	if (col.y < ROOM_MARGIN_Y)
+	if (rebotes.y < ROOM_MARGIN_Y)
 	{
-		col.y = ROOM_MARGIN_Y;
+		rebotes.y = ROOM_MARGIN_Y;
 		
-		if (angle > 180 && angle <= 270) angle = (180 - (angle - 180)) + rand() % 10 -4;
-		else if (angle > 270 && angle < 360) angle = (90 - (angle - 270)) + rand() % 10 -4;
+		if (angle > 180 && angle <= 270) angle = (180 - (angle - 180)) /*+ rand() % 10 -4*/;
+		else if (angle > 270 && angle < 360) angle = (90 - (angle - 270)) /*+ rand() % 10 -4*/;
 		//angle = rand() % 360;
 	}
-	else if (col.y > SCREEN_HEIGHT - ROOM_MARGIN_Y - col.h)
+	else if (rebotes.y > SCREEN_HEIGHT - ROOM_MARGIN_Y - rebotes.h)
 	{
-		col.y = SCREEN_HEIGHT - ROOM_MARGIN_Y - col.h;
+		rebotes.y = SCREEN_HEIGHT - ROOM_MARGIN_Y - rebotes.h;
 		
-		if (angle > 0 && angle <= 90) angle = (360 - angle) + rand() % 10 -4;
-		else if (angle > 90 && angle < 180) angle = (180 + (180 - angle)) + rand() % 10 -4;
+		if (angle > 0 && angle <= 90) angle = (360 - angle) /*+ rand() % 10 -4*/;
+		else if (angle > 90 && angle < 180) angle = (180 + (180 - angle)) /*+ rand() % 10 -4*/;
 		//angle = rand() % 360;
 	}
 
@@ -108,7 +107,18 @@ void Hollow::update()
 	else if (angle <= 68 || angle >= 338) orientacio = RIGHT;
 	else if (angle < 338 && angle > 248) orientacio = UP;
 	else if (angle <= 248 && angle >= 112) orientacio = LEFT;
-	std::cout << angle << std::endl;
+
+	if (head)
+	{
+		col.x = rebotes.x;
+		col.y = rebotes.y;
+	}
+	else
+	{
+		col.x = rebotes.x + 11;
+		col.y = rebotes.y + 17;
+	}
+
 	paint.x = col.x;
 	paint.y = col.y;
 }

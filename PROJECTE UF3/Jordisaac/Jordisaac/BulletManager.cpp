@@ -59,8 +59,5 @@ void BulletManager::update()
 
 void BulletManager::render()
 {
-	for (int i = 0; i < bullets.size(); i++)
-	{
-		bullets[i]->render();
-	}
+	for (int i = 0; i < bullets.size(); i++) bullets[i]->render();
 }

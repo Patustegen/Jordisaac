@@ -7,6 +7,7 @@ class Enemy :
 protected:
     Player* pPos;
 public:
+    virtual void setAngle(int a);
     virtual void init();
     virtual void update();
     virtual void render();

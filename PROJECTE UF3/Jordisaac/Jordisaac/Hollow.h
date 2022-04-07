@@ -10,6 +10,7 @@ class Hollow :
 public:
     Hollow(bool h = false);
     ~Hollow();
+    void setAngle(int a) { angle = a; };
     void init();
     void update();
     void render();

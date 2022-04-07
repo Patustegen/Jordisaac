@@ -10,6 +10,6 @@ protected:
     int frame;
 public:
     int getHP() { return hp; };
-    void hurt() { hp--; };
+    void hurt(int h = 1);
 };
 

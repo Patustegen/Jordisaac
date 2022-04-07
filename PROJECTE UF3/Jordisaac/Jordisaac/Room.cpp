@@ -7,8 +7,9 @@
 
 void Room::init(Player* p)
 {
+	roomFrame = -1;
 	_player = p;
-	//if (rID != 0)
+	if (rID != 0)
 	{
 		switch (roomType)
 		{
@@ -27,13 +28,13 @@ void Room::init(Player* p)
 		case BOSS:
 			if (!completed)
 			{
-				int nboss = rand() % 3;
-				nboss = 0;
+				bossType = rand() % 3;
+				bossType = 0;
 				Boss* nBoss = nullptr;
-				switch (nboss)
+				switch (bossType)
 				{
 				case 0:
-					nBoss = new Hollow();
+					nBoss = new Hollow(true);
 					break;
 				case 1:
 					break;
@@ -44,6 +45,17 @@ void Room::init(Player* p)
 				}
 				nBoss->init();
 				enemies.push_back(nBoss);
+				if (bossType == 0)
+				{
+					for (int i = 0; i < 4; i++)
+					{
+						Hollow* nHollowBody = new Hollow();
+						nHollowBody->init();
+						enemies.push_back(nHollowBody);
+					}
+					int a = rand() % 360;
+					for (int i = 0; i < enemies.size(); i++) enemies[i]->setAngle(a);
+				}
 			}
 			break;
 		case GOLDEN:
@@ -62,15 +74,9 @@ void Room::init(Player* p)
 
 void Room::update()
 {
+	roomFrame++;
 	_player->update();
 	iBulletM->update();
-
-	///////////////////////////////////////////////////////////
-	if (roomType != BOSS)
-	{
-		completed = true;
-	}
-	//////////////////////////////////////////////////////////
 
 	if (completed)
 	{
@@ -84,31 +90,35 @@ void Room::update()
 	}
 	else
 	{
-		for (int i = 0; i < enemies.size(); i++)
+		if (roomType == BOSS && bossType == 0 && roomFrame < 30)
 		{
-			enemies[i]->update();
-			if (iVideo->onCollision(_player->getCol(),enemies[i]->getCol()))
+			for (int i = 0; i < roomFrame; i++)
 			{
-				if (_player->getHurt()) 
+				if (roomFrame % 6 == 0)
 				{
-					enemies[i]->hurt();
+					enemies[i / 6]->update();
 				}
 			}
-			if (enemies[i]->getHP() <= 0)
+		}
+		else
+		{
+			for (int i = 0; i < enemies.size(); i++)
 			{
-				delete enemies[i];
-				enemies.erase(enemies.begin()+i);
-				i--;
+				enemies[i]->update();
+				if (iVideo->onCollision(_player->getCol(), enemies[i]->getCol())) _player->getHurt();
+				if (enemies[i]->getHP() <= 0)
+				{
+					delete enemies[i];
+					enemies.erase(enemies.begin() + i);
+					i--;
+				}
 			}
 		}
-		
+
 		bool swapped = false;
 		movCharacters.resize(0);
 		movCharacters.push_back(_player);
-		for (int i = 0; i < enemies.size(); i++)
-		{
-			movCharacters.push_back(enemies[i]);
-		}
+		for (int i = 0; i < enemies.size(); i++) movCharacters.push_back(enemies[i]);
 		do
 		{
 			swapped = true;
@@ -199,6 +209,8 @@ bool Room::playerCol(Rect* col)
 
 Room::Room(int nDoors, int roomID)
 {
+	bossType = -1;
+	roomFrame = 0;
 	int doorCount = 0;
 	roomType = NORMAL;
 	_player = nullptr;
