@@ -1,6 +1,6 @@
 #ifndef SCENE_H
 #define SCENE_H
-
+#include <vector>
 //! Scene class
 /*!
 	Handles the Scenes for all the game.
@@ -35,6 +35,7 @@ class Scene
 	protected:
 		bool		mReinit;			/*!<  Reload when returning to scene*/
 		int alpha;
+		std::vector<int> sID;
 };
 
 #endif

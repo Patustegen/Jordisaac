@@ -344,7 +344,9 @@ void Player::init()
 	shooting = false;
 	frame = 0;
 	cooldown = 0;
-	bullets.resize(0);
+	coins = 0;
+	bombs = 0;
+	keys = 0;
 
 	col.w = 24;
 	col.h = 24;
@@ -366,10 +368,17 @@ void Player::init()
 	gID = iResourceM->loadAndGetGraphicID("Assets\\Characters\\Body.png");
 	gFrame = iResourceM->loadAndGetGraphicID("Assets\\Characters\\Frame.png");
 
+	sID.push_back(iSoundM->loadAndGetSoundID("Assets/Characters/death1.wav"));
+	sID.push_back(iSoundM->loadAndGetSoundID("Assets/Characters/death2.wav"));
+	sID.push_back(iSoundM->loadAndGetSoundID("Assets/Characters/death3.wav"));
+	sID.push_back(iSoundM->loadAndGetSoundID("Assets/Characters/hurt1.wav"));
+	sID.push_back(iSoundM->loadAndGetSoundID("Assets/Characters/hurt2.wav"));
+	sID.push_back(iSoundM->loadAndGetSoundID("Assets/Characters/hurt3.wav"));
 
 	switch (iSceneD->getSelectedCharacter())
 	{
 	case ISAAC:
+		bombs = 1;
 		pHead = iResourceM->loadAndGetGraphicID("Assets\\Characters\\IsaacHead.png");
 		pMisc = iResourceM->loadAndGetGraphicID("Assets\\Characters\\IsaacMisc.png");
 		break;
@@ -387,6 +396,7 @@ void Player::init()
 		pMisc = iResourceM->loadAndGetGraphicID("Assets\\Characters\\MagdeleneMisc.png");
 		break;
 	case CAIN:
+		keys = 1;
 		stats[RANGE] = 4.5f;
 		stats[SPEED] = 1.3f;
 		stats[LIFE_CAPACITY] = 4;
@@ -424,10 +434,12 @@ bool Player::getHurt()
 		if (hp == 0)
 		{
 			state = DEAD;
+			iAudio->playAudio(iSoundM->getSoundByID(sID[rand() % 3]),3);
 		}
 		else
 		{
 			state = HURT;
+			iAudio->playAudio(iSoundM->getSoundByID(sID[rand() % 3 + 3]));
 		}
 		return true;
 		break;
@@ -457,7 +469,9 @@ Player::Player()
 	frame = 0;
 	cooldown = 0;
 	hp = 6;
-	bullets.resize(0);
+	coins = 0;
+	bombs = 0;
+	keys = 0;
 	
 	//Rects
 	col = {0,0,0,0};
@@ -471,4 +485,8 @@ Player::Player()
 	pHead = -1;
 	pMisc = -1;
 
+}
+
+Player::~Player()
+{
 }

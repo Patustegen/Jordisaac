@@ -3,7 +3,9 @@
 UI::UI()
 {
 	rHearts = { 0,0,0,0 };
+	rPickups = { 0,0,0,0 };
 	gHeart = -1;
+	gPickups = -1;
 	mPlayer = nullptr;
 }
 
@@ -13,17 +15,25 @@ UI::~UI()
 
 void UI::load()
 {
-	gHeart = iResourceM->loadAndGetGraphicID("Assets\\UI\\UIHearts.png");
+	gHeart = iResourceM->loadAndGetGraphicID("Assets/UI/UIHearts.png");
+	gPickups = iResourceM->loadAndGetGraphicID("Assets/UI/UIPickups.png");
 }
 
 void UI::init()
 {
-	rHearts = { MARGIN, MARGIN, H_W, H_H };
+	rHearts = { MARGIN * 2, MARGIN, H_W, H_H };
+	rPickups = { MARGIN, MARGIN * 2, PU_W, PU_H };
 }
 
 void UI::render()
 {
-	rHearts.x = MARGIN;
+	rPickups.y = MARGIN * 2;
+	for (int i = 0; i < 3; i++)
+	{
+		iVideo->renderGraphic(gPickups, rPickups.x, rPickups.y, rPickups.w, rPickups.h, 0, rPickups.h * i);
+		rPickups.y += rPickups.h;
+	}
+	rHearts.x = MARGIN * 2;
 	rHearts.y = MARGIN;
 	int nHearts = (int)mPlayer->getStat(LIFE_CAPACITY) / 2;
 	float life = (float)mPlayer->getHP();

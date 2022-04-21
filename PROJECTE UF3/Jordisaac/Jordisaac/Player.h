@@ -20,7 +20,12 @@ private:
     DIAGONALS mDiagonals;
     Rect Head;
     Rect Misc;
-    std::vector<Bullet*> bullets;
+
+    //Pickups secundaris
+    int coins;
+    int bombs;
+    int keys;
+
 
     float stats[STAT_LENGHT];
     bool shooting;

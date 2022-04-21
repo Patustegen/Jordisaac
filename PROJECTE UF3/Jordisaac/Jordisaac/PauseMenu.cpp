@@ -14,6 +14,7 @@ void PauseMenu::update()
 	}
 	else if (iInputM->getEvents(GOUP) || iInputM->getEvents(SHOOTUP))
 	{
+		iAudio->playAudio(iSoundM->getSoundByID(sID[0]));
 		switch (selected)
 		{
 		case P_OPTIONS:
@@ -31,6 +32,7 @@ void PauseMenu::update()
 	}
 	else if (iInputM->getEvents(GODOWN) || iInputM->getEvents(SHOOTDOWN))
 	{
+		iAudio->playAudio(iSoundM->getSoundByID(sID[1]));
 		switch (selected)
 		{
 		case P_OPTIONS:

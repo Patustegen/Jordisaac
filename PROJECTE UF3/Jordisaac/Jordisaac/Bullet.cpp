@@ -63,6 +63,12 @@ Bullet::Bullet(float vel, int t, float range, Rect* sp, LOOKING coord, DIAGONALS
 	}
 	destroy = false;
 	load();
+	iAudio->playAudio(iSoundM->getSoundByID(sID[rand() % 3]));
+}
+
+Bullet::~Bullet()
+{
+	iAudio->playAudio(iSoundM->getSoundByID(sID[rand() % 3 + 3]));
 }
 
 void Bullet::update()
@@ -124,4 +130,11 @@ void Bullet::render()
 void Bullet::load()
 {
 	gID = iResourceM->loadAndGetGraphicID("Assets\\Characters\\defaultTears.png");
+
+	sID.push_back(iSoundM->loadAndGetSoundID("Assets/Characters/tearFire1.mp3"));
+	sID.push_back(iSoundM->loadAndGetSoundID("Assets/Characters/tearFire1.mp3"));
+	sID.push_back(iSoundM->loadAndGetSoundID("Assets/Characters/tearFire2.mp3"));
+	sID.push_back(iSoundM->loadAndGetSoundID("Assets/Characters/tearImpact1.mp3"));
+	sID.push_back(iSoundM->loadAndGetSoundID("Assets/Characters/tearImpact2.mp3"));
+	sID.push_back(iSoundM->loadAndGetSoundID("Assets/Characters/tearImpact3.mp3"));
 }

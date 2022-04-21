@@ -10,10 +10,13 @@ void OptionsMenu::update()
 {
 	if (iInputM->getEvents(QUIT))
 	{
-		iSceneD->changeScene(iSceneD->getLastSceneEnum());
+		SceneEnum lastScene = iSceneD->getLastSceneEnum();
+		if (lastScene == MAIN) iAudio->playAudio(iSoundM->getSoundByID(sID[2]));
+		iSceneD->changeScene(lastScene);
 	}
 	else if (iInputM->getEvents(GOUP) || iInputM->getEvents(SHOOTUP))
 	{
+		iAudio->playAudio(iSoundM->getSoundByID(sID[0]));
 		switch (selected)
 		{
 		case CONTROLS:
@@ -34,6 +37,7 @@ void OptionsMenu::update()
 	}
 	else if (iInputM->getEvents(GODOWN) || iInputM->getEvents(SHOOTDOWN))
 	{
+		iAudio->playAudio(iSoundM->getSoundByID(sID[1]));
 		switch (selected)
 		{
 		case CONTROLS:

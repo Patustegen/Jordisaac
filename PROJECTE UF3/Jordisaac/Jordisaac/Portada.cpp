@@ -28,17 +28,17 @@ void Portada::update()
 	if (iInputM->getEvents(ENTER))
 	{
 		iSceneD->changeScene(MAIN);
+		iAudio->playAudio(iSoundM->getSoundByID(sID[2]));
 	}
 }
 
 void Portada::load()
 {
 	bgImage = iResourceM->loadAndGetGraphicID("Assets\\Menus\\splashmenu.png");
-	bgMusic = iSoundM->loadAndGetSoundID("Assets\\Music\\intro-theme.mp3");
 }
 
 void Portada::init()
 {
-	iAudio->playAudio(iSoundM->getSoundByID(bgMusic), 0, -1);
+	iAudio->playAudio(iSoundM->getSoundByID(sID[3]), 0, -1);
 	alpha = 0;
 }

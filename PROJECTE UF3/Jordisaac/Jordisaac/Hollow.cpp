@@ -76,7 +76,6 @@ void Hollow::update()
 
 		if (angle > 90 && angle <= 180) angle = (90 - (angle - 90)) /*+ rand() % 10 -4*/;
 		else if (angle > 180 && angle < 270) angle = (270 + (270 - angle)) /*+ rand() % 10 -4*/;
-		//angle = rand() % 360;
 	}
 	else if (rebotes.x > SCREEN_WIDTH - ROOM_MARGIN_X - rebotes.w) 
 	{
@@ -84,7 +83,6 @@ void Hollow::update()
 		
 		if (angle >= 0 && angle < 90) angle = (180 - angle) /*+ rand() % 10 -4*/;
 		else if (angle > 270 && angle < 360) angle = (180 + (360 - angle)) /*+ rand() % 10 -4*/;
-		//angle = rand() % 360;
 	}
 	if (rebotes.y < ROOM_MARGIN_Y)
 	{
@@ -92,7 +90,6 @@ void Hollow::update()
 		
 		if (angle > 180 && angle <= 270) angle = (180 - (angle - 180)) /*+ rand() % 10 -4*/;
 		else if (angle > 270 && angle < 360) angle = (90 - (angle - 270)) /*+ rand() % 10 -4*/;
-		//angle = rand() % 360;
 	}
 	else if (rebotes.y > SCREEN_HEIGHT - ROOM_MARGIN_Y - rebotes.h)
 	{
@@ -100,7 +97,6 @@ void Hollow::update()
 		
 		if (angle > 0 && angle <= 90) angle = (360 - angle) /*+ rand() % 10 -4*/;
 		else if (angle > 90 && angle < 180) angle = (180 + (180 - angle)) /*+ rand() % 10 -4*/;
-		//angle = rand() % 360;
 	}
 
 	if (angle < 112 && angle > 68) orientacio = DOWN;

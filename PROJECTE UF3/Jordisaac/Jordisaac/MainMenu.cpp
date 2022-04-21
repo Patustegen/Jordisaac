@@ -11,6 +11,7 @@ void MainMenu::update()
 {
 	if (iInputM->getEvents(ENTER))
 	{
+		iAudio->playAudio(iSoundM->getSoundByID(sID[2]));
 		switch (menuSelected)
 		{
 		case NEWGAME:
@@ -32,6 +33,7 @@ void MainMenu::update()
 	}
 	else if (iInputM->getEvents(GOUP) || iInputM->getEvents(SHOOTUP))
 	{
+		iAudio->playAudio(iSoundM->getSoundByID(sID[0]));
 		switch (menuSelected)
 		{
 		case NEWGAME:
@@ -52,6 +54,7 @@ void MainMenu::update()
 	}
 	else if (iInputM->getEvents(GODOWN) || iInputM->getEvents(SHOOTDOWN))
 	{
+		iAudio->playAudio(iSoundM->getSoundByID(sID[1]));
 		switch (menuSelected)
 		{
 		case NEWGAME:
@@ -87,7 +90,7 @@ void MainMenu::init()
 	menuSelected = NEWGAME;
 	if (!iAudio->isPlaying(0))
 	{
-		iAudio->playAudio(iSoundM->getSoundByID(iSoundM->loadAndGetSoundID("Assets\\Music\\intro-theme.mp3")), 0,-1);
+		iAudio->playAudio(iSoundM->getSoundByID(sID[3]), 0,-1);
 	}
 }
 

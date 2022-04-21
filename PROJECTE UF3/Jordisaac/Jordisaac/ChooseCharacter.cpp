@@ -25,6 +25,7 @@ void ChooseCharacter::update()
 		}
 		else if (iInputM->getEvents(GOLEFT) || iInputM->getEvents(SHOOTLEFT))
 		{
+			iAudio->playAudio(iSoundM->getSoundByID(sID[1]));
 			switch (aCharacter)
 			{
 			case ISAAC:
@@ -53,6 +54,7 @@ void ChooseCharacter::update()
 		}
 		else if (iInputM->getEvents(GORIGHT) || iInputM->getEvents(SHOOTRIGHT))
 		{
+			iAudio->playAudio(iSoundM->getSoundByID(sID[0]));
 			switch (aCharacter)
 			{
 			case ISAAC:
@@ -81,6 +83,7 @@ void ChooseCharacter::update()
 		}
 		else if (iInputM->getEvents(QUIT))
 		{
+			iAudio->playAudio(iSoundM->getSoundByID(sID[2]));
 			iSceneD->changeScene(MAIN);
 		}
 	}

@@ -18,7 +18,6 @@ public:
 
 private:
 	int bgImage;
-	int bgMusic;
 	int iScaled;
 	int dScaled;
 };
