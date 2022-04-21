@@ -44,7 +44,13 @@ void Player::update()
 		if (iInputM->getEvents(SHOOTRIGHT)) lHead = RIGHT;
 		if (iInputM->getEvents(SHOOTDOWN)) lHead = DOWN;
 		if (iInputM->getEvents(SHOOTLEFT)) lHead = LEFT;
-		if (iInputM->getEvents(USEBOMB));
+		if (iInputM->getEvents(USEBOMB)) 
+		{
+			if (pickups[0] > 0)
+			{
+				pickups[0]--;
+			}
+		}
 		if (iInputM->getEvents(USEITEM));
 		if (iInputM->getEvents(USECONS));
 		
@@ -228,10 +234,10 @@ void Player::update()
 			{
 				realX -= 1;
 			}
-			col.x += realX;
+			col.x += (int)realX;
 			if (!iRoomM->getActualRoom()->roomWalkable(&col))
 			{
-				col.x -= realX;
+				col.x -= (int)realX;
 			}
 			else
 			{
@@ -254,10 +260,10 @@ void Player::update()
 			{
 				realY -= 1;
 			}
-			col.y += realY;
+			col.y += (int)realY;
 			if (!iRoomM->getActualRoom()->roomWalkable(&col))
 			{
-				col.y -= realY;
+				col.y -= (int)realY;
 			}
 			else
 			{
@@ -277,7 +283,7 @@ void Player::update()
 			if (cooldown <= 0)
 			{
 				shooting = true;
-				cooldown = 500 + stats[TEARS] * 100;
+				cooldown = 500 + (int)stats[TEARS] * 100;
 			}
 		}
 
@@ -344,9 +350,9 @@ void Player::init()
 	shooting = false;
 	frame = 0;
 	cooldown = 0;
-	coins = 0;
-	bombs = 0;
-	keys = 0;
+	pickups[0] = 0;
+	pickups[1] = 0;
+	pickups[2] = 0;
 
 	col.w = 24;
 	col.h = 24;
@@ -378,7 +384,7 @@ void Player::init()
 	switch (iSceneD->getSelectedCharacter())
 	{
 	case ISAAC:
-		bombs = 1;
+		pickups[1] = 1;
 		pHead = iResourceM->loadAndGetGraphicID("Assets\\Characters\\IsaacHead.png");
 		pMisc = iResourceM->loadAndGetGraphicID("Assets\\Characters\\IsaacMisc.png");
 		break;
@@ -396,7 +402,7 @@ void Player::init()
 		pMisc = iResourceM->loadAndGetGraphicID("Assets\\Characters\\MagdeleneMisc.png");
 		break;
 	case CAIN:
-		keys = 1;
+		pickups[2] = 1;
 		stats[RANGE] = 4.5f;
 		stats[SPEED] = 1.3f;
 		stats[LIFE_CAPACITY] = 4;
@@ -457,6 +463,12 @@ Player::Player()
 		stats[i] = 0;
 	}
 
+	//Pickups
+	for (int i = 0; i < 3; i++)
+	{
+		pickups[i] = 0;
+	}
+
 	//States
 	state = IDLE;
 	hstate = IDLE;
@@ -469,9 +481,6 @@ Player::Player()
 	frame = 0;
 	cooldown = 0;
 	hp = 6;
-	coins = 0;
-	bombs = 0;
-	keys = 0;
 	
 	//Rects
 	col = {0,0,0,0};

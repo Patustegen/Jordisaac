@@ -5,7 +5,7 @@ Bullet::Bullet(float vel, int t, float range, Rect* sp, LOOKING coord, DIAGONALS
 {
 	initPos = { sp->x, sp->y };
 	type = t;
-	maxMove = range * 50;
+	maxMove = (int)range * 50;
 	velocity = vel * 0.25f;
 	col = { 0, 0, 22, 22, 0, 0 };
 	paint = { 0, 0, 15, 15 };
@@ -109,8 +109,8 @@ void Bullet::update()
 	}
 	col.restX = std::modf(col.restX, &moveX);
 	col.restY = std::modf(col.restY, &moveY);
-	col.x += moveX;
-	col.y += moveY;
+	col.x += (int)moveX;
+	col.y += (int)moveY;
 
 	paint.x = col.x;
 	paint.y = col.y;

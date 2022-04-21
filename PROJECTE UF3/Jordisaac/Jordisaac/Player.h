@@ -22,9 +22,7 @@ private:
     Rect Misc;
 
     //Pickups secundaris
-    int coins;
-    int bombs;
-    int keys;
+    int pickups[3];
 
 
     float stats[STAT_LENGHT];
@@ -39,6 +37,7 @@ public:
     void render();
     void update();
     void init();
+    int getPickup(int p) { return pickups[p]; };
     float getStat(int nStat) { return stats[nStat]; };
     bool getHurt();
     Player();

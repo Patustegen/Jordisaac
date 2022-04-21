@@ -1,6 +1,6 @@
 #include "Hollow.h"
 #include "Singletons.h"
-#define PI 3.14159265
+#define PI 3.14159265f
 
 Hollow::Hollow(bool h)
 {
@@ -56,18 +56,18 @@ void Hollow::update()
 
 	float vel = 0.35f * iVideo->getDeltaTime();
 	//VelX = Vel * cos(angle)
-	float velX = vel * cos(angle * PI / 180.0);
+	float velX = vel * cos(angle * PI / 180.0f);
 
 	//VelY = Vel * sin(angle)
-	float velY = vel * sin(angle * PI / 180.0);
+	float velY = vel * sin(angle * PI / 180.0f);
 
 	rebotes.restX += velX;
 	rebotes.restY += velY;
 
 	rebotes.restX = std::modf(rebotes.restX, &moveX);
 	rebotes.restY = std::modf(rebotes.restY, &moveY);
-	rebotes.x += moveX;
-	rebotes.y += moveY;
+	rebotes.x += (int)moveX;
+	rebotes.y += (int)moveY;
 
 
 	if (rebotes.x < ROOM_MARGIN_X)

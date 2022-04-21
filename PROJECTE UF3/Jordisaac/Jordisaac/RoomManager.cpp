@@ -31,6 +31,7 @@ Room* RoomManager::getActualRoom()
 			return &Level[i];
 		}
 	}
+	return nullptr;
 }
 
 void RoomManager::changeRoom(int aR, int nMove, Player* p)

@@ -52,11 +52,11 @@ void AttackFly::update()
 	{
 		realX -= 1;
 	}
-	col.x += realX;
+	col.x += (int)realX;
 
 	if (!iRoomM->getActualRoom()->roomWalkable(&col) || !iRoomM->getActualRoom()->colWalkable(&col))
 	{
-		col.x -= realX;
+		col.x -= (int)realX;
 	}
 	else
 	{
@@ -94,11 +94,11 @@ void AttackFly::update()
 	{
 		realY -= 1;
 	}
-	col.y += realY;
+	col.y += (int)realY;
 
 	if (!iRoomM->getActualRoom()->roomWalkable(&col) || !iRoomM->getActualRoom()->colWalkable(&col))
 	{
-		col.y -= realY;
+		col.y -= (int)realY;
 	}
 	else 
 	{
