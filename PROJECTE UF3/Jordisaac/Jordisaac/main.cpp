@@ -9,6 +9,7 @@ int main(int argc, char* args[]) {
 	iSceneD = SceneDirector::getInstance();
 	iRoomM = RoomManager::getInstance();
 	iBulletM = BulletManager::getInstance();
+	iBombM = BombManager::getInstance();
 
 	
 

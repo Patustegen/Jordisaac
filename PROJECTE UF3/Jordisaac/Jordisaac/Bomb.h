@@ -1,14 +1,18 @@
 #pragma once
 #include "BaseCollision.h"
+
+enum BOMB_ESTATS { COUNTDOWN, EXPLODING, EXPLODED };
+
 class Bomb :
     public BaseCollision
 {
-    bool exploded;
+    bool destroy;
+    BOMB_ESTATS estats;
     int timer;
 public:
     void update();
     void render();
-    bool hasExploded() { return exploded; };
+    bool mustDestroy() { return destroy; };
     Bomb(int x, int y);
     ~Bomb();
 };

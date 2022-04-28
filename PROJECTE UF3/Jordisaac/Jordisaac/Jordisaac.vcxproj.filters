@@ -74,6 +74,9 @@
       <Filter>Enemies</Filter>
     </ClCompile>
     <ClCompile Include="Bomb.cpp" />
+    <ClCompile Include="BombManager.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseCharacter.h" />
@@ -152,6 +155,9 @@
       <Filter>Enemies</Filter>
     </ClInclude>
     <ClInclude Include="Bomb.h" />
+    <ClInclude Include="BombManager.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Scenes">

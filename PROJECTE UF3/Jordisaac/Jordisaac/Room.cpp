@@ -77,9 +77,27 @@ void Room::update()
 	roomFrame++;
 	_player->update();
 	iBulletM->update();
+	iBombM->update();
 
 	if (completed)
 	{
+		movCharacters.resize(0);
+		movCharacters.push_back(_player);
+		bool swapped = false;
+		do
+		{
+			swapped = true;
+			for (int i = 1; i < movCharacters.size(); i++)
+			{
+				if (movCharacters[i - 1]->getCol()->y + movCharacters[i - 1]->getCol()->h > movCharacters[i]->getCol()->y + movCharacters[i]->getCol()->h)
+				{
+					BaseCharacter* tmp = movCharacters[i - 1];
+					movCharacters[i - 1] = movCharacters[i];
+					movCharacters[i] = tmp;
+					swapped = false;
+				}
+			}
+		} while (!swapped);
 		for (int i = 0; i < colDoor.size(); i++)
 		{
 			if (iVideo->isInside(&colDoor[i].col, _player->getCol()))
@@ -145,6 +163,7 @@ void Room::update()
 void Room::render()
 {
 	iVideo->renderGraphic(bg, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+	iBombM->render();
 	for (int i = 0; i < colDoor.size(); i++)
 	{
 		iVideo->renderGraphicEx(gDoor, &colDoor.at(i).paint, colDoor.at(i).angle, 2.0f, 2.0f, colDoor.at(i).paint.w * completed);

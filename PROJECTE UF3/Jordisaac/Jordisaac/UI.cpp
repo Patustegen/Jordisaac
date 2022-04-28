@@ -37,9 +37,11 @@ void UI::render()
 		iVideo->renderGraphic(gPickups, rPickups.x, rPickups.y, rPickups.w, rPickups.h, 0, rPickups.h * i, 0.75f, 0.75f);
 		rNumbers.x = (int)(rPickups.x + rPickups.w * 0.75f);
 		rNumbers.y = rPickups.y + 8;
-		iVideo->renderGraphic(gNumbers, rNumbers.x, rNumbers.y, rNumbers.w, rNumbers.h, rNumbers.w * mPlayer->getPickup(i) / 10, 0, 2.0f, 2.0f);
+		int result = mPlayer->getPickup(i) / 10;
+		iVideo->renderGraphic(gNumbers, rNumbers.x, rNumbers.y, rNumbers.w, rNumbers.h, rNumbers.w * (mPlayer->getPickup(i) / 10), 0, 2.0f, 2.0f);
 		rNumbers.x += rNumbers.w * 2;
-		iVideo->renderGraphic(gNumbers, rNumbers.x, rNumbers.y, rNumbers.w, rNumbers.h, rNumbers.w * mPlayer->getPickup(i) % 10, 0, 2.0f, 2.0f);
+		result = mPlayer->getPickup(i) % 10;
+		iVideo->renderGraphic(gNumbers, rNumbers.x, rNumbers.y, rNumbers.w, rNumbers.h, rNumbers.w * (mPlayer->getPickup(i) % 10), 0, 2.0f, 2.0f);
 
 		rPickups.y += (int)(rPickups.h * 0.75f);
 	}
@@ -49,27 +51,15 @@ void UI::render()
 	float life = (float)mPlayer->getHP();
 	for (int i = 0; i < nHearts; i++)
 	{
-		if (life > 1)
-		{
-			iVideo->renderGraphic(gHeart, rHearts.x, rHearts.y, rHearts.w, rHearts.h, 0, 0, 1.5f, 1.5f);
-		}
-		else if (life == 1)
-		{
-			iVideo->renderGraphic(gHeart, rHearts.x, rHearts.y, rHearts.w, rHearts.h, rHearts.w, 0, 1.5f, 1.5f);
-		}
-		else
-		{
-			iVideo->renderGraphic(gHeart, rHearts.x, rHearts.y, rHearts.w, rHearts.h, rHearts.w * 2, 0, 1.5f, 1.5f);
-		}
+		if (life > 1) iVideo->renderGraphic(gHeart, rHearts.x, rHearts.y, rHearts.w, rHearts.h, 0, 0, 1.5f, 1.5f);
+		else if (life == 1) iVideo->renderGraphic(gHeart, rHearts.x, rHearts.y, rHearts.w, rHearts.h, rHearts.w, 0, 1.5f, 1.5f);
+		else iVideo->renderGraphic(gHeart, rHearts.x, rHearts.y, rHearts.w, rHearts.h, rHearts.w * 2, 0, 1.5f, 1.5f);
 		life -= 2;
 		if (i == 5)
 		{
 			rHearts.y += (int)(rHearts.h * 1.5f - 10);
 			rHearts.x = MARGIN * 4;
 		}
-		else
-		{
-			rHearts.x += (int)(rHearts.w * 1.5f - 10);
-		}
+		else rHearts.x += (int)(rHearts.w * 1.5f - 10);
 	}
 }

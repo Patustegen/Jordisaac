@@ -150,6 +150,7 @@
     <ClCompile Include="BaseCharacter.cpp" />
     <ClCompile Include="BaseCollision.cpp" />
     <ClCompile Include="Bomb.cpp" />
+    <ClCompile Include="BombManager.cpp" />
     <ClCompile Include="Boss.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="BulletManager.cpp" />
@@ -181,6 +182,7 @@
     <ClInclude Include="BaseCharacter.h" />
     <ClInclude Include="BaseCollision.h" />
     <ClInclude Include="Bomb.h" />
+    <ClInclude Include="BombManager.h" />
     <ClInclude Include="Boss.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="BulletManager.h" />

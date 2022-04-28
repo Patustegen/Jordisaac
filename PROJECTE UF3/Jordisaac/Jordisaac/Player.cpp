@@ -46,12 +46,13 @@ void Player::update()
 		if (iInputM->getEvents(SHOOTLEFT)) lHead = LEFT;
 		if (iInputM->getEvents(USEBOMB)) 
 		{
-			if (pickups[0] > 0)
+			if (pickups[1] > 0)
 			{
-				pickups[0]--;
+				pickups[1]--;
+				iBombM->AddBomb(col.x, col.y);
 			}
 		}
-		if (iInputM->getEvents(USEITEM));
+		if (iInputM->getEvents(USEITEM)) pickups[1]++;
 		if (iInputM->getEvents(USECONS));
 		
 		mDiagonals = NONE;
