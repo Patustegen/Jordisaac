@@ -73,10 +73,16 @@
     <ClCompile Include="Hollow.cpp">
       <Filter>Enemies</Filter>
     </ClCompile>
-    <ClCompile Include="Bomb.cpp" />
     <ClCompile Include="BombManager.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
+    <ClCompile Include="Pickup.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Bomb.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="PickupsManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseCharacter.h" />
@@ -154,10 +160,16 @@
     <ClInclude Include="Hollow.h">
       <Filter>Enemies</Filter>
     </ClInclude>
-    <ClInclude Include="Bomb.h" />
     <ClInclude Include="BombManager.h">
       <Filter>Engine</Filter>
     </ClInclude>
+    <ClInclude Include="Pickup.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Bomb.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="PickupsManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Scenes">

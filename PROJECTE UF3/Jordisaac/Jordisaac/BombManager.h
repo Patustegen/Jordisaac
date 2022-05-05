@@ -1,7 +1,6 @@
 #pragma once
 #include "Bomb.h"
 #include <vector>
-#include "enums.h"
 class BombManager
 {
 	std::vector<Bomb*> bombs;
@@ -19,4 +18,3 @@ public:
 	void update();
 	void render();
 };
-

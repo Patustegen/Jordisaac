@@ -70,6 +70,7 @@ void Room::init(Player* p)
 		movCharacters.push_back(enemies[i]);
 	}
 	iBulletM->init();
+	iBombM->init();
 }
 
 void Room::update()
@@ -78,6 +79,7 @@ void Room::update()
 	_player->update();
 	iBulletM->update();
 	iBombM->update();
+	iPickM->update();
 
 	if (completed)
 	{
@@ -163,11 +165,12 @@ void Room::update()
 void Room::render()
 {
 	iVideo->renderGraphic(bg, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-	iBombM->render();
 	for (int i = 0; i < colDoor.size(); i++)
 	{
 		iVideo->renderGraphicEx(gDoor, &colDoor.at(i).paint, colDoor.at(i).angle, 2.0f, 2.0f, colDoor.at(i).paint.w * completed);
 	}
+	iBombM->render();
+	iPickM->render();
 	for (int i = 0; i < movCharacters.size(); i++)
 	{
 		movCharacters[i]->render();

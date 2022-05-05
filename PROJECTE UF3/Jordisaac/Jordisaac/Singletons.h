@@ -8,6 +8,7 @@
 #include "RoomManager.h"
 #include "BulletManager.h"
 #include "BombManager.h"
+#include "PickupsManager.h"
 
 extern ResourceManager* iResourceM;
 extern Video* iVideo;
@@ -18,3 +19,4 @@ extern SceneDirector* iSceneD;
 extern RoomManager* iRoomM;
 extern BulletManager* iBulletM;
 extern BombManager* iBombM;
+extern PickupsManager* iPickM;

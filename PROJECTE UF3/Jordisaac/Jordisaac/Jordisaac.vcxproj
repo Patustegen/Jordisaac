@@ -163,6 +163,8 @@
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="OptionsMenu.cpp" />
     <ClCompile Include="PauseMenu.cpp" />
+    <ClCompile Include="Pickup.cpp" />
+    <ClCompile Include="PickupsManager.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Portada.cpp" />
     <ClCompile Include="Ranking.cpp" />
@@ -195,6 +197,8 @@
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="OptionsMenu.h" />
     <ClInclude Include="PauseMenu.h" />
+    <ClInclude Include="Pickup.h" />
+    <ClInclude Include="PickupsManager.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Portada.h" />
     <ClInclude Include="Ranking.h" />

@@ -38,6 +38,7 @@ public:
     void update();
     void init();
     int getPickup(int p) { return pickups[p]; };
+    void PickupUp(int p, int q = 1) { pickups[p] += q; };
     float getStat(int nStat) { return stats[nStat]; };
     bool getHurt();
     Player();

@@ -10,8 +10,7 @@ int main(int argc, char* args[]) {
 	iRoomM = RoomManager::getInstance();
 	iBulletM = BulletManager::getInstance();
 	iBombM = BombManager::getInstance();
-
-	
+	iPickM = PickupsManager::getInstance();
 
 	iSceneD->getCurrentScene()->init();
 	while (true)

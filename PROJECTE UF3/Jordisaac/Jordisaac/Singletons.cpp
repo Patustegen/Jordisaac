@@ -9,3 +9,4 @@ SceneDirector* iSceneD;
 RoomManager* iRoomM;
 BulletManager* iBulletM;
 BombManager* iBombM;
+PickupsManager* iPickM;
