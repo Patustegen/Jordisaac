@@ -5,8 +5,8 @@ class Pickup :
 {
     int type;
     int room;
+    int frame;
 public:
-    void update();
     void render();
     int getType() { return type; };
     int getRoom() { return room; };

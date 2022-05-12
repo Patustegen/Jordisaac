@@ -28,6 +28,8 @@ private:
     float stats[STAT_LENGHT];
     bool shooting;
     int cooldown;
+    bool eHeart;
+    std::vector<HEARTS> sHearts;
 
     //ASSETS
     int pHead;
@@ -40,6 +42,9 @@ public:
     int getPickup(int p) { return pickups[p]; };
     void PickupUp(int p, int q = 1) { pickups[p] += q; };
     float getStat(int nStat) { return stats[nStat]; };
+    std::vector<HEARTS> getSHearts() { return sHearts; };
+    bool hasEHeart() { return eHeart; };
+    bool pickupHeart(HEARTS t);
     bool getHurt();
     Player();
     ~Player();

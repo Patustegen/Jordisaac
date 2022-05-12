@@ -60,6 +60,12 @@ void UI::render()
 			rHearts.y += (int)(rHearts.h * 1.5f - 10);
 			rHearts.x = MARGIN * 4;
 		}
-		else rHearts.x += (int)(rHearts.w * 1.5f - 10);
+		else if(i != nHearts -1) rHearts.x += (int)(rHearts.w * 1.5f - 10);
+	}
+	if (mPlayer->hasEHeart()) iVideo->renderGraphic(gHeart, rHearts.x, rHearts.y, rHearts.w, rHearts.h, 0, 0, 1.5f, 1.5f);
+	int nSHearts = mPlayer->getSHearts().size();
+	for (int i = 0; i < nSHearts; i++)
+	{
+
 	}
 }

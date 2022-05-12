@@ -64,6 +64,21 @@ void Room::init(Player* p)
 			break;
 		}
 	}
+	else
+	{
+		completed = true;
+		for (int i = 0; i < 13; i++)
+		{
+			if (i < 6)
+			{
+				iPickM->AddPickup(ROOM_MARGIN_X + i * 35, ROOM_MARGIN_Y + 10, i);
+			}
+			else
+			{
+				iPickM->AddPickup(ROOM_MARGIN_X + i * 35, ROOM_MARGIN_Y + 60, i);
+			}
+		}
+	}
 	movCharacters.push_back(_player);
 	for (int i = 0; i < enemies.size(); i++)
 	{
@@ -158,6 +173,11 @@ void Room::update()
 			completed = true;
 			movCharacters.resize(0);
 			movCharacters.push_back(_player);
+			int max = rand() % 3;
+			for (int i = 0; i < max; i++)
+			{
+				iPickM->AddPickup((SCREEN_WIDTH / 2) - (rand() % 15 - 10), (SCREEN_HEIGHT/ 2) - (rand() % 15 - 10));
+			}
 		}
 	}
 }
@@ -227,6 +247,11 @@ bool Room::playerCol(Rect* col)
 {
 	if (iVideo->onCollision(col, _player->getCol())) return true;
 	return false;
+}
+
+void Room::DamageAll()
+{
+	for (int i = 0; i < enemies.size(); i++)enemies[i]->hurt();
 }
 
 Room::Room(int nDoors, int roomID)

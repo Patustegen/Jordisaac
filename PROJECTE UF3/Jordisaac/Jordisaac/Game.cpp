@@ -34,6 +34,7 @@ void Game::init()
 {
 	iRoomM->createNewLevel(1);
 	iInputM->switchGameMode(true);
+	iPickM->setPlayer(player);
 	ui->setPlayer(player);
 	player->init();
 	ui->init();

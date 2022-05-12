@@ -341,6 +341,8 @@ void Player::init()
 	stats[LUCK] = 0;
 	stats[LIFE_CAPACITY] = 6;
 	hp = 6;
+	sHearts.resize(0);
+	eHeart = false;
 
 	state = IDLE;
 	hstate = IDLE;
@@ -430,15 +432,132 @@ void Player::init()
 	}
 }
 
+bool Player::pickupHeart(HEARTS t)
+{
+	switch (t)
+	{
+	case HALF_RED:
+		if (hp <= stats[LIFE_CAPACITY] +1)
+		{
+			hp++;
+			return true;
+		}
+		else return false;
+		break;
+	case FULL_RED:
+		if (hp <= stats[LIFE_CAPACITY] +2)
+		{
+			hp += 2;
+			return true;
+		}
+		else return false;
+		break;
+	case HALF_SOUL:
+		if (sHearts.size() == 0) sHearts.push_back(t);
+		else
+		{
+			switch (sHearts[sHearts.size() - 1])
+			{
+			case HALF_SOUL:
+				sHearts[sHearts.size() - 1] = FULL_SOUL;
+				break;
+			case HALF_BLACK:
+				sHearts[sHearts.size() - 1] = FULL_BLACK;
+				break;
+			default:
+				sHearts.push_back(t);
+				break;
+			}
+		}
+		break;
+	case FULL_SOUL:
+		if (sHearts.size() == 0) sHearts.push_back(t);
+		else
+		{
+			switch (sHearts[sHearts.size() - 1])
+			{
+			case HALF_SOUL:
+				sHearts[sHearts.size() - 1] = t;
+				sHearts.push_back(HALF_SOUL);
+				break;
+			case HALF_BLACK:
+				sHearts[sHearts.size() - 1] = FULL_BLACK;
+				sHearts.push_back(HALF_SOUL);
+				break;
+			default:
+				sHearts.push_back(t);
+				break;
+			}
+		}
+		break;
+	case FULL_BLACK:
+		if (sHearts.size() == 0) sHearts.push_back(t);
+		else
+		{
+			switch (sHearts[sHearts.size() - 1])
+			{
+			case HALF_BLACK:
+				sHearts[sHearts.size() - 1] = t;
+				sHearts.push_back(HALF_BLACK);
+				break;
+			case HALF_SOUL:
+				sHearts[sHearts.size() - 1] = FULL_SOUL;
+				sHearts.push_back(HALF_BLACK);
+				break;
+			default:
+				sHearts.push_back(t);
+				break;
+			}
+		}
+		break;
+	case HALF_ETERNAL:
+		if (eHeart)
+		{
+			eHeart = false;
+			stats[LIFE_CAPACITY] += 2;
+			hp += 2;
+		}
+		else eHeart = true;
+		break;
+	default:
+		break;
+	}
+}
+
 bool Player::getHurt()
 {
 	switch (state)
 	{
 	case IDLE:
 	case MOVING:
-		hp--;
+		if (sHearts.size() > 0)
+		{
+			switch (sHearts[sHearts.size() - 1])
+			{
+			case HALF_SOUL:
+				sHearts.resize(sHearts.size() - 1);
+				break;
+			case FULL_SOUL:
+				sHearts[sHearts.size() - 1] = HALF_SOUL;
+				break;
+			case HALF_BLACK:
+				sHearts.resize(sHearts.size() - 1);
+				iRoomM->getActualRoom()->damageAll();
+				break;
+			case FULL_BLACK:
+				sHearts[sHearts.size() - 1] = HALF_BLACK;
+				break;
+			default:
+				break;
+			}
+		}
+		else
+		{
+			hp--;
+			if (eHeart && hp % 2 == 0) eHeart = false;
+		}
 		frame = 0;
-		if (hp == 0)
+		if (hp == 0 && sHearts.size() == 0)
 		{
 			state = DEAD;
 			iAudio->playAudio(iSoundM->getSoundByID(sID[rand() % 3]),3);
@@ -463,6 +582,8 @@ Player::Player()
 	{
 		stats[i] = 0;
 	}
+	sHearts.resize(0);
+	eHeart = false;
 
 	//Pickups
 	for (int i = 0; i < 3; i++)

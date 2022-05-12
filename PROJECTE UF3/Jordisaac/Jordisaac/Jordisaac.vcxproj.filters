@@ -82,7 +82,9 @@
     <ClCompile Include="Bomb.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
-    <ClCompile Include="PickupsManager.cpp" />
+    <ClCompile Include="PickupsManager.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseCharacter.h" />
@@ -169,7 +171,9 @@
     <ClInclude Include="Bomb.h">
       <Filter>Engine</Filter>
     </ClInclude>
-    <ClInclude Include="PickupsManager.h" />
+    <ClInclude Include="PickupsManager.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Scenes">
