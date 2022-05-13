@@ -39,33 +39,82 @@ void PickupsManager::update()
 				case 0:
 				case 1:
 				case 2:
-					_p->PickupUp(pickups[i]->getType());
+					if (_p->PickupUp(pickups[i]->getType()))
+					{
+						//sound
+						pickups.erase(pickups.begin() + i);
+						i--;
+					}
 					break;
 				case 3:
-					_p->PickupUp(1, 2);
+					if (_p->PickupUp(1, 2))
+					{
+						//sound
+						pickups.erase(pickups.begin() + i);
+						i--;
+					}
 					break;
 				case 4:
-					_p->PickupUp(0, 5);
+					if (_p->PickupUp(0, 5))
+					{
+						//sound
+						pickups.erase(pickups.begin() + i);
+						i--;
+					}
 					break;
 				case 5:
-					_p->PickupUp(0, 10);
+					if (_p->PickupUp(0, 10))
+					{
+						//sound
+						pickups.erase(pickups.begin() + i);
+						i--;
+					}
 					break;
 				case 6:
 					//Battery
 					break;
 				//CORS
 				case 7:
-					
+					if (_p->pickupHeart(HALF_RED))
+					{
+						pickups.erase(pickups.begin() + i);
+						i--;
+					}
 					break;
 				case 8:
+					if (_p->pickupHeart(FULL_RED))
+					{
+						pickups.erase(pickups.begin() + i);
+						i--;
+					}
 					break;
 				case 9:
+					if (_p->pickupHeart(HALF_SOUL))
+					{
+						pickups.erase(pickups.begin() + i);
+						i--;
+					}
 					break;
 				case 10:
+					if (_p->pickupHeart(FULL_SOUL))
+					{
+						pickups.erase(pickups.begin() + i);
+						i--;
+					}
 					break;
 				case 11:
+					if (_p->pickupHeart(FULL_BLACK))
+					{
+						pickups.erase(pickups.begin() + i);
+						i--;
+					}
 					break;
 				case 12:
+					if (_p->pickupHeart(HALF_ETERNAL))
+					{
+						pickups.erase(pickups.begin() + i);
+						i--;
+					}
 					break;
 				default:
 					break;

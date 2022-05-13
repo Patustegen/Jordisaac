@@ -52,7 +52,7 @@ void Player::update()
 				iBombM->AddBomb(col.x, col.y);
 			}
 		}
-		if (iInputM->getEvents(USEITEM)) pickups[1]++;
+		if (iInputM->getEvents(USEITEM));
 		if (iInputM->getEvents(USECONS));
 		
 		mDiagonals = NONE;
@@ -430,6 +430,22 @@ void Player::init()
 	default:
 		break;
 	}
+	totalHearts = hp;
+}
+
+bool Player::PickupUp(int p, int q)
+{
+	if (pickups[p] + q <= MAX_PICKUP)
+	{
+		pickups[p] += q;
+		return true;
+	}
+	else if (pickups[p] != MAX_PICKUP)
+	{
+		pickups[p] = MAX_PICKUP;
+		return true;
+	}
+	return false;
 }
 
 bool Player::pickupHeart(HEARTS t)
@@ -437,75 +453,148 @@ bool Player::pickupHeart(HEARTS t)
 	switch (t)
 	{
 	case HALF_RED:
-		if (hp <= stats[LIFE_CAPACITY] +1)
+		if (hp +1 <= stats[LIFE_CAPACITY])
 		{
 			hp++;
 			return true;
 		}
-		else return false;
+		return false;
 		break;
 	case FULL_RED:
-		if (hp <= stats[LIFE_CAPACITY] +2)
+		if (hp +2 <= stats[LIFE_CAPACITY])
 		{
 			hp += 2;
 			return true;
 		}
-		else return false;
+		return false;
 		break;
 	case HALF_SOUL:
-		if (sHearts.size() == 0) sHearts.push_back(t);
+		if (sHearts.size() == 0)
+		{ 
+			if (totalHearts + 2 <= MAX_HEARTS)
+			{
+				sHearts.push_back(t);
+				totalHearts++;
+				return true;
+			}
+			return false;
+		}
 		else
 		{
 			switch (sHearts[sHearts.size() - 1])
 			{
 			case HALF_SOUL:
 				sHearts[sHearts.size() - 1] = FULL_SOUL;
+				totalHearts++;
+				return true;
 				break;
 			case HALF_BLACK:
 				sHearts[sHearts.size() - 1] = FULL_BLACK;
+				totalHearts++;
+				return true;
 				break;
 			default:
-				sHearts.push_back(t);
+				if (totalHearts + 2 <= MAX_HEARTS)
+				{
+					sHearts.push_back(t);
+					totalHearts++;
+					return true;
+				}
+				return false;
 				break;
 			}
 		}
 		break;
 	case FULL_SOUL:
-		if (sHearts.size() == 0) sHearts.push_back(t);
+		if (sHearts.size() == 0)
+		{
+			if (totalHearts + 2 <= MAX_HEARTS)
+			{
+				sHearts.push_back(t);
+				totalHearts += 2;
+				return true;
+			}
+			return false;
+		}
 		else
 		{
 			switch (sHearts[sHearts.size() - 1])
 			{
 			case HALF_SOUL:
-				sHearts[sHearts.size() - 1] = t;
-				sHearts.push_back(HALF_SOUL);
+				if (totalHearts + 2 <= MAX_HEARTS)
+				{
+					sHearts[sHearts.size() - 1] = t;
+					sHearts.push_back(HALF_SOUL);
+					totalHearts++;
+					return true;
+				}
+				return false;
 				break;
 			case HALF_BLACK:
-				sHearts[sHearts.size() - 1] = FULL_BLACK;
-				sHearts.push_back(HALF_SOUL);
+				if (totalHearts + 2 <= MAX_HEARTS)
+				{
+					sHearts[sHearts.size() - 1] = FULL_BLACK;
+					sHearts.push_back(HALF_SOUL);
+					totalHearts++;
+					return true;
+				}
+				return false;
 				break;
 			default:
-				sHearts.push_back(t);
+				if (totalHearts + 2 <= MAX_HEARTS)
+				{
+					sHearts.push_back(t);
+					totalHearts++;
+					return true;
+				}
+				return false;
 				break;
 			}
 		}
 		break;
 	case FULL_BLACK:
-		if (sHearts.size() == 0) sHearts.push_back(t);
+		if (sHearts.size() == 0)
+		{
+			if (totalHearts + 2 <= MAX_HEARTS)
+			{
+				sHearts.push_back(t);
+				totalHearts++;
+				return true;
+			}
+			return false;
+		}
 		else
 		{
 			switch (sHearts[sHearts.size() - 1])
 			{
 			case HALF_BLACK:
-				sHearts[sHearts.size() - 1] = t;
-				sHearts.push_back(HALF_BLACK);
+				if (totalHearts + 2 <= MAX_HEARTS)
+				{
+					sHearts[sHearts.size() - 1] = t;
+					sHearts.push_back(HALF_BLACK);
+					totalHearts++;
+					return true;
+				}
+				return false;
 				break;
 			case HALF_SOUL:
-				sHearts[sHearts.size() - 1] = FULL_SOUL;
-				sHearts.push_back(HALF_BLACK);
+				if (totalHearts + 2 <= MAX_HEARTS)
+				{
+					sHearts[sHearts.size() - 1] = FULL_SOUL;
+					sHearts.push_back(HALF_BLACK);
+					totalHearts++;
+					return true;
+				}
+				return false;
 				break;
 			default:
-				sHearts.push_back(t);
+				if (totalHearts + 2 <= MAX_HEARTS)
+				{
+					sHearts.push_back(t);
+					totalHearts++;
+					return true;
+				}
+				return false;
 				break;
 			}
 		}
@@ -513,11 +602,39 @@ bool Player::pickupHeart(HEARTS t)
 	case HALF_ETERNAL:
 		if (eHeart)
 		{
-			eHeart = false;
-			stats[LIFE_CAPACITY] += 2;
-			hp += 2;
+			if (hp != MAX_HEARTS)
+			{
+				eHeart = false;
+				stats[LIFE_CAPACITY] += 2;
+				hp += 2;
+				if (totalHearts == MAX_HEARTS)
+				{
+					for (int i = 0; i < sHearts.size() -1; i++)
+					{
+						sHearts[i] = sHearts[i + 1];
+					}
+					sHearts.pop_back();
+					return true;
+				}
+				else if (totalHearts +1 == MAX_HEARTS)
+				{
+					sHearts.pop_back();
+					totalHearts = MAX_HEARTS;
+					return true;
+				}
+				else
+				{
+					totalHearts++;
+					return true;
+				}
+			}
+			return false;
 		}
-		else eHeart = true;
+		else 
+		{ 
+			eHeart = true;
+			return true;
+		}
 		break;
 	default:
 		break;
@@ -532,16 +649,17 @@ bool Player::getHurt()
 	case MOVING:
 		if (sHearts.size() > 0)
 		{
+			totalHearts--;
 			switch (sHearts[sHearts.size() - 1])
 			{
 			case HALF_SOUL:
-				sHearts.resize(sHearts.size() - 1);
+				sHearts.pop_back();
 				break;
 			case FULL_SOUL:
 				sHearts[sHearts.size() - 1] = HALF_SOUL;
 				break;
 			case HALF_BLACK:
-				sHearts.resize(sHearts.size() - 1);
+				sHearts.pop_back();
 				iRoomM->getActualRoom()->damageAll();
 				break;
 			case FULL_BLACK:
@@ -553,8 +671,8 @@ bool Player::getHurt()
 		}
 		else
 		{
-			hp--;
-			if (eHeart && hp % 2 == 0) eHeart = false;
+			if (eHeart) eHeart = false;
+			else hp--;
 		}
 		frame = 0;
 		if (hp == 0 && sHearts.size() == 0)
@@ -584,6 +702,7 @@ Player::Player()
 	}
 	sHearts.resize(0);
 	eHeart = false;
+	totalHearts = hp;
 
 	//Pickups
 	for (int i = 0; i < 3; i++)

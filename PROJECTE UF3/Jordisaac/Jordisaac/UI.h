@@ -30,7 +30,6 @@ public:
 	void setPlayer(Player* nP) { mPlayer = nP; };
 	void load();
 	void init();
-	void update();
 	void render();
 };
 

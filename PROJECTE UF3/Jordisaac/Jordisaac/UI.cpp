@@ -48,24 +48,49 @@ void UI::render()
 	rHearts.x = MARGIN * 4;
 	rHearts.y = MARGIN;
 	int nHearts = (int)mPlayer->getStat(LIFE_CAPACITY) / 2;
-	float life = (float)mPlayer->getHP();
+	int life = mPlayer->getHP();
 	for (int i = 0; i < nHearts; i++)
 	{
 		if (life > 1) iVideo->renderGraphic(gHeart, rHearts.x, rHearts.y, rHearts.w, rHearts.h, 0, 0, 1.5f, 1.5f);
 		else if (life == 1) iVideo->renderGraphic(gHeart, rHearts.x, rHearts.y, rHearts.w, rHearts.h, rHearts.w, 0, 1.5f, 1.5f);
 		else iVideo->renderGraphic(gHeart, rHearts.x, rHearts.y, rHearts.w, rHearts.h, rHearts.w * 2, 0, 1.5f, 1.5f);
 		life -= 2;
+		if (i == nHearts-1)
+		{
+			if (mPlayer->hasEHeart()) iVideo->renderGraphic(gHeart, rHearts.x, rHearts.y, rHearts.w, rHearts.h, 0, rHearts.h * 3, 1.5f, 1.5f);
+		}
 		if (i == 5)
 		{
 			rHearts.y += (int)(rHearts.h * 1.5f - 10);
 			rHearts.x = MARGIN * 4;
 		}
-		else if(i != nHearts -1) rHearts.x += (int)(rHearts.w * 1.5f - 10);
+		else rHearts.x += (int)(rHearts.w * 1.5f - 10);
 	}
-	if (mPlayer->hasEHeart()) iVideo->renderGraphic(gHeart, rHearts.x, rHearts.y, rHearts.w, rHearts.h, 0, 0, 1.5f, 1.5f);
 	int nSHearts = mPlayer->getSHearts().size();
 	for (int i = 0; i < nSHearts; i++)
 	{
-
+		switch (mPlayer->getSHearts()[i])
+		{
+		case HALF_SOUL:
+			iVideo->renderGraphic(gHeart, rHearts.x, rHearts.y, rHearts.w, rHearts.h, rHearts.w, rHearts.h, 1.5f, 1.5f);
+			break;
+		case FULL_SOUL:
+			iVideo->renderGraphic(gHeart, rHearts.x, rHearts.y, rHearts.w, rHearts.h, 0, rHearts.h, 1.5f, 1.5f);
+			break;
+		case HALF_BLACK:
+			iVideo->renderGraphic(gHeart, rHearts.x, rHearts.y, rHearts.w, rHearts.h, rHearts.w, rHearts.h * 2, 1.5f, 1.5f);
+			break;
+		case FULL_BLACK:
+			iVideo->renderGraphic(gHeart, rHearts.x, rHearts.y, rHearts.w, rHearts.h, 0, rHearts.h * 2, 1.5f, 1.5f);
+			break;
+		default:
+			break;
+		}
+		if (i + nHearts == 5)
+		{
+			rHearts.y += (int)(rHearts.h * 1.5f - 10);
+			rHearts.x = MARGIN * 4;
+		}
+		else rHearts.x += (int)(rHearts.w * 1.5f - 10);
 	}
 }

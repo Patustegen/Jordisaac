@@ -249,7 +249,7 @@ bool Room::playerCol(Rect* col)
 	return false;
 }
 
-void Room::DamageAll()
+void Room::damageAll()
 {
 	for (int i = 0; i < enemies.size(); i++)enemies[i]->hurt();
 }

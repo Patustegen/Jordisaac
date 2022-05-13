@@ -2,7 +2,8 @@
 #include "BaseCharacter.h"
 #include "enums.h"
 #include "Bullet.h"
-
+#define MAX_HEARTS 24
+#define MAX_PICKUP 99
 enum STATS
 {
     DAMAGE, TEARS, RANGE, SHOT_SPEED, SPEED, LUCK, LIFE_CAPACITY,
@@ -30,6 +31,7 @@ private:
     int cooldown;
     bool eHeart;
     std::vector<HEARTS> sHearts;
+    int totalHearts;
 
     //ASSETS
     int pHead;
@@ -40,7 +42,7 @@ public:
     void update();
     void init();
     int getPickup(int p) { return pickups[p]; };
-    void PickupUp(int p, int q = 1) { pickups[p] += q; };
+    bool PickupUp(int p, int q = 1);
     float getStat(int nStat) { return stats[nStat]; };
     std::vector<HEARTS> getSHearts() { return sHearts; };
     bool hasEHeart() { return eHeart; };
