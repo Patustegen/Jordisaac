@@ -11,6 +11,7 @@ class RoomManager
 	static RoomManager* pInstance;
 	std::vector<Room> Level;
 	int aRoom;
+	int aLevel;
 protected:
 	RoomManager();
 public:
@@ -21,6 +22,7 @@ public:
 	}
 	~RoomManager();
 	Room* getActualRoom();
+	int getActualLevel() { return aLevel; };
 	void changeRoom(int aR, int nMove, Player* p);
 	void createNewLevel(int lDiff);
 };

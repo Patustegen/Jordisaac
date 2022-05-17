@@ -16,6 +16,8 @@ struct Door
 	Rect paint;
 	double angle;
 	int idChange;
+	bool locked = false;
+	ROOM_TYPE nRoom = NORMAL;
 };
 
 class Room
@@ -39,13 +41,13 @@ public:
 	bool roomWalkable(Rect* col);
 	bool colWalkable(Rect* col);
 	int getRoomID() { return rID; };
+	ROOM_TYPE getRoomType() { return roomType; };
 	bool enemyCol(Rect* col, int* enemyID = nullptr);
 	Enemy* getEnemy(int enemyID) { return enemies[enemyID]; };
 	bool playerCol(Rect* col);
 	std::vector<Door> getDoorVect() { return colDoor; };
 	void damageAll();
 	Room(int nDoors, int roomID);
-	Room();
 	~Room();
 };
 

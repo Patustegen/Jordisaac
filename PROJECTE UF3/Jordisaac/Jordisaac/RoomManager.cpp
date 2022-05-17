@@ -19,7 +19,12 @@ RoomManager::RoomManager()
 {
 	Level.resize(0);
 	aRoom = 0;
+	aLevel = 0;
 	srand((unsigned int)time(NULL));
+}
+
+RoomManager::~RoomManager()
+{
 }
 
 Room* RoomManager::getActualRoom()
@@ -64,6 +69,7 @@ void RoomManager::createNewLevel(int lDiff)
 {
 	Level.resize(0);
 	aRoom = 0;
+	aLevel = lDiff;
 	int maxRooms = min(20, (int)(rand()%2 + 5 + floor(lDiff * 10 / 3)));
 	
 
@@ -200,6 +206,19 @@ void RoomManager::createNewLevel(int lDiff)
 				Room nRoom(mapaLogic[X][Y], roomID);
 				Level.push_back(nRoom);
 			}
+		}
+	}
+	for (int i = 0; i < Level.size(); i++)
+	{
+		if (Level[i].getRoomID() == 0)
+		{
+			int doors = 0;
+			if (Level[i].getDoorVect()[0].angle == 0.0) doors = 180.0;
+			else if (Level[i].getDoorVect()[0].angle == 180.0) doors = 0.0;
+			else if (Level[i].getDoorVect()[0].angle == 270.0) doors = 90.0;
+			else if (Level[i].getDoorVect()[0].angle == 90.0) doors = 270.0;
+			Room nRoom(doors,-Level[i].getDoorVect()[0].idChange);
+			Level.push_back(nRoom);
 		}
 	}
 }

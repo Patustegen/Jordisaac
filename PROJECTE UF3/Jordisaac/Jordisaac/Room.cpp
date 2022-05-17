@@ -264,12 +264,12 @@ Room::Room(int nDoors, int roomID)
 	completed = false;
 	movCharacters.resize(0);
 	colDoor.resize(0);
+	enemies.resize(0);
 	rID = roomID;
 	bg = iResourceM->loadAndGetGraphicID("Assets\\Rooms\\BasementDefault.png");
 	gDoor = iResourceM->loadAndGetGraphicID("Assets\\Rooms\\defaultDoor.png");
 
 
-	enemies.resize(0);
 	if (nDoors & 0x01)
 	{
 		doorCount++;
@@ -310,20 +310,15 @@ Room::Room(int nDoors, int roomID)
 		nDoor.idChange = -1;
 		colDoor.push_back(nDoor);
 	}
-	if (doorCount == 1 /* && roomID != 0*/)
+	if (doorCount == 1  && (roomID != 0 && roomID != -1 && roomID != -10 && roomID != 1 && roomID != 10))
 	{
 		roomType = BOSS;
 	}
-}
-
-Room::Room()
-{
-	_player = nullptr;
-	bg = -1;
-	gDoor = -1;
-	completed = false;
-	rID = 0;
-	roomType = NORMAL;
+	else if (doorCount == 1 && (roomID == 0 || roomID == -1 || roomID == -10 || roomID == 1 || roomID == 10))
+	{
+		roomType = GOLDEN;
+		if (iRoomM->getActualLevel() == 1) colDoor[0].locked = true;
+	}
 }
 
 Room::~Room()
