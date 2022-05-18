@@ -213,12 +213,28 @@ void RoomManager::createNewLevel(int lDiff)
 		if (Level[i].getRoomID() == 0)
 		{
 			int doors = 0;
-			if (Level[i].getDoorVect()[0].angle == 0.0) doors = 180.0;
-			else if (Level[i].getDoorVect()[0].angle == 180.0) doors = 0.0;
-			else if (Level[i].getDoorVect()[0].angle == 270.0) doors = 90.0;
-			else if (Level[i].getDoorVect()[0].angle == 90.0) doors = 270.0;
-			Room nRoom(doors,-Level[i].getDoorVect()[0].idChange);
+			if (Level[i].getDoorVect()[1].angle == 0.0) doors = 2;
+			else if (Level[i].getDoorVect()[1].angle == 180.0) doors = 1;
+			else if (Level[i].getDoorVect()[1].angle == 270.0) doors = 4;
+			else if (Level[i].getDoorVect()[1].angle == 90.0) doors = 8;
+			Room nRoom(doors,Level[i].getDoorVect()[1].idChange);
 			Level.push_back(nRoom);
+		}
+		else if (Level[i].getRoomType() == BOSS)
+		{
+			for (int j = 0; j < Level.size(); j++)
+			{
+				if (Level[j].getRoomID() == Level[i].getRoomID() + Level[i].getDoorVect()[0].idChange)
+				{
+					for (int d = 0; d < Level[j].getDoorVect().size(); d++)
+					{
+						if (Level[j].getRoomID() + Level[j].getDoorVect()[d].idChange == Level[i].getRoomID())
+						{
+							Level[j].getDoorVect()[d].nRoom = BOSS;
+						}
+					}
+				}
+			}
 		}
 	}
 }

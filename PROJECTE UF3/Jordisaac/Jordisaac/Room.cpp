@@ -3,7 +3,7 @@
 #include "AttackFly.h"
 #include "Hollow.h"
 
-#define DOOR_MARGIN 30
+#define DOOR_MARGIN 15
 
 void Room::init(Player* p)
 {
@@ -66,16 +66,19 @@ void Room::init(Player* p)
 	}
 	else
 	{
-		completed = true;
-		for (int i = 0; i < 13; i++)
+		if (completed == false)
 		{
-			if (i < 6)
+			completed = true;
+			for (int i = 0; i < 13; i++)
 			{
-				iPickM->AddPickup(ROOM_MARGIN_X + i * 35, ROOM_MARGIN_Y + 10, i);
-			}
-			else
-			{
-				iPickM->AddPickup(ROOM_MARGIN_X + i * 35, ROOM_MARGIN_Y + 60, i);
+				if (i < 6)
+				{
+					iPickM->AddPickup(ROOM_MARGIN_X + i * 35, ROOM_MARGIN_Y + 10, i);
+				}
+				else
+				{
+					iPickM->AddPickup(ROOM_MARGIN_X + i * 35, ROOM_MARGIN_Y + 60, i);
+				}
 			}
 		}
 	}
@@ -173,7 +176,7 @@ void Room::update()
 			completed = true;
 			movCharacters.resize(0);
 			movCharacters.push_back(_player);
-			int max = rand() % 3;
+			int max = rand() % 2 + (_player->getStat(LUCK) / 2);
 			for (int i = 0; i < max; i++)
 			{
 				iPickM->AddPickup((SCREEN_WIDTH / 2) - (rand() % 15 - 10), (SCREEN_HEIGHT/ 2) - (rand() % 15 - 10));
@@ -185,9 +188,22 @@ void Room::update()
 void Room::render()
 {
 	iVideo->renderGraphic(bg, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-	for (int i = 0; i < colDoor.size(); i++)
+	switch (roomType)
 	{
-		iVideo->renderGraphicEx(gDoor, &colDoor.at(i).paint, colDoor.at(i).angle, 2.0f, 2.0f, colDoor.at(i).paint.w * completed);
+	case NORMAL:
+		for (int i = 0; i < colDoor.size(); i++)
+		{
+			iVideo->renderGraphicEx(gDoor, &colDoor.at(i).paint, colDoor.at(i).angle, 2.0f, 2.0f, colDoor.at(i).paint.w * completed, colDoor.at(0).paint.h * colDoor.at(i).nRoom);
+		}
+		break;
+	case BOSS:
+		iVideo->renderGraphicEx(gDoor, &colDoor.at(0).paint, colDoor.at(0).angle, 2.0f, 2.0f, colDoor.at(0).paint.w * completed, colDoor.at(0).paint.h);
+		break;
+	case GOLDEN:
+		iVideo->renderGraphicEx(gDoor, &colDoor.at(0).paint, colDoor.at(0).angle, 2.0f, 2.0f, colDoor.at(0).paint.w * completed, colDoor.at(0).paint.h * 2);
+		break;
+	default:
+		break;
 	}
 	iBombM->render();
 	iPickM->render();
@@ -267,7 +283,7 @@ Room::Room(int nDoors, int roomID)
 	enemies.resize(0);
 	rID = roomID;
 	bg = iResourceM->loadAndGetGraphicID("Assets\\Rooms\\BasementDefault.png");
-	gDoor = iResourceM->loadAndGetGraphicID("Assets\\Rooms\\defaultDoor.png");
+	gDoor = iResourceM->loadAndGetGraphicID("Assets\\Rooms\\doorsImages.png");
 
 
 	if (nDoors & 0x01)
@@ -279,6 +295,18 @@ Room::Room(int nDoors, int roomID)
 		nDoor.angle = 0.0;
 		nDoor.idChange = -10;
 		colDoor.push_back(nDoor);
+		if (roomID == 0)
+		{
+			doorCount++;
+			Door nDoor;
+			nDoor.col = { SCREEN_WIDTH / 2 - DOOR_W, SCREEN_HEIGHT - DOOR_H * 2 - DOOR_MARGIN, DOOR_W * 2, DOOR_H * 2 };
+			nDoor.paint = { SCREEN_WIDTH / 2 - DOOR_W, SCREEN_HEIGHT - DOOR_H * 2 - DOOR_MARGIN, DOOR_W, DOOR_H };
+			nDoor.angle = 180.0;
+			nDoor.idChange = 10;
+			if (iRoomM->getActualLevel() != 1) nDoor.locked = true;
+			nDoor.nRoom = GOLDEN;
+			colDoor.push_back(nDoor);
+		}
 	}
 	if (nDoors & 0x02)
 	{
@@ -289,6 +317,18 @@ Room::Room(int nDoors, int roomID)
 		nDoor.angle = 180.0;
 		nDoor.idChange = 10;
 		colDoor.push_back(nDoor);
+		if (roomID == 0)
+		{
+			doorCount++;
+			Door nDoor;
+			nDoor.col = { SCREEN_WIDTH / 2 - DOOR_W, DOOR_MARGIN, DOOR_W * 2, DOOR_H * 2 };
+			nDoor.paint = { SCREEN_WIDTH / 2 - DOOR_W, DOOR_MARGIN, DOOR_W, DOOR_H };
+			nDoor.angle = 0.0;
+			nDoor.idChange = -10;
+			if (iRoomM->getActualLevel() != 1) nDoor.locked = true;
+			nDoor.nRoom = GOLDEN;
+			colDoor.push_back(nDoor);
+		}
 	}
 	if (nDoors & 0x04)
 	{
@@ -299,6 +339,18 @@ Room::Room(int nDoors, int roomID)
 		nDoor.angle = 90.0;
 		nDoor.idChange = 1;
 		colDoor.push_back(nDoor);
+		if (roomID == 0)
+		{
+			doorCount++;
+			Door nDoor;
+			nDoor.col = { DOOR_MARGIN, SCREEN_HEIGHT / 2 - DOOR_H, DOOR_W * 2, DOOR_H * 2 };
+			nDoor.paint = { DOOR_MARGIN, SCREEN_HEIGHT / 2 - DOOR_H, DOOR_W, DOOR_H };
+			nDoor.angle = 270.0;
+			nDoor.idChange = -1;
+			if (iRoomM->getActualLevel() != 1) nDoor.locked = true;
+			nDoor.nRoom = GOLDEN;
+			colDoor.push_back(nDoor);
+		}
 	}
 	if (nDoors & 0x08)
 	{
@@ -309,16 +361,25 @@ Room::Room(int nDoors, int roomID)
 		nDoor.angle = 270.0;
 		nDoor.idChange = -1;
 		colDoor.push_back(nDoor);
+		if (roomID == 0)
+		{
+			doorCount++;
+			Door nDoor;
+			nDoor.col = { SCREEN_WIDTH - DOOR_W * 2 - DOOR_MARGIN, SCREEN_HEIGHT / 2 - DOOR_H, DOOR_W * 2, DOOR_H * 2 };
+			nDoor.paint = { SCREEN_WIDTH - DOOR_W * 2 - DOOR_MARGIN, SCREEN_HEIGHT / 2 - DOOR_H, DOOR_W, DOOR_H };
+			nDoor.angle = 90.0;
+			nDoor.idChange = 1;
+			if (iRoomM->getActualLevel() != 1) nDoor.locked = true;
+			nDoor.nRoom = GOLDEN;
+			colDoor.push_back(nDoor);
+		}
 	}
-	if (doorCount == 1  && (roomID != 0 && roomID != -1 && roomID != -10 && roomID != 1 && roomID != 10))
-	{
-		roomType = BOSS;
-	}
-	else if (doorCount == 1 && (roomID == 0 || roomID == -1 || roomID == -10 || roomID == 1 || roomID == 10))
-	{
-		roomType = GOLDEN;
-		if (iRoomM->getActualLevel() == 1) colDoor[0].locked = true;
-	}
+	if (doorCount == 1  && (roomID != 0 && roomID != -1 && roomID != -10 && roomID != 1 && roomID != 10)) roomType = BOSS;
+	else if (doorCount == 1 && (roomID == -1 || roomID == -10 || roomID == 1 || roomID == 10)) roomType = GOLDEN;
+}
+
+Room::Room()
+{
 }
 
 Room::~Room()

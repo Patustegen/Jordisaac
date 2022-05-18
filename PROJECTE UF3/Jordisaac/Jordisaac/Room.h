@@ -3,8 +3,8 @@
 #include "Enemy.h"
 #include "Player.h"
 
-#define DOOR_W 49
-#define DOOR_H 33
+#define DOOR_W 61
+#define DOOR_H 39
 #define ROOM_MARGIN_Y 90
 #define ROOM_MARGIN_X 105
 
@@ -48,6 +48,7 @@ public:
 	std::vector<Door> getDoorVect() { return colDoor; };
 	void damageAll();
 	Room(int nDoors, int roomID);
+	Room();
 	~Room();
 };
 
