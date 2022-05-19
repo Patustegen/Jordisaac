@@ -12,8 +12,6 @@ void Player::render()
 	{
 		iVideo->renderGraphic(pMisc , Misc.x, Misc.y, Misc.w, Misc.h, (frame / 200) * Misc.w, 3 * Misc.h, 2, 2);
 	}
-
-	//iVideo->renderGraphic(gFrame, col.x, col.y, col.w, col.h);
 }
 
 void Player::update()
@@ -24,6 +22,9 @@ void Player::update()
 		if (frame >= 400)
 		{
 			frame = 400;
+			iSceneD->changeScene(GAME_OVER);
+			iInputM->switchGameMode(false);
+			iSceneD->getCurrentScene()->init(score);
 		}
 	}
 	else
@@ -344,6 +345,8 @@ void Player::init()
 	sHearts.resize(0);
 	eHeart = false;
 
+	score = 0;
+
 	state = IDLE;
 	hstate = IDLE;
 	lBody = DOWN;
@@ -375,7 +378,6 @@ void Player::init()
 	Misc.h = 33;
 
 	gID = iResourceM->loadAndGetGraphicID("Assets\\Characters\\Body.png");
-	gFrame = iResourceM->loadAndGetGraphicID("Assets\\Characters\\Frame.png");
 
 	sID.push_back(iSoundM->loadAndGetSoundID("Assets/Characters/death1.wav"));
 	sID.push_back(iSoundM->loadAndGetSoundID("Assets/Characters/death2.wav"));
@@ -704,6 +706,8 @@ Player::Player()
 	eHeart = false;
 	totalHearts = hp;
 
+	score = 0;
+
 	//Pickups
 	for (int i = 0; i < 3; i++)
 	{
@@ -731,10 +735,8 @@ Player::Player()
 
 	//Graphics
 	gID = -1;
-	gFrame = -1;
 	pHead = -1;
 	pMisc = -1;
-
 }
 
 Player::~Player()

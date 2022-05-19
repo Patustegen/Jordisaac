@@ -26,5 +26,6 @@ private:
 	int characs;
 	bool selected;
 	int audio;
+	int gStats[4];
 };
 

@@ -14,9 +14,15 @@ Scene::Scene(){
 Scene::~Scene(){
 }
 
-void Scene::init(){
+void Scene::init(int s)
+{
+}
+
+void Scene::init()
+{
 	mReinit = false;
 }
+
 
 void Scene::reinit(){
 	mReinit = true;

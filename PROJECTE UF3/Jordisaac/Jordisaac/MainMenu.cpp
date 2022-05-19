@@ -23,6 +23,7 @@ void MainMenu::update()
 			break;
 		case S_RANKING:
 			iSceneD->changeScene(RANK);
+			iSceneD->getCurrentScene()->init();
 			break;
 		case S_OPTIONS:
 			iSceneD->changeLastScene(OPTIONS);

@@ -15,6 +15,7 @@ class Scene
 		virtual ~Scene();
 
 		//! Initializes the Scene.
+		virtual void init(int s);
 		virtual void init();
 
 		//! Loads Scene Assets.

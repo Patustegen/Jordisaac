@@ -85,6 +85,9 @@
     <ClCompile Include="PickupsManager.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
+    <ClCompile Include="GameOver.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseCharacter.h" />
@@ -173,6 +176,9 @@
     </ClInclude>
     <ClInclude Include="PickupsManager.h">
       <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOver.h">
+      <Filter>Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

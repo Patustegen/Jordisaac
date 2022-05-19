@@ -7,6 +7,7 @@
 #include "Ranking.h"
 #include "PauseMenu.h"
 #include "ChooseCharacter.h"
+#include "GameOver.h"
 
 SceneDirector* SceneDirector::pInstance = NULL;
 
@@ -34,6 +35,7 @@ void SceneDirector::init(){
 	OptionsMenu	*options		= new OptionsMenu();
 	Ranking	*rank		= new Ranking();
 	PauseMenu	*pause	= new PauseMenu();
+	GameOver* over = new GameOver();
 
 	mVectorScenes[PORTADA] = portada;
 	mVectorScenes[MAIN] = mainM;
@@ -42,10 +44,12 @@ void SceneDirector::init(){
 	mVectorScenes[OPTIONS] = options;
 	mVectorScenes[RANK] = rank;
 	mVectorScenes[PAUSE] = pause;
+	mVectorScenes[GAME_OVER] = over;
 
 	portada->load();
 	mainM->load();
 	charac->load();
+	rank->load();
 
 	mLastScene = PORTADA;
 	mCurrScene = PORTADA;

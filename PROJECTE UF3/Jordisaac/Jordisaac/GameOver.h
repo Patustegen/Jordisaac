@@ -1,6 +1,6 @@
 #pragma once
 #include "Scene.h"
-class Ranking :
+class GameOver :
     public Scene
 {
 public:
@@ -13,12 +13,6 @@ public:
 	//! Loads Scene Assets.
 	void load();
 
-	void init();
-private:
-	int gBG;
-	int gNums;
-	int gCharac;
-	int rPlayer[10];
-	int rScore[10];
+	void init(int s = 0);
 };
 

@@ -25,6 +25,7 @@ private:
     //Pickups secundaris
     int pickups[3];
 
+    int score;
 
     float stats[STAT_LENGHT];
     bool shooting;
@@ -36,7 +37,6 @@ private:
     //ASSETS
     int pHead;
     int pMisc;
-    int gFrame;
 public:
     void render();
     void update();
@@ -44,10 +44,12 @@ public:
     int getPickup(int p) { return pickups[p]; };
     bool PickupUp(int p, int q = 1);
     float getStat(int nStat) { return stats[nStat]; };
+    STATE getState() { return state; };
     std::vector<HEARTS> getSHearts() { return sHearts; };
     bool hasEHeart() { return eHeart; };
     bool pickupHeart(HEARTS t);
     bool getHurt();
+    int getScore() { return score; };
     Player();
     ~Player();
 };
