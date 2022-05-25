@@ -6,12 +6,31 @@ PickupsManager* PickupsManager::pInstance = NULL;
 PickupsManager::PickupsManager()
 {
 	pickups.resize(0);
+	_p = nullptr;
 }
 
-void PickupsManager::AddPickup(int x, int y, int t)
+void PickupsManager::AddPickup(int x, int y, PICKUP_TYPE t, int i)
 {
-	if (t == -1) t = rand() % 13;
-	Pickup* nPickup = new Pickup(x, y, t);
+	if (i == -1)
+	{
+		switch (t)
+		{
+		case NORMAL_PU:
+			i = rand() % 13;
+			break;
+		case CONS_PU:
+			break;
+		case PASSIVE_PU:
+			break;
+		case ACTIVE_PU:
+			break;
+		case TRINKET_PU:
+			break;
+		default:
+			break;
+		}
+	}
+	Pickup* nPickup = new Pickup(x, y, i, t);
 	pickups.push_back(nPickup);
 }
 
@@ -36,85 +55,100 @@ void PickupsManager::update()
 			{
 				switch (pickups[i]->getType())
 				{
-				case 0:
-				case 1:
-				case 2:
-					if (_p->PickupUp(pickups[i]->getType()))
+				case NORMAL_PU:
+					switch (pickups[i]->getId())
 					{
-						//sound
-						pickups.erase(pickups.begin() + i);
-						i--;
+					case 0:
+					case 1:
+					case 2:
+						if (_p->PickupUp(pickups[i]->getId()))
+						{
+							//sound
+							pickups.erase(pickups.begin() + i);
+							i--;
+						}
+						break;
+					case 3:
+						if (_p->PickupUp(1, 2))
+						{
+							//sound
+							pickups.erase(pickups.begin() + i);
+							i--;
+						}
+						break;
+					case 4:
+						if (_p->PickupUp(0, 5))
+						{
+							//sound
+							pickups.erase(pickups.begin() + i);
+							i--;
+						}
+						break;
+					case 5:
+						if (_p->PickupUp(0, 10))
+						{
+							//sound
+							pickups.erase(pickups.begin() + i);
+							i--;
+						}
+						break;
+					case 6:
+						//Battery
+						break;
+						//CORS
+					case 7:
+						if (_p->pickupHeart(HALF_RED))
+						{
+							pickups.erase(pickups.begin() + i);
+							i--;
+						}
+						break;
+					case 8:
+						if (_p->pickupHeart(FULL_RED))
+						{
+							pickups.erase(pickups.begin() + i);
+							i--;
+						}
+						break;
+					case 9:
+						if (_p->pickupHeart(HALF_SOUL))
+						{
+							pickups.erase(pickups.begin() + i);
+							i--;
+						}
+						break;
+					case 10:
+						if (_p->pickupHeart(FULL_SOUL))
+						{
+							pickups.erase(pickups.begin() + i);
+							i--;
+						}
+						break;
+					case 11:
+						if (_p->pickupHeart(FULL_BLACK))
+						{
+							pickups.erase(pickups.begin() + i);
+							i--;
+						}
+						break;
+					case 12:
+						if (_p->pickupHeart(HALF_ETERNAL))
+						{
+							pickups.erase(pickups.begin() + i);
+							i--;
+						}
+						break;
+					default:
+						break;
 					}
 					break;
-				case 3:
-					if (_p->PickupUp(1, 2))
-					{
-						//sound
-						pickups.erase(pickups.begin() + i);
-						i--;
-					}
+				case CONS_PU:
 					break;
-				case 4:
-					if (_p->PickupUp(0, 5))
-					{
-						//sound
-						pickups.erase(pickups.begin() + i);
-						i--;
-					}
+				case PASSIVE_PU:
 					break;
-				case 5:
-					if (_p->PickupUp(0, 10))
-					{
-						//sound
-						pickups.erase(pickups.begin() + i);
-						i--;
-					}
+				case ACTIVE_PU:
 					break;
-				case 6:
-					//Battery
-					break;
-				//CORS
-				case 7:
-					if (_p->pickupHeart(HALF_RED))
-					{
-						pickups.erase(pickups.begin() + i);
-						i--;
-					}
-					break;
-				case 8:
-					if (_p->pickupHeart(FULL_RED))
-					{
-						pickups.erase(pickups.begin() + i);
-						i--;
-					}
-					break;
-				case 9:
-					if (_p->pickupHeart(HALF_SOUL))
-					{
-						pickups.erase(pickups.begin() + i);
-						i--;
-					}
-					break;
-				case 10:
-					if (_p->pickupHeart(FULL_SOUL))
-					{
-						pickups.erase(pickups.begin() + i);
-						i--;
-					}
-					break;
-				case 11:
-					if (_p->pickupHeart(FULL_BLACK))
-					{
-						pickups.erase(pickups.begin() + i);
-						i--;
-					}
-					break;
-				case 12:
-					if (_p->pickupHeart(HALF_ETERNAL))
-					{
-						pickups.erase(pickups.begin() + i);
-						i--;
-					}
+				case TRINKET_PU:
 					break;
 				default:
 					break;

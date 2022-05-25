@@ -61,11 +61,11 @@ void Room::init(Player* p)
 			{
 				if (i < 6)
 				{
-					iPickM->AddPickup(ROOM_MARGIN_X + i * 35, ROOM_MARGIN_Y + 10, i);
+					iPickM->AddPickup(ROOM_MARGIN_X + i * 35, ROOM_MARGIN_Y + 10, NORMAL_PU, i);
 				}
 				else
 				{
-					iPickM->AddPickup(ROOM_MARGIN_X + i * 35, ROOM_MARGIN_Y + 60, i);
+					iPickM->AddPickup(ROOM_MARGIN_X + i * 35, ROOM_MARGIN_Y + 60, NORMAL_PU, i);
 				}
 			}
 		}
@@ -153,7 +153,7 @@ void Room::update()
 			int max = rand() % 2 + (_player->getStat(LUCK) / 2);
 			for (int i = 0; i < max; i++)
 			{
-				iPickM->AddPickup((SCREEN_WIDTH / 2) - (rand() % 15 - 10), (SCREEN_HEIGHT/ 2) - (rand() % 15 - 10));
+				iPickM->AddPickup((SCREEN_WIDTH / 2) - (rand() % 15 - 10), (SCREEN_HEIGHT/ 2) - (rand() % 15 - 10), NORMAL_PU);
 			}
 		}
 	}

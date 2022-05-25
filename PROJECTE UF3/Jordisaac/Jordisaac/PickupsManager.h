@@ -16,7 +16,7 @@ public:
 		return pInstance;
 	}
 	void setPlayer(Player* p) { _p = p; };
-	void AddPickup(int x, int y, int t = -1);
+	void AddPickup(int x, int y, PICKUP_TYPE t, int i = -1);
 	void init();
 	void update();
 	void render();
