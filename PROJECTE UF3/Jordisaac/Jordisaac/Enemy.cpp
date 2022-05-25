@@ -1,9 +1,6 @@
 #include "Enemy.h"
 
 
-void Enemy::setAngle(int a)
-{
-}
 
 void Enemy::init()
 {

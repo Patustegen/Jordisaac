@@ -32,7 +32,6 @@ private:
 	std::vector<Door> colDoor;
 	int bg;
 	int gDoor;
-	int roomFrame;
 	int bossType;
 public:
 	void init(Player* p);

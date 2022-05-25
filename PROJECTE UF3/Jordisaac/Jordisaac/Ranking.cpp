@@ -17,7 +17,7 @@ void Ranking::render()
 		}
 		if (rPlayer[i] != -1)
 		{
-			iVideo->renderGraphic(gCharac, 400, 65 + 40 * i - (90 * 0.3f) + (8 * 1.25f), 67, 90, 67 * rPlayer[i], 0, 0.6f,0.6f);
+			iVideo->renderGraphic(gCharac, 370 + i %2 * 50, 65 + 40 * i - (90 * 0.3f) + (8 * 1.25f), 67, 90, 67 * rPlayer[i], 0, 0.6f,0.6f);
 			iVideo->renderGraphic(gNums, 500, 65 + 40 * i - (9 * 2) + (8 * 1.25f), 8, 9, 8 * rScore[i], 0, 2.0f, 2.0f);
 		}
 	}

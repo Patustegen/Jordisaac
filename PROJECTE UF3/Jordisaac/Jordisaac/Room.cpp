@@ -7,7 +7,6 @@
 
 void Room::init(Player* p)
 {
-	roomFrame = -1;
 	_player = p;
 	if (rID != 0)
 	{
@@ -34,7 +33,7 @@ void Room::init(Player* p)
 				switch (bossType)
 				{
 				case 0:
-					nBoss = new Hollow(true);
+					nBoss = new Hollow();
 					break;
 				case 1:
 					break;
@@ -45,17 +44,6 @@ void Room::init(Player* p)
 				}
 				nBoss->init();
 				enemies.push_back(nBoss);
-				if (bossType == 0)
-				{
-					for (int i = 0; i < 4; i++)
-					{
-						Hollow* nHollowBody = new Hollow();
-						nHollowBody->init();
-						enemies.push_back(nHollowBody);
-					}
-					int a = rand() % 360;
-					for (int i = 0; i < enemies.size(); i++) enemies[i]->setAngle(a);
-				}
 			}
 			break;
 		case GOLDEN:
@@ -93,7 +81,6 @@ void Room::init(Player* p)
 
 void Room::update()
 {
-	roomFrame++;
 	_player->update();
 	iBulletM->update();
 	iBombM->update();
@@ -128,28 +115,15 @@ void Room::update()
 	}
 	else
 	{
-		if (roomType == BOSS && bossType == 0 && roomFrame < 30)
+		for (int i = 0; i < enemies.size(); i++)
 		{
-			for (int i = 0; i < roomFrame; i++)
+			enemies[i]->update();
+			if (iVideo->onCollision(_player->getCol(), enemies[i]->getCol())) _player->getHurt();
+			if (enemies[i]->getHP() <= 0)
 			{
-				if (roomFrame % 6 == 0)
-				{
-					enemies[i / 6]->update();
-				}
-			}
-		}
-		else
-		{
-			for (int i = 0; i < enemies.size(); i++)
-			{
-				enemies[i]->update();
-				if (iVideo->onCollision(_player->getCol(), enemies[i]->getCol())) _player->getHurt();
-				if (enemies[i]->getHP() <= 0)
-				{
-					delete enemies[i];
-					enemies.erase(enemies.begin() + i);
-					i--;
-				}
+				delete enemies[i];
+				enemies.erase(enemies.begin() + i);
+				i--;
 			}
 		}
 
@@ -273,7 +247,6 @@ void Room::damageAll()
 Room::Room(int nDoors, int roomID)
 {
 	bossType = -1;
-	roomFrame = 0;
 	int doorCount = 0;
 	roomType = NORMAL;
 	_player = nullptr;

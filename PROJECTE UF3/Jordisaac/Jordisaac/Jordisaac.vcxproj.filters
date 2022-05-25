@@ -70,7 +70,7 @@
     <ClCompile Include="Boss.cpp">
       <Filter>Enemies</Filter>
     </ClCompile>
-    <ClCompile Include="Hollow.cpp">
+    <ClCompile Include="HollowBody.cpp">
       <Filter>Enemies</Filter>
     </ClCompile>
     <ClCompile Include="BombManager.cpp">
@@ -88,6 +88,7 @@
     <ClCompile Include="GameOver.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="Hollow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseCharacter.h" />
@@ -162,7 +163,7 @@
     <ClInclude Include="Boss.h">
       <Filter>Enemies</Filter>
     </ClInclude>
-    <ClInclude Include="Hollow.h">
+    <ClInclude Include="HollowBody.h">
       <Filter>Enemies</Filter>
     </ClInclude>
     <ClInclude Include="BombManager.h">
@@ -180,6 +181,7 @@
     <ClInclude Include="GameOver.h">
       <Filter>Scenes</Filter>
     </ClInclude>
+    <ClInclude Include="Hollow.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Scenes">
