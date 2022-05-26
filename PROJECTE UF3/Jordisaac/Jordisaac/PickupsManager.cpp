@@ -43,6 +43,19 @@ void PickupsManager::init()
 		i--;
 	}
 	pickups.resize(0);
+	for (int i = 0; i < 6; i++)
+	{
+		bool bad;
+		do
+		{
+			bad = false;
+			pills[i] = rand() % 6;
+			for (int j = 0; j < i; j++)
+			{
+				if (pills[j] == pills[i]) bad = true;
+			}
+		} while (bad);
+	}
 }
 
 void PickupsManager::update()
@@ -143,6 +156,23 @@ void PickupsManager::update()
 					}
 					break;
 				case CONS_PU:
+					switch (pickups[i]->getId())
+					{
+					case 0:
+						break;
+					case 1:
+						break;
+					case 2:
+						break;
+					case 3:
+						break;
+					case 4:
+						break;
+					case 5:
+						break;
+					default:
+						break;
+					}
 					break;
 				case PASSIVE_PU:
 					break;

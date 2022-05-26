@@ -38,5 +38,8 @@ void Game::init()
 	ui->setPlayer(player);
 	player->init();
 	ui->init();
+	iPickM->init();
+	iBombM->init();
+	iBulletM->init();
 	iRoomM->getActualRoom()->init(player);
 }

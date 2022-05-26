@@ -170,6 +170,7 @@
     <ClCompile Include="PauseMenu.cpp" />
     <ClCompile Include="Pickup.cpp" />
     <ClCompile Include="PickupsManager.cpp" />
+    <ClCompile Include="Pill.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Portada.cpp" />
     <ClCompile Include="Ranking.cpp" />
@@ -206,6 +207,7 @@
     <ClInclude Include="PauseMenu.h" />
     <ClInclude Include="Pickup.h" />
     <ClInclude Include="PickupsManager.h" />
+    <ClInclude Include="Pill.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Portada.h" />
     <ClInclude Include="Ranking.h" />
