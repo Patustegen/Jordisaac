@@ -20,6 +20,9 @@ Pickup::Pickup(int x, int y, int i, PICKUP_TYPE t)
 		paint = { x, y, 27, 23 };
 		break;
 	case CONS_PU:
+		gID = iResourceM->loadAndGetGraphicID("Assets/Pills/Pills.png");
+		col = { x + 2, y + 2, 17, 19 };
+		paint = { x, y, 17, 19 };
 		break;
 	case PASSIVE_PU:
 		break;

@@ -228,9 +228,9 @@ void RoomManager::createNewLevel(int lDiff)
 				{
 					for (int d = 0; d < Level[j].getDoorVect().size(); d++)
 					{
-						if (Level[j].getRoomID() + Level[j].getDoorVect()[d].idChange == Level[i].getRoomID())
+						if (Level[j].getDoorVect()[d].idChange == -Level[i].getDoorVect()[0].idChange)
 						{
-							Level[j].getDoorVect()[d].nRoom = BOSS;
+							Level[j].setDoorFrame(d,BOSS);
 						}
 					}
 				}

@@ -93,4 +93,5 @@ void UI::render()
 		}
 		else rHearts.x += (int)(rHearts.w * 1.5f - 10);
 	}
+	mPlayer->getCons()->render();
 }

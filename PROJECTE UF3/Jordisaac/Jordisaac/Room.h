@@ -45,6 +45,7 @@ public:
 	Enemy* getEnemy(int enemyID) { return enemies[enemyID]; };
 	bool playerCol(Rect* col);
 	std::vector<Door> getDoorVect() { return colDoor; };
+	void setDoorFrame(int i, ROOM_TYPE nR) { colDoor[i].nRoom = nR; };
 	void damageAll();
 	Room(int nDoors, int roomID);
 	Room();

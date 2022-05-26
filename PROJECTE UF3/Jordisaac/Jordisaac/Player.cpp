@@ -54,7 +54,7 @@ void Player::update()
 			}
 		}
 		if (iInputM->getEvents(USEITEM));
-		if (iInputM->getEvents(USECONS));
+		if (iInputM->getEvents(USECONS)) cons.Use();
 		
 		mDiagonals = NONE;
 
@@ -346,6 +346,8 @@ void Player::init()
 	eHeart = false;
 
 	score = 0;
+
+	cons.setPill(-1, -1);
 
 	state = IDLE;
 	hstate = IDLE;

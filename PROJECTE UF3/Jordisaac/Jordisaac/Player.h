@@ -2,6 +2,7 @@
 #include "BaseCharacter.h"
 #include "enums.h"
 #include "Bullet.h"
+#include "Pill.h"
 #define MAX_HEARTS 24
 #define MAX_PICKUP 99
 enum STATS
@@ -21,6 +22,9 @@ private:
     DIAGONALS mDiagonals;
     Rect Head;
     Rect Misc;
+
+    //Pickups principals
+    Pill cons;
 
     //Pickups secundaris
     int pickups[3];
@@ -49,6 +53,7 @@ public:
     bool hasEHeart() { return eHeart; };
     bool pickupHeart(HEARTS t);
     bool getHurt();
+    Pill* getCons() { return &cons; };
     int getScore() { return score; };
     Player();
     ~Player();

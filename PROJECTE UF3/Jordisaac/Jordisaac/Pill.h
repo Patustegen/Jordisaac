@@ -6,8 +6,11 @@ class Pill :
     int type;
     int sprite;
 public:
+    int getType() { return sprite; };
+    void setPill(int t, int s);
+    void render();
     void Use();
-    Pill(int t, int s);
+    Pill();
     ~Pill();
 };
 

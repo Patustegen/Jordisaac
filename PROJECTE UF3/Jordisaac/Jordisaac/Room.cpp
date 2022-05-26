@@ -68,6 +68,10 @@ void Room::init(Player* p)
 					iPickM->AddPickup(ROOM_MARGIN_X + i * 35, ROOM_MARGIN_Y + 60, NORMAL_PU, i);
 				}
 			}
+			for (int i = 0; i < 6; i++)
+			{
+				iPickM->AddPickup(ROOM_MARGIN_X + i * 35, SCREEN_HEIGHT - ROOM_MARGIN_Y - 60, CONS_PU, i);
+			}
 		}
 	}
 	movCharacters.push_back(_player);

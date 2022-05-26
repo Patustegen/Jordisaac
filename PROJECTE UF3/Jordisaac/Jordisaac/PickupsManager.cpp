@@ -19,6 +19,7 @@ void PickupsManager::AddPickup(int x, int y, PICKUP_TYPE t, int i)
 			i = rand() % 13;
 			break;
 		case CONS_PU:
+			i = rand() % 6;
 			break;
 		case PASSIVE_PU:
 			break;
@@ -77,6 +78,7 @@ void PickupsManager::update()
 						if (_p->PickupUp(pickups[i]->getId()))
 						{
 							//sound
+							delete pickups[i];
 							pickups.erase(pickups.begin() + i);
 							i--;
 						}
@@ -85,6 +87,7 @@ void PickupsManager::update()
 						if (_p->PickupUp(1, 2))
 						{
 							//sound
+							delete pickups[i];
 							pickups.erase(pickups.begin() + i);
 							i--;
 						}
@@ -93,6 +96,7 @@ void PickupsManager::update()
 						if (_p->PickupUp(0, 5))
 						{
 							//sound
+							delete pickups[i];
 							pickups.erase(pickups.begin() + i);
 							i--;
 						}
@@ -101,6 +105,7 @@ void PickupsManager::update()
 						if (_p->PickupUp(0, 10))
 						{
 							//sound
+							delete pickups[i];
 							pickups.erase(pickups.begin() + i);
 							i--;
 						}
@@ -112,6 +117,7 @@ void PickupsManager::update()
 					case 7:
 						if (_p->pickupHeart(HALF_RED))
 						{
+							delete pickups[i];
 							pickups.erase(pickups.begin() + i);
 							i--;
 						}
@@ -119,6 +125,7 @@ void PickupsManager::update()
 					case 8:
 						if (_p->pickupHeart(FULL_RED))
 						{
+							delete pickups[i];
 							pickups.erase(pickups.begin() + i);
 							i--;
 						}
@@ -126,6 +133,7 @@ void PickupsManager::update()
 					case 9:
 						if (_p->pickupHeart(HALF_SOUL))
 						{
+							delete pickups[i];
 							pickups.erase(pickups.begin() + i);
 							i--;
 						}
@@ -133,6 +141,7 @@ void PickupsManager::update()
 					case 10:
 						if (_p->pickupHeart(FULL_SOUL))
 						{
+							delete pickups[i];
 							pickups.erase(pickups.begin() + i);
 							i--;
 						}
@@ -140,6 +149,7 @@ void PickupsManager::update()
 					case 11:
 						if (_p->pickupHeart(FULL_BLACK))
 						{
+							delete pickups[i];
 							pickups.erase(pickups.begin() + i);
 							i--;
 						}
@@ -147,6 +157,7 @@ void PickupsManager::update()
 					case 12:
 						if (_p->pickupHeart(HALF_ETERNAL))
 						{
+							delete pickups[i];
 							pickups.erase(pickups.begin() + i);
 							i--;
 						}
@@ -156,22 +167,23 @@ void PickupsManager::update()
 					}
 					break;
 				case CONS_PU:
-					switch (pickups[i]->getId())
+					if (_p->getCons()->getType() != -1)
 					{
-					case 0:
-						break;
-					case 1:
-						break;
-					case 2:
-						break;
-					case 3:
-						break;
-					case 4:
-						break;
-					case 5:
-						break;
-					default:
-						break;
+						int x = _p->getCol()->x + _p->getCol()->w / 2 - pickups[i]->getCol()->w / 2;
+						int y = _p->getCol()->y + _p->getCol()->h + pickups[i]->getCol()->h;
+						if (y > SCREEN_HEIGHT - ROOM_MARGIN_Y) y = _p->getCol()->y - _p->getCol()->h - 20;
+						AddPickup(x, y, CONS_PU, _p->getCons()->getType());
+						_p->getCons()->setPill(pills[pickups[i]->getId()], pickups[i]->getId());
+						delete pickups[i];
+						pickups.erase(pickups.begin() + i);
+						i--;
+					}
+					else
+					{
+						_p->getCons()->setPill(pills[pickups[i]->getId()], pickups[i]->getId());
+						delete pickups[i];
+						pickups.erase(pickups.begin() + i);
+						i--;
 					}
 					break;
 				case PASSIVE_PU:
