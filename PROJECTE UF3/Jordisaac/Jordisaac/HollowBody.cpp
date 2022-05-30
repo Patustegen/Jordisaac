@@ -1,6 +1,5 @@
 #include "HollowBody.h"
 #include "Singletons.h"
-#define PI 3.14159265f
 
 HollowBody::HollowBody(bool h)
 {

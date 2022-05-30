@@ -68,10 +68,10 @@ void Player::update()
 				stats[RANGE] += 1.25f;
 				break;
 			case 3:
-				stats[SHOT_SPEED] -= 0.25f;
+				stats[SHOT_SPEED] -= 0.35f;
 				break;
 			case 4:
-				stats[TEARS] += 0.25f;
+				stats[TEARS] -= 0.75f;
 				break;
 			case 5:
 				stats[DAMAGE] += 0.25f;
@@ -311,13 +311,13 @@ void Player::update()
 			if (cooldown <= 0)
 			{
 				shooting = true;
-				cooldown = 500 + (int)stats[TEARS] * 100;
+				cooldown = 500 + stats[TEARS] * 100;
 			}
 		}
 
 		if (shooting && cooldown == 500 + stats[TEARS] * 100)
 		{
-			iBulletM->AddBullet(stats[SHOT_SPEED], 1, stats[RANGE], stats[DAMAGE], &Head, lHead);
+			iBulletM->AddBullet(stats[SHOT_SPEED], 1, stats[RANGE], stats[DAMAGE], &Head, lHead, 90 - lHead * 90);
 		}
 
 

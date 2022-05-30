@@ -1,63 +1,34 @@
 #include "Bullet.h"
 #include "Singletons.h"
 
-Bullet::Bullet(float vel, int t, float range, float dmg, Rect* sp, LOOKING coord, DIAGONALS diagonals)
+Bullet::Bullet(float vel, int t, float range, float dmg, Rect* sp, LOOKING coord, int a)
 {
 	initPos = { sp->x, sp->y };
 	type = t;
+	angle = a;
 	damage = dmg;
 	maxMove = (int)range * 50;
 	velocity = vel * 0.25f;
 	col = { 0, 0, 22, 22, 0, 0 };
 	paint = { 0, 0, 15, 15 };
+
 	switch (coord)
 	{
 	case DOWN:
-		dir = S;
 		col.x = sp->x + sp->w - (col.w / 2);
 		col.y = sp->y + col.h + sp->h;
 		break;
 	case RIGHT:
 		col.x = sp->x + sp->w + col.w;
 		col.y = sp->y + sp->h - (col.h / 2);
-		dir = E;
 		break;
 	case UP:
-		dir = N;
 		col.x = sp->x + sp->w - (col.w / 2);
 		col.y = sp->y - col.h;
 		break;
 	case LEFT:
-		dir = W;
 		col.x = sp->x - col.w;
 		col.y = sp->y + sp->h - (col.h / 2);
-		break;
-	case NO:
-		switch (diagonals)
-		{
-		case NE:
-			col.x = sp->x + sp->w + col.w - 2;
-			col.y = sp->y - col.h + 2;
-			dir = N_E;
-			break;
-		case SE:
-			col.x = sp->x + sp->w + col.w - 2;
-			col.y = sp->y + col.h + sp->h - 2;
-			dir = S_E;
-			break;
-		case SW:
-			col.x = sp->x - col.w + 2;
-			col.y = sp->y + col.h + sp->h - 2;
-			dir = S_W;
-			break;
-		case NW:
-			col.x = sp->x + sp->w + col.w - 2;
-			col.y = sp->y + col.h + sp->h - 2;
-			dir = N_W;
-			break;
-		default:
-			break;
-		}
 		break;
 	default:
 		break;
@@ -75,39 +46,16 @@ Bullet::~Bullet()
 void Bullet::update()
 {
 	float moveX = 0, moveY = 0;
-	switch (dir)
-	{
-	case N:
-		col.restY -= velocity * iVideo->getDeltaTime();
-		break;
-	case N_E:
-		col.restX += velocity * (iVideo->getDeltaTime() * 0.7f);
-		col.restY -= velocity * (iVideo->getDeltaTime() * 0.7f);
-		break;
-	case E:
-		col.restX += velocity * iVideo->getDeltaTime();
-		break;
-	case S_E:
-		col.restX += velocity * (iVideo->getDeltaTime() * 0.7f);
-		col.restY += velocity * (iVideo->getDeltaTime() * 0.7f);
-		break;
-	case S:
-		col.restY += velocity * iVideo->getDeltaTime();
-		break;
-	case S_W:
-		col.restX -= velocity * (iVideo->getDeltaTime() * 0.7f);
-		col.restY += velocity * (iVideo->getDeltaTime() * 0.7f);
-		break;
-	case W:
-		col.restX -= velocity * iVideo->getDeltaTime();
-		break;
-	case N_W:
-		col.restX -= velocity * (iVideo->getDeltaTime() * 0.7f);
-		col.restY -= velocity * (iVideo->getDeltaTime() * 0.7f);
-		break;
-	default:
-		break;
-	}
+
+	float vel = velocity * (float)iVideo->getDeltaTime();
+
+	float velX = vel * cos(angle * PI / 180.0f);
+
+	float velY = vel * sin(angle * PI / 180.0f);
+
+	col.restX += velX;
+	col.restY += velY;
+
 	col.restX = std::modf(col.restX, &moveX);
 	col.restY = std::modf(col.restY, &moveY);
 	col.x += (int)moveX;

@@ -1,6 +1,7 @@
 #include "Room.h"
 #include "Singletons.h"
 #include "AttackFly.h"
+#include "Pooter.h"
 #include "Hollow.h"
 
 #define DOOR_MARGIN 15
@@ -22,6 +23,9 @@ void Room::init(Player* p)
 					nFly->setPlayer(p);
 					enemies.push_back(nFly);
 				}
+				Pooter* nPoot = new Pooter(rand()%400 + 200, rand()%200 + 200);
+				nPoot->setPlayer(p);
+				enemies.push_back(nPoot);
 			}
 			break;
 		case BOSS:

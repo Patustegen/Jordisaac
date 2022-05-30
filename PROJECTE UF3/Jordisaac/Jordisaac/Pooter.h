@@ -6,6 +6,7 @@ class Pooter :
     public Enemy
 {
     STATE_POOTER state;
+    int cooldown;
 public:
     void init();
     void update();

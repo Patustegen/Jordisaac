@@ -2,6 +2,7 @@
 #define SCREEN_WIDTH 957
 #define SCREEN_HEIGHT 540
 #define FPS 60
+#define PI 3.14159265f
 struct Rect
 {
 	int x = 0;
