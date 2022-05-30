@@ -5,11 +5,11 @@ class BaseCharacter :
     public BaseCollision
 {
 protected:
-    int hp;
+    float hp;
     std::vector<int> sID;
     int frame;
 public:
-    int getHP() { return hp; };
-    void hurt(int h = 1);
+    float getHP() { return hp; };
+    void hurt(float h = 1);
 };
 

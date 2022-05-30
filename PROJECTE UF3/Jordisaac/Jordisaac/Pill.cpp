@@ -14,35 +14,8 @@ void Pill::render()
 
 void Pill::Use()
 {
-	switch (type)
-	{
-	case 0:
-		type = -1;
-		sprite = -1;
-		break;
-	case 1:
-		type = -1;
-		sprite = -1;
-		break;
-	case 2:
-		type = -1;
-		sprite = -1;
-		break;
-	case 3:
-		type = -1;
-		sprite = -1;
-		break;
-	case 4:
-		type = -1;
-		sprite = -1;
-		break;
-	case 5:
-		type = -1;
-		sprite = -1;
-		break;
-	default:
-		break;
-	}
+	type = -1;
+	sprite = -1;
 }
 
 Pill::Pill()

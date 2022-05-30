@@ -14,7 +14,7 @@ public:
 		if (pInstance == NULL) pInstance = new BulletManager();
 		return pInstance;
 	}
-	void AddBullet(float vel, int t, float r, Rect* sp, LOOKING coord, DIAGONALS diagonals = NONE);
+	void AddBullet(float vel, int t, float r, float dmg, Rect* sp, LOOKING coord, DIAGONALS diagonals = NONE);
 	void init();
 	void update();
 	void render();

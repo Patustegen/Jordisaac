@@ -1,6 +1,6 @@
 #include "BaseCharacter.h"
 
-void BaseCharacter::hurt(int h)
+void BaseCharacter::hurt(float h)
 {
 	hp -= h;
 }

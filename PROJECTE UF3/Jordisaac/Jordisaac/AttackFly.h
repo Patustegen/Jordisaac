@@ -3,7 +3,6 @@
 class AttackFly :
     public Enemy
 {
-private:
     STATE state;
 public:
     void init();

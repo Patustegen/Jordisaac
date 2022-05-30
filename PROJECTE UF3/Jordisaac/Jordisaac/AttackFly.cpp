@@ -149,7 +149,7 @@ AttackFly::AttackFly(int x, int y)
 	frame = 0;
 	col = { x, y, 16, 16 };
 	paint = { col.x - 10, col.y - 14, 19, 15 };
-	hp = 2;
+	hp = 3;
 	load();
 }
 

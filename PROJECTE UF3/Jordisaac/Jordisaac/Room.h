@@ -43,6 +43,7 @@ public:
 	ROOM_TYPE getRoomType() { return roomType; };
 	bool enemyCol(Rect* col, int* enemyID = nullptr);
 	Enemy* getEnemy(int enemyID) { return enemies[enemyID]; };
+	Player* getPlayer() { return _player; };
 	bool playerCol(Rect* col);
 	std::vector<Door> getDoorVect() { return colDoor; };
 	void setDoorFrame(int i, ROOM_TYPE nR) { colDoor[i].nRoom = nR; };

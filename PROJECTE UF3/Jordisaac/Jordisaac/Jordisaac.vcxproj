@@ -172,6 +172,7 @@
     <ClCompile Include="PickupsManager.cpp" />
     <ClCompile Include="Pill.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Pooter.cpp" />
     <ClCompile Include="Portada.cpp" />
     <ClCompile Include="Ranking.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
@@ -209,6 +210,7 @@
     <ClInclude Include="PickupsManager.h" />
     <ClInclude Include="Pill.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Pooter.h" />
     <ClInclude Include="Portada.h" />
     <ClInclude Include="Ranking.h" />
     <ClInclude Include="ResourceManager.h" />

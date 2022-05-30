@@ -1,10 +1,11 @@
 #include "Bullet.h"
 #include "Singletons.h"
 
-Bullet::Bullet(float vel, int t, float range, Rect* sp, LOOKING coord, DIAGONALS diagonals)
+Bullet::Bullet(float vel, int t, float range, float dmg, Rect* sp, LOOKING coord, DIAGONALS diagonals)
 {
 	initPos = { sp->x, sp->y };
 	type = t;
+	damage = dmg;
 	maxMove = (int)range * 50;
 	velocity = vel * 0.25f;
 	col = { 0, 0, 22, 22, 0, 0 };
@@ -129,7 +130,8 @@ void Bullet::render()
 
 void Bullet::load()
 {
-	gID = iResourceM->loadAndGetGraphicID("Assets\\Characters\\defaultTears.png");
+	if (type == 0) gID = iResourceM->loadAndGetGraphicID("Assets/Enemies/defaultBlood.png");
+	else gID = iResourceM->loadAndGetGraphicID("Assets\\Characters\\defaultTears.png");
 
 	sID.push_back(iSoundM->loadAndGetSoundID("Assets/Characters/tearFire1.mp3"));
 	sID.push_back(iSoundM->loadAndGetSoundID("Assets/Characters/tearFire1.mp3"));

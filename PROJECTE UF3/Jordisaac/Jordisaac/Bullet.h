@@ -7,6 +7,7 @@ class Bullet :
 {
 private:
     float velocity;
+    float damage;
     BULLET_DIRECTION dir;
     int type;
     Rect initPos;
@@ -14,9 +15,10 @@ private:
     bool destroy;
     std::vector<int> sID;
 public:
-    Bullet(float vel, int t, float range, Rect* sp, LOOKING coord, DIAGONALS diagonals = NONE);
+    Bullet(float vel, int t, float range, float dmg, Rect* sp, LOOKING coord, DIAGONALS diagonals = NONE);
     ~Bullet();
     int getType() { return type; };
+    float getDamage() { return damage; };
     bool mustDestroy() { return destroy; };
     void update();
     void render();

@@ -54,7 +54,33 @@ void Player::update()
 			}
 		}
 		if (iInputM->getEvents(USEITEM));
-		if (iInputM->getEvents(USECONS)) cons.Use();
+		if (iInputM->getEvents(USECONS))
+		{
+			switch (cons.getType())
+			{
+			case 0:
+				stats[SPEED] += 0.35f;
+				break;
+			case 1:
+				stats[SPEED] -= 0.25f;
+				break;
+			case 2:
+				stats[RANGE] += 1.25f;
+				break;
+			case 3:
+				stats[SHOT_SPEED] -= 0.25f;
+				break;
+			case 4:
+				stats[TEARS] += 0.25f;
+				break;
+			case 5:
+				stats[DAMAGE] += 0.25f;
+				break;
+			default:
+				break;
+			}
+			cons.Use();
+		}
 		
 		mDiagonals = NONE;
 
@@ -291,7 +317,7 @@ void Player::update()
 
 		if (shooting && cooldown == 500 + stats[TEARS] * 100)
 		{
-			iBulletM->AddBullet(stats[SHOT_SPEED], 1, stats[RANGE], &Head, lHead);
+			iBulletM->AddBullet(stats[SHOT_SPEED], 1, stats[RANGE], stats[DAMAGE], &Head, lHead);
 		}
 
 
@@ -334,7 +360,7 @@ void Player::update()
 
 void Player::init()
 {
-	stats[DAMAGE] = 3.5f;
+	stats[DAMAGE] = 1.5f;
 	stats[TEARS] = 0;
 	stats[RANGE] = 6.5f;
 	stats[SHOT_SPEED] = 1;

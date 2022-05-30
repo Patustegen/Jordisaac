@@ -8,9 +8,9 @@ BulletManager::BulletManager()
 	bullets.resize(0);
 }
 
-void BulletManager::AddBullet(float vel, int t, float r, Rect* sp, LOOKING coord, DIAGONALS diagonals)
+void BulletManager::AddBullet(float vel, int t, float r, float dmg, Rect* sp, LOOKING coord, DIAGONALS diagonals)
 {
-	Bullet* nBullet = new Bullet(vel, t, r, sp, coord, diagonals);
+	Bullet* nBullet = new Bullet(vel, t, r, dmg, sp, coord, diagonals);
 	bullets.push_back(nBullet);
 }
 
@@ -39,13 +39,17 @@ void BulletManager::update()
 		{
 			if (iRoomM->getActualRoom()->enemyCol(bullets[i]->getCol(), &enemyID))
 			{
-				iRoomM->getActualRoom()->getEnemy(enemyID)->hurt();
+				iRoomM->getActualRoom()->getEnemy(enemyID)->hurt(bullets[i]->getDamage());
 				touched = true;
 			}
 		}
 		else
 		{
-			if (iRoomM->getActualRoom()->playerCol(bullets[i]->getCol())) touched = true;
+			if (iRoomM->getActualRoom()->playerCol(bullets[i]->getCol()))
+			{
+				iRoomM->getActualRoom()->getPlayer()->hurt(bullets[i]->getDamage());
+				touched = true;
+			}
 		}
 		
 		if (touched)
