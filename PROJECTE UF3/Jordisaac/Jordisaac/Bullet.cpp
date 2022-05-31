@@ -19,7 +19,8 @@ Bullet::Bullet(float vel, int t, float range, float dmg, Rect* sp, LOOKING coord
 		col.y = sp->y + col.h + sp->h;
 		break;
 	case RIGHT:
-		col.x = sp->x + sp->w + col.w;
+		col.x = sp->x + sp->w;
+		if (t == 1) col.x += col.w;
 		col.y = sp->y + sp->h - (col.h / 2);
 		break;
 	case UP:
@@ -33,6 +34,8 @@ Bullet::Bullet(float vel, int t, float range, float dmg, Rect* sp, LOOKING coord
 	default:
 		break;
 	}
+	paint.x = col.x;
+	paint.y = col.y;
 	destroy = false;
 	load();
 	iAudio->playAudio(iSoundM->getSoundByID(sID[rand() % 3]));

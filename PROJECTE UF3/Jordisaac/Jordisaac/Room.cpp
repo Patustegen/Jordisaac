@@ -37,7 +37,9 @@ void Room::init(Player* p)
 				switch (bossType)
 				{
 				case 0:
-					nBoss = new Hollow();
+					Hollow * nHollow = new Hollow();
+					for (int i = 0; i < nHollow->getHBody().size(); i++) enemies.push_back(nHollow->getHBody()[i]);
+					nBoss = nHollow;
 					break;
 				case 1:
 					break;
@@ -51,6 +53,11 @@ void Room::init(Player* p)
 			}
 			break;
 		case GOLDEN:
+			if (completed == false)
+			{
+				completed = true;
+				iPickM->AddPickup(SCREEN_WIDTH / 2 - 10, SCREEN_HEIGHT / 2 - 10, CONS_PU, rand() % 6);
+			}
 			break;
 		default:
 			break;

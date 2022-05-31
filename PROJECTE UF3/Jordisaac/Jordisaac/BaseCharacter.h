@@ -10,6 +10,6 @@ protected:
     int frame;
 public:
     float getHP() { return hp; };
-    void hurt(float h = 1);
+    virtual void hurt(float h = 1);
 };
 

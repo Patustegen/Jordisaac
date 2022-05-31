@@ -47,7 +47,7 @@ void BulletManager::update()
 		{
 			if (iRoomM->getActualRoom()->playerCol(bullets[i]->getCol()))
 			{
-				iRoomM->getActualRoom()->getPlayer()->hurt(bullets[i]->getDamage());
+				iRoomM->getActualRoom()->getPlayer()->getHurt();
 				touched = true;
 			}
 		}

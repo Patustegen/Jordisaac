@@ -19,6 +19,7 @@ HollowBody::HollowBody(bool h)
 	}
 	orientacio = NO;
 	angle = 0;
+	touched = false;
 }
 
 HollowBody::~HollowBody()
@@ -41,10 +42,12 @@ void HollowBody::init()
 	}
 	paint.x = col.x;
 	paint.y = col.y;
+	touched = false;
 }
 
 void HollowBody::update()
 {
+	touched = false;
 	frame += iVideo->getDeltaTime() * 2;
 	if (frame > 1999)
 	{
@@ -119,4 +122,9 @@ void HollowBody::update()
 void HollowBody::render()
 {
 	iVideo->renderGraphicEx(gID, &paint, 0, 2.0f, 2.0f, (frame / 1000) * paint.w, paint.h * orientacio);
+}
+
+void HollowBody::hurt(float h)
+{
+	touched = true;
 }

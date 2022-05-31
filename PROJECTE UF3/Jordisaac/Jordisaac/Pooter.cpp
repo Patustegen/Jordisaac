@@ -9,52 +9,50 @@ void Pooter::update()
 {
 	frame += iVideo->getDeltaTime();
 	cooldown += iVideo->getDeltaTime();
-	int shoot = 0;
 	float deltaMove = iVideo->getDeltaTime() / 17.0f;
 	float moveX = 0.0f;
 	float moveY = 0.0f;
-	float realX;
-	float realY;
-	float decimX = std::modf(moveX, &realX);
-	float decimY = std::modf(moveY, &realY);
+	float realX = 0.0f;
+	float realY = 0.0f;
+	float decimX = 0.0f;
+	float decimY = 0.0f;
 	switch (state)
 	{
 	case MOVING_RIGHT:
 	case MOVING_LEFT:
 		if (frame >= 200) frame = 0;
-		if (col.x + (col.w / 2) + 70 < pPos->getCol()->x + (pPos->getCol()->w / 2))
+		if (col.x + (col.w / 2) < pPos->getCol()->x + (pPos->getCol()->w / 2))
 		{
 			moveX = deltaMove;
 			state = MOVING_RIGHT;
 		}
-		else if (col.x + (col.w / 2) - 70 > pPos->getCol()->x + (pPos->getCol()->w / 2))
+		else if (col.x + (col.w / 2) > pPos->getCol()->x + (pPos->getCol()->w / 2))
 		{
 			moveX = -deltaMove;
 			state = MOVING_LEFT;
 		}
-		else shoot++;
-		if (col.y + (col.h / 2) + 50 < pPos->getCol()->y + (pPos->getCol()->h / 2))
+		if (col.y + (col.h / 2) < pPos->getCol()->y + (pPos->getCol()->h / 2))
 		{
 			moveY = deltaMove;
 		}
-		else if (col.y + (col.h / 2) - 50 > pPos->getCol()->y + (pPos->getCol()->h / 2))
+		else if (col.y + (col.h / 2) > pPos->getCol()->y + (pPos->getCol()->h / 2))
 		{
 			moveY = -deltaMove;
 		}
-		else shoot++;
 
-		if (shoot == 2 && cooldown > 1000)
+		if (cooldown > 2000)
 		{
+			cooldown = 0;
 			if (col.x + (col.w / 2) < pPos->getCol()->x + (pPos->getCol()->w / 2))
 			{
 				state = SHOOTING_RIGHT;
-				int angle = atan2(pPos->getCol()->y - col.y, pPos->getCol()->x - col.x) * 180 / PI;
+				int angle = atan2((pPos->getCol()->y + pPos->getCol()->h / 2) - (col.y + col.h / 2), (pPos->getCol()->x + pPos->getCol()->w / 2) - (col.x + col.w / 2)) * 180 / PI;
 				iBulletM->AddBullet(0.4f, 0, 7.0f, 1.0f, &col, RIGHT, angle);
 			}
 			else
 			{
 				state = SHOOTING_LEFT;
-				int angle = atan2(pPos->getCol()->y - col.y, pPos->getCol()->x - col.x) * 180 / PI;
+				int angle = atan2((pPos->getCol()->y + pPos->getCol()->h / 2) - (col.y + col.h / 2), (pPos->getCol()->x + pPos->getCol()->w / 2) - (col.x + col.w / 2)) * 180 / PI;
 				iBulletM->AddBullet(0.4f, 0, 7.0f, 1.0f, &col, LEFT, angle);
 			}
 		}
@@ -64,6 +62,8 @@ void Pooter::update()
 			moveX *= 0.4f;
 			moveY *= 0.4f;
 		}
+		decimX = std::modf(moveX, &realX);
+		decimY = std::modf(moveY, &realY);
 
 		if (col.restX + decimX >= 1)
 		{
@@ -107,6 +107,7 @@ void Pooter::update()
 			}
 		}
 
+
 		if (col.restY + decimY >= 1)
 		{
 			realY += 1;
@@ -149,7 +150,7 @@ void Pooter::update()
 			}
 		}
 
-		paint.x = col.x - 12;
+		paint.x = col.x - 10;
 		paint.y = col.y - 15;
 		break;
 	case SHOOTING_RIGHT:
@@ -182,10 +183,11 @@ Pooter::Pooter(int x, int y)
 	pPos = nullptr;
 	state = MOVING_RIGHT;
 	frame = 0;
-	col = { x, y, 25, 20 };
-	paint = { col.x - 12, col.y - 15, 24, 25 };
+	col = { x, y, 25, 24 };
+	paint = { col.x - 10, col.y - 15, 24, 25 };
 	hp = 6;
 	cooldown = 0;
+	load();
 }
 
 Pooter::~Pooter()

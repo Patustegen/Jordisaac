@@ -14,7 +14,12 @@ void Hollow::update()
 {
 	for (int i = 0; i < mHBody.size(); i++)
 	{
+		if (i != 0)
+		{
+			int distance_x = (mHBody[i]->getCol()->x + mHBody[i]->getCol()->w / 2) - (mHBody[i + 1]->getCol()->x + mHBody[i + 1]->getCol()->w / 2);
+		}
 		mHBody[i]->update();
+		if (mHBody[i]->hasTouched()) hp--;
 	}
 }
 
@@ -39,4 +44,10 @@ Hollow::Hollow()
 
 Hollow::~Hollow()
 {
+	for (int i = 0; i < mHBody.size(); i++)
+	{
+		delete mHBody[i];
+		mHBody.erase(mHBody.begin() + i);
+		i--;
+	}
 }

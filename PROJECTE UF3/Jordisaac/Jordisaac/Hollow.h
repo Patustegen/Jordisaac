@@ -10,6 +10,7 @@ public:
     void init();
     void update();
     void render();
+    std::vector<HollowBody*> getHBody() { return mHBody; };
     Hollow();
     ~Hollow();
 };

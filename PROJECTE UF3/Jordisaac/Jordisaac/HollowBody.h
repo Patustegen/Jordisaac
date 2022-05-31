@@ -7,6 +7,7 @@ class HollowBody :
     int angle;
     Rect rebotes;
     LOOKING orientacio;
+    bool touched;
 public:
     HollowBody(bool h = false);
     ~HollowBody();
@@ -14,5 +15,7 @@ public:
     void init();
     void update();
     void render();
+    void hurt(float h = 1);
+    bool hasTouched() { return touched; };
 };
 

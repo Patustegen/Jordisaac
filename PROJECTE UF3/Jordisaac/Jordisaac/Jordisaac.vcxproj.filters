@@ -88,9 +88,13 @@
     <ClCompile Include="GameOver.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="Hollow.cpp" />
     <ClCompile Include="Pill.cpp" />
-    <ClCompile Include="Pooter.cpp" />
+    <ClCompile Include="Pooter.cpp">
+      <Filter>Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Hollow.cpp">
+      <Filter>Enemies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseCharacter.h" />
@@ -183,9 +187,13 @@
     <ClInclude Include="GameOver.h">
       <Filter>Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="Hollow.h" />
     <ClInclude Include="Pill.h" />
-    <ClInclude Include="Pooter.h" />
+    <ClInclude Include="Pooter.h">
+      <Filter>Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Hollow.h">
+      <Filter>Enemies</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Scenes">
