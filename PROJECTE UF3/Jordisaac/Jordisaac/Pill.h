@@ -5,6 +5,7 @@ class Pill :
 {
     int type;
     int sprite;
+    int sID[3];
 public:
     int getType() { return sprite; };
     void setPill(int t, int s);

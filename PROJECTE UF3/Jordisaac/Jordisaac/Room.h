@@ -32,7 +32,9 @@ private:
 	std::vector<Door> colDoor;
 	int bg;
 	int gDoor;
+	int gTDoor;
 	int bossType;
+	int bossMusic;
 public:
 	void init(Player* p);
 	void update();

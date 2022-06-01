@@ -7,6 +7,15 @@ PickupsManager::PickupsManager()
 {
 	pickups.resize(0);
 	_p = nullptr;
+	sID[0] = iSoundM->loadAndGetSoundID("Assets/Sounds/pennydrop.mp3");
+	sID[1] = iSoundM->loadAndGetSoundID("Assets/Sounds/Key_drop0.mp3");
+	sID[2] = iSoundM->loadAndGetSoundID("Assets/Sounds/nickeldrop.mp3");
+	sID[3] = iSoundM->loadAndGetSoundID("Assets/Sounds/dimedrop.mp3");
+	sID[4] = iSoundM->loadAndGetSoundID("Assets/Sounds/pennypickup.mp3");
+	sID[5] = iSoundM->loadAndGetSoundID("Assets/Sounds/Keypickup.mp3");
+	sID[6] = iSoundM->loadAndGetSoundID("Assets/Sounds/nickelpickup.mp3");
+	sID[7] = iSoundM->loadAndGetSoundID("Assets/Sounds/dimepickup.mp3");
+	sID[11] = iSoundM->loadAndGetSoundID("Assets/Sounds/superholy.mp3");
 }
 
 void PickupsManager::AddPickup(int x, int y, PICKUP_TYPE t, int i)
@@ -17,6 +26,10 @@ void PickupsManager::AddPickup(int x, int y, PICKUP_TYPE t, int i)
 		{
 		case NORMAL_PU:
 			i = rand() % 13;
+			if (i == 0) iAudio->playAudio(iSoundM->getSoundByID(sID[0]));
+			else if (i == 2) iAudio->playAudio(iSoundM->getSoundByID(sID[1]));
+			else if (i == 4) iAudio->playAudio(iSoundM->getSoundByID(sID[2]));
+			else if (i == 5) iAudio->playAudio(iSoundM->getSoundByID(sID[3]));
 			break;
 		case CONS_PU:
 			i = rand() % 6;
@@ -77,7 +90,8 @@ void PickupsManager::update()
 					case 2:
 						if (_p->PickupUp(pickups[i]->getId()))
 						{
-							//sound
+							if (pickups[i]->getId() == 0) iAudio->playAudio(iSoundM->getSoundByID(sID[4]));
+							else if (pickups[i]->getId() == 2) iAudio->playAudio(iSoundM->getSoundByID(sID[5]));
 							delete pickups[i];
 							pickups.erase(pickups.begin() + i);
 							i--;
@@ -86,7 +100,6 @@ void PickupsManager::update()
 					case 3:
 						if (_p->PickupUp(1, 2))
 						{
-							//sound
 							delete pickups[i];
 							pickups.erase(pickups.begin() + i);
 							i--;
@@ -95,7 +108,7 @@ void PickupsManager::update()
 					case 4:
 						if (_p->PickupUp(0, 5))
 						{
-							//sound
+							iAudio->playAudio(iSoundM->getSoundByID(sID[6]));
 							delete pickups[i];
 							pickups.erase(pickups.begin() + i);
 							i--;
@@ -104,7 +117,7 @@ void PickupsManager::update()
 					case 5:
 						if (_p->PickupUp(0, 10))
 						{
-							//sound
+							iAudio->playAudio(iSoundM->getSoundByID(sID[7]));
 							delete pickups[i];
 							pickups.erase(pickups.begin() + i);
 							i--;
@@ -157,6 +170,7 @@ void PickupsManager::update()
 					case 12:
 						if (_p->pickupHeart(HALF_ETERNAL))
 						{
+							iAudio->playAudio(iSoundM->getSoundByID(sID[11]));
 							delete pickups[i];
 							pickups.erase(pickups.begin() + i);
 							i--;

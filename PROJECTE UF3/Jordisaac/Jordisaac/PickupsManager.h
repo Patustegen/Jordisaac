@@ -7,6 +7,7 @@ class PickupsManager
 	std::vector<Pickup*> pickups;
 	static PickupsManager* pInstance;
 	int pills[6];
+	int sID[12];
 	Player* _p;
 protected:
 	PickupsManager();

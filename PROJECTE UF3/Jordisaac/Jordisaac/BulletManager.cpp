@@ -14,6 +14,21 @@ void BulletManager::AddBullet(float vel, int t, float r, float dmg, Rect* sp, LO
 	bullets.push_back(nBullet);
 }
 
+bool BulletManager::preciseCollision(Rect* col, int t)
+{
+	for (int i = 0; i < bullets.size(); i++)
+	{
+		if (bullets[i]->getType() != t)
+		{
+			if (iVideo->onCollision(col,bullets[i]->getCol()))
+			{
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
 void BulletManager::init()
 {
 	for (int i = 0; i < bullets.size(); i++)

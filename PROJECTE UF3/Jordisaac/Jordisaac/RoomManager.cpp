@@ -3,6 +3,7 @@
 #include <stdlib.h>     
 #include <time.h> 
 #include <math.h>
+#include "Singletons.h"
 
 #define NORTH 1
 #define SOUTH 2
@@ -21,6 +22,7 @@ RoomManager::RoomManager()
 	aRoom = 0;
 	aLevel = 0;
 	srand((unsigned int)time(NULL));
+	music = iSoundM->loadAndGetSoundID("Assets/Music/music.mp3");
 }
 
 RoomManager::~RoomManager()
@@ -41,26 +43,35 @@ Room* RoomManager::getActualRoom()
 
 void RoomManager::changeRoom(int aR, int nMove, Player* p)
 {
-	aRoom = aR + nMove;
-	if (nMove == 10)
+	if (nMove == 10000)
 	{
-		p->getCol()->x = SCREEN_WIDTH / 2 - p->getCol()->w;
-		p->getCol()->y = SPAWN_POINT_Y;
+		createNewLevel(aLevel + 1);
+		int m = iSoundM->loadAndGetSoundID("Assets/Music/win.mp3");
+		iAudio->playAudio(iSoundM->getSoundByID(m));
 	}
-	else if (nMove == -10)
+	else
 	{
-		p->getCol()->x = SCREEN_WIDTH / 2 - p->getCol()->w;
-		p->getCol()->y = SCREEN_HEIGHT - SPAWN_POINT_Y - p->getCol()->h * 2;
-	}
-	else if (nMove == -1)
-	{
-		p->getCol()->y = SCREEN_HEIGHT / 2 - p->getCol()->h;
-		p->getCol()->x = SCREEN_WIDTH - SPAWN_POINT_X - p->getCol()->w * 2;
-	}
-	else if (nMove == 1)
-	{
-		p->getCol()->y = SCREEN_HEIGHT / 2 - p->getCol()->h;
-		p->getCol()->x = SPAWN_POINT_X;
+		aRoom = aR + nMove;
+		if (nMove == 10)
+		{
+			p->getCol()->x = SCREEN_WIDTH / 2 - p->getCol()->w;
+			p->getCol()->y = SPAWN_POINT_Y;
+		}
+		else if (nMove == -10)
+		{
+			p->getCol()->x = SCREEN_WIDTH / 2 - p->getCol()->w;
+			p->getCol()->y = SCREEN_HEIGHT - SPAWN_POINT_Y - p->getCol()->h * 2;
+		}
+		else if (nMove == -1)
+		{
+			p->getCol()->y = SCREEN_HEIGHT / 2 - p->getCol()->h;
+			p->getCol()->x = SCREEN_WIDTH - SPAWN_POINT_X - p->getCol()->w * 2;
+		}
+		else if (nMove == 1)
+		{
+			p->getCol()->y = SCREEN_HEIGHT / 2 - p->getCol()->h;
+			p->getCol()->x = SPAWN_POINT_X;
+		}
 	}
 	getActualRoom()->init(p);
 }
@@ -237,4 +248,6 @@ void RoomManager::createNewLevel(int lDiff)
 			}
 		}
 	}
+	iAudio->haltChannel();
+	iAudio->playAudio(iSoundM->getSoundByID(music), 0, -1);
 }

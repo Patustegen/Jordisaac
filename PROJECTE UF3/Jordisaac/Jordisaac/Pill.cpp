@@ -14,6 +14,7 @@ void Pill::render()
 
 void Pill::Use()
 {
+	if (type != -1) iAudio->playAudio(iSoundM->getSoundByID(sID[rand() % 3]));
 	type = -1;
 	sprite = -1;
 }
@@ -24,6 +25,9 @@ Pill::Pill()
 	sprite = -1;
 	paint = { SCREEN_WIDTH - 70, SCREEN_HEIGHT - 70, 17, 19 };
 	gID = iResourceM->loadAndGetGraphicID("Assets/Pills/Pills.png");
+	sID[0] = iSoundM->loadAndGetSoundID("Assets/Sounds/Powerup1.mp3");
+	sID[1] = iSoundM->loadAndGetSoundID("Assets/Sounds/Powerup2.mp3");
+	sID[2] = iSoundM->loadAndGetSoundID("Assets/Sounds/Powerup3.mp3");
 }
 
 Pill::~Pill()

@@ -31,15 +31,16 @@ void Room::init(Player* p)
 		case BOSS:
 			if (!completed)
 			{
+				iAudio->haltChannel();
+				int m = iSoundM->loadAndGetSoundID("Assets/Music/BossRoom.mp3");
+				iAudio->playAudio(iSoundM->getSoundByID(m), 0);
 				bossType = rand() % 3;
 				bossType = 0;
 				Boss* nBoss = nullptr;
 				switch (bossType)
 				{
 				case 0:
-					Hollow * nHollow = new Hollow();
-					for (int i = 0; i < nHollow->getHBody().size(); i++) enemies.push_back(nHollow->getHBody()[i]);
-					nBoss = nHollow;
+					nBoss = new Hollow();
 					break;
 				case 1:
 					break;
@@ -96,6 +97,10 @@ void Room::init(Player* p)
 
 void Room::update()
 {
+	if (roomType == BOSS)
+	{
+		if (!iAudio->isPlaying(0)) iAudio->playAudio(iSoundM->getSoundByID(bossMusic), 0, -1);
+	}
 	_player->update();
 	iBulletM->update();
 	iBombM->update();
@@ -186,7 +191,14 @@ void Room::render()
 		}
 		break;
 	case BOSS:
-		iVideo->renderGraphicEx(gDoor, &colDoor.at(0).paint, colDoor.at(0).angle, 2.0f, 2.0f, colDoor.at(0).paint.w * completed, colDoor.at(0).paint.h);
+		for (int i = 0; i < colDoor.size(); i++)
+		{
+			if (colDoor[i].idChange == 10000)
+			{
+				if (completed) iVideo->renderGraphic(gTDoor, colDoor[i].paint.x, colDoor[i].paint.y, colDoor[i].paint.w, colDoor[i].paint.h, 0, 0, 0.25f, 0.25f);
+			}
+			else iVideo->renderGraphicEx(gDoor, &colDoor.at(i).paint, colDoor.at(i).angle, 2.0f, 2.0f, colDoor.at(i).paint.w * completed, colDoor.at(i).paint.h);
+		}
 		break;
 	case GOLDEN:
 		iVideo->renderGraphicEx(gDoor, &colDoor.at(0).paint, colDoor.at(0).angle, 2.0f, 2.0f, colDoor.at(0).paint.w * completed, colDoor.at(0).paint.h * 2);
@@ -266,12 +278,14 @@ Room::Room(int nDoors, int roomID)
 	roomType = NORMAL;
 	_player = nullptr;
 	completed = false;
+	bossMusic = false;
 	movCharacters.resize(0);
 	colDoor.resize(0);
 	enemies.resize(0);
 	rID = roomID;
 	bg = iResourceM->loadAndGetGraphicID("Assets\\Rooms\\BasementDefault.png");
 	gDoor = iResourceM->loadAndGetGraphicID("Assets\\Rooms\\doorsImages.png");
+	gTDoor = iResourceM->loadAndGetGraphicID("Assets\\Rooms\\trapdoor.png");
 
 
 	if (nDoors & 0x01)
@@ -364,6 +378,17 @@ Room::Room(int nDoors, int roomID)
 	}
 	if (doorCount == 1  && (roomID != 0 && roomID != -1 && roomID != -10 && roomID != 1 && roomID != 10)) roomType = BOSS;
 	else if (doorCount == 1 && (roomID == -1 || roomID == -10 || roomID == 1 || roomID == 10)) roomType = GOLDEN;
+
+	if (roomType == BOSS)
+	{
+		Door nDoor;
+		nDoor.col = { SCREEN_WIDTH / 2 - (int)(156.0f * 0.25f) / 2, SCREEN_HEIGHT / 2 - (int)(149.0f * 0.25f) / 2, (int)(156.0f * 0.25f), (int)(149.0f * 0.25f)};
+		nDoor.paint = { nDoor.col.x, nDoor.col.y, 156, 149 };
+		nDoor.angle = 0.0;
+		nDoor.idChange = 10000;
+		colDoor.push_back(nDoor);
+		bossMusic = iSoundM->loadAndGetSoundID("Assets/Music/bossMusic.mp3");
+	}
 }
 
 Room::Room()

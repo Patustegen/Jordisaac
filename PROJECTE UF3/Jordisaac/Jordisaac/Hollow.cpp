@@ -8,26 +8,49 @@ void Hollow::init()
 		mHBody[i]->init();
 		mHBody[i]->setAngle(a);
 	}
+	movBody = mHBody;
 }
 
 void Hollow::update()
 {
 	for (int i = 0; i < mHBody.size(); i++)
 	{
-		if (i != 0)
+		if (!mHBody[i]->isInited())
 		{
-			int distance_x = (mHBody[i]->getCol()->x + mHBody[i]->getCol()->w / 2) - (mHBody[i + 1]->getCol()->x + mHBody[i + 1]->getCol()->w / 2);
+			int distance_x = (mHBody[i]->getCol()->x + mHBody[i]->getCol()->w / 2) - (mHBody[i - 1]->getCol()->x + mHBody[i - 1]->getCol()->w / 2);
+			int distance_y = (mHBody[i]->getCol()->y + mHBody[i]->getCol()->h / 2) - (mHBody[i - 1]->getCol()->y + mHBody[i - 1]->getCol()->h / 2);
+
+			if (distance_x >= 25 || distance_x <= -25 || distance_y >= 15 || distance_y <= -15) mHBody[i]->update();
 		}
-		mHBody[i]->update();
-		if (mHBody[i]->hasTouched()) hp--;
+		else
+		{
+			mHBody[i]->update();
+			if (mHBody[i]->hasTouched()) hp--;
+		}
 	}
+	movBody = mHBody;
+	bool swapped;
+	do
+	{
+		swapped = true;
+		for (int i = 1; i < movBody.size(); i++)
+		{
+			if (movBody[i - 1]->getCol()->y + movBody[i - 1]->getCol()->h > movBody[i]->getCol()->y + movBody[i]->getCol()->h)
+			{
+				HollowBody* tmp = movBody[i - 1];
+				movBody[i - 1] = movBody[i];
+				movBody[i] = tmp;
+				swapped = false;
+			}
+		}
+	} while (!swapped);
 }
 
 void Hollow::render()
 {
-	for (int i = 0; i < mHBody.size(); i++)
+	for (int i = 0; i < movBody.size(); i++)
 	{
-		mHBody[i]->render();
+		movBody[i]->render();
 	}
 }
 

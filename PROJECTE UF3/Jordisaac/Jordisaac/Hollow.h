@@ -6,6 +6,7 @@ class Hollow :
     public Boss
 {
     std::vector<HollowBody*> mHBody;
+    std::vector<HollowBody*> movBody;
 public:
     void init();
     void update();

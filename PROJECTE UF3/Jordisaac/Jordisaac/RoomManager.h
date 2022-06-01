@@ -12,6 +12,7 @@ class RoomManager
 	std::vector<Room> Level;
 	int aRoom;
 	int aLevel;
+	int music;
 protected:
 	RoomManager();
 public:

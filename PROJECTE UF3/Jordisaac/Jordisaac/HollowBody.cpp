@@ -20,6 +20,7 @@ HollowBody::HollowBody(bool h)
 	orientacio = NO;
 	angle = 0;
 	touched = false;
+	inited = false;
 }
 
 HollowBody::~HollowBody()
@@ -34,11 +35,13 @@ void HollowBody::init()
 	{
 		col.x = rebotes.x;
 		col.y = rebotes.y;
+		inited = true;
 	}
 	else
 	{
 		col.x = rebotes.x + 11;
 		col.y = rebotes.y + 17;
+		inited = false;
 	}
 	paint.x = col.x;
 	paint.y = col.y;
@@ -47,6 +50,7 @@ void HollowBody::init()
 
 void HollowBody::update()
 {
+	inited = true;
 	touched = false;
 	frame += iVideo->getDeltaTime() * 2;
 	if (frame > 1999)
@@ -117,14 +121,12 @@ void HollowBody::update()
 
 	paint.x = col.x;
 	paint.y = col.y;
+
+	if (iVideo->onCollision(iRoomM->getActualRoom()->getPlayer()->getCol(), &col)) iRoomM->getActualRoom()->getPlayer()->getHurt();
+	if (iBulletM->preciseCollision(&col, 0)) touched = true;
 }
 
 void HollowBody::render()
 {
 	iVideo->renderGraphicEx(gID, &paint, 0, 2.0f, 2.0f, (frame / 1000) * paint.w, paint.h * orientacio);
-}
-
-void HollowBody::hurt(float h)
-{
-	touched = true;
 }

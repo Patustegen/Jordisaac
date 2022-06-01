@@ -15,6 +15,7 @@ public:
 		return pInstance;
 	}
 	void AddBullet(float vel, int t, float r, float dmg, Rect* sp, LOOKING coord, int a);
+	bool preciseCollision(Rect* col, int t);
 	void init();
 	void update();
 	void render();
