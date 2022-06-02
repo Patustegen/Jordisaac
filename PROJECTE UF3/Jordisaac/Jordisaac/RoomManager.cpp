@@ -23,6 +23,7 @@ RoomManager::RoomManager()
 	aLevel = 0;
 	srand((unsigned int)time(NULL));
 	music = iSoundM->loadAndGetSoundID("Assets/Music/music.mp3");
+	currentGame = false;
 }
 
 RoomManager::~RoomManager()
@@ -46,31 +47,80 @@ void RoomManager::changeRoom(int aR, int nMove, Player* p)
 	if (nMove == 10000)
 	{
 		createNewLevel(aLevel + 1);
-		int m = iSoundM->loadAndGetSoundID("Assets/Music/win.mp3");
-		iAudio->playAudio(iSoundM->getSoundByID(m));
 	}
 	else
 	{
-		aRoom = aR + nMove;
-		if (nMove == 10)
+		if (getActualRoom()->getRoomType() == GOLDEN)
 		{
-			p->getCol()->x = SCREEN_WIDTH / 2 - p->getCol()->w;
-			p->getCol()->y = SPAWN_POINT_Y;
+			if (getActualRoom()->getDoorVect()[0].angle == 180)
+			{
+				p->getCol()->x = SCREEN_WIDTH / 2 - p->getCol()->w;
+				p->getCol()->y = SPAWN_POINT_Y;
+			}
+			else if (getActualRoom()->getDoorVect()[0].angle == 0)
+			{
+				p->getCol()->x = SCREEN_WIDTH / 2 - p->getCol()->w;
+				p->getCol()->y = SCREEN_HEIGHT - SPAWN_POINT_Y - p->getCol()->h * 2;
+			}
+			else if (getActualRoom()->getDoorVect()[0].angle == 270)
+			{
+				p->getCol()->y = SCREEN_HEIGHT / 2 - p->getCol()->h;
+				p->getCol()->x = SCREEN_WIDTH - SPAWN_POINT_X - p->getCol()->w * 2;
+			}
+			else if (getActualRoom()->getDoorVect()[0].angle == 90)
+			{
+				p->getCol()->y = SCREEN_HEIGHT / 2 - p->getCol()->h;
+				p->getCol()->x = SPAWN_POINT_X;
+			}
+			aRoom = 0;
 		}
-		else if (nMove == -10)
+		else if (aRoom == 0 && nMove == getActualRoom()->getDoorVect()[1].idChange)
 		{
-			p->getCol()->x = SCREEN_WIDTH / 2 - p->getCol()->w;
-			p->getCol()->y = SCREEN_HEIGHT - SPAWN_POINT_Y - p->getCol()->h * 2;
+			if (getActualRoom()->getDoorVect()[1].angle == 180)
+			{
+				p->getCol()->x = SCREEN_WIDTH / 2 - p->getCol()->w;
+				p->getCol()->y = SPAWN_POINT_Y;
+			}
+			else if (getActualRoom()->getDoorVect()[1].angle == 0)
+			{
+				p->getCol()->x = SCREEN_WIDTH / 2 - p->getCol()->w;
+				p->getCol()->y = SCREEN_HEIGHT - SPAWN_POINT_Y - p->getCol()->h * 2;
+			}
+			else if (getActualRoom()->getDoorVect()[1].angle == 270)
+			{
+				p->getCol()->y = SCREEN_HEIGHT / 2 - p->getCol()->h;
+				p->getCol()->x = SCREEN_WIDTH - SPAWN_POINT_X - p->getCol()->w * 2;
+			}
+			else if (getActualRoom()->getDoorVect()[1].angle == 90)
+			{
+				p->getCol()->y = SCREEN_HEIGHT / 2 - p->getCol()->h;
+				p->getCol()->x = SPAWN_POINT_X;
+			}
+			aRoom = -1000;
 		}
-		else if (nMove == -1)
+		else
 		{
-			p->getCol()->y = SCREEN_HEIGHT / 2 - p->getCol()->h;
-			p->getCol()->x = SCREEN_WIDTH - SPAWN_POINT_X - p->getCol()->w * 2;
-		}
-		else if (nMove == 1)
-		{
-			p->getCol()->y = SCREEN_HEIGHT / 2 - p->getCol()->h;
-			p->getCol()->x = SPAWN_POINT_X;
+			aRoom = aR + nMove;
+			if (nMove == 10)
+			{
+				p->getCol()->x = SCREEN_WIDTH / 2 - p->getCol()->w;
+				p->getCol()->y = SPAWN_POINT_Y;
+			}
+			else if (nMove == -10)
+			{
+				p->getCol()->x = SCREEN_WIDTH / 2 - p->getCol()->w;
+				p->getCol()->y = SCREEN_HEIGHT - SPAWN_POINT_Y - p->getCol()->h * 2;
+			}
+			else if (nMove == -1)
+			{
+				p->getCol()->y = SCREEN_HEIGHT / 2 - p->getCol()->h;
+				p->getCol()->x = SCREEN_WIDTH - SPAWN_POINT_X - p->getCol()->w * 2;
+			}
+			else if (nMove == 1)
+			{
+				p->getCol()->y = SCREEN_HEIGHT / 2 - p->getCol()->h;
+				p->getCol()->x = SPAWN_POINT_X;
+			}
 		}
 	}
 	getActualRoom()->init(p);
@@ -78,6 +128,7 @@ void RoomManager::changeRoom(int aR, int nMove, Player* p)
 
 void RoomManager::createNewLevel(int lDiff)
 {
+	currentGame = true;
 	Level.resize(0);
 	aRoom = 0;
 	aLevel = lDiff;
@@ -228,7 +279,7 @@ void RoomManager::createNewLevel(int lDiff)
 			else if (Level[i].getDoorVect()[1].angle == 180.0) doors = 1;
 			else if (Level[i].getDoorVect()[1].angle == 270.0) doors = 4;
 			else if (Level[i].getDoorVect()[1].angle == 90.0) doors = 8;
-			Room nRoom(doors,Level[i].getDoorVect()[1].idChange);
+			Room nRoom(doors, -1000);
 			Level.push_back(nRoom);
 		}
 		else if (Level[i].getRoomType() == BOSS)
@@ -248,6 +299,7 @@ void RoomManager::createNewLevel(int lDiff)
 			}
 		}
 	}
+	bgI = rand() % 3;
 	iAudio->haltChannel();
 	iAudio->playAudio(iSoundM->getSoundByID(music), 0, -1);
 }

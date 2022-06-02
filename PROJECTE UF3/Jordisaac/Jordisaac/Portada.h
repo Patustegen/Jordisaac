@@ -17,7 +17,6 @@ public:
 	void init();
 
 private:
-	int bgImage;
 	int iScaled;
 	int dScaled;
 };

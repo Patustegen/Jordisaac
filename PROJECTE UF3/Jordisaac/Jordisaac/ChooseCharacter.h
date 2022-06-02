@@ -22,7 +22,6 @@ private:
 	CHARACTERS aCharacter;
 	CHARACTERS bCharacter;
 	CHARACTERS nCharacter;
-	int bgImage;
 	int characs;
 	bool selected;
 	int audio;

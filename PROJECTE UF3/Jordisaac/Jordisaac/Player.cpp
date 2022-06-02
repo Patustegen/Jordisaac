@@ -21,10 +21,11 @@ void Player::update()
 		frame += iVideo->getDeltaTime();
 		if (frame >= 400)
 		{
-			frame = 400;
+			score += pickups[0] + pickups[2];
 			iSceneD->changeScene(GAME_OVER);
 			iInputM->switchGameMode(false);
 			iSceneD->getCurrentScene()->init(score);
+			iRoomM->endGame();
 		}
 	}
 	else

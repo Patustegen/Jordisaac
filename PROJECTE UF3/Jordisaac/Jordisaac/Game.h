@@ -7,7 +7,7 @@ class Game :
 private:
 	Player* player;
 	UI* ui;
-	int bg;
+	int bgImage[3];
 public:
 	Game();
 

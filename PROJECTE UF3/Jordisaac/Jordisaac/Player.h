@@ -55,6 +55,7 @@ public:
     bool getHurt();
     Pill* getCons() { return &cons; };
     int getScore() { return score; };
+    void giveScore(int s) { score += s; };
     Player();
     ~Player();
 };

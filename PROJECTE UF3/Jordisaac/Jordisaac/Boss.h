@@ -3,10 +3,10 @@
 class Boss :
     public Enemy
 {
+    int bossMusic;
 public:
     Boss();
     ~Boss();
-    //virtual void setAngle(int a);
     virtual void init();
     virtual void update();
     virtual void render();

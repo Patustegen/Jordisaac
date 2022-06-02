@@ -3,7 +3,10 @@
 
 void PauseMenu::render()
 {
-
+	iResourceM->setAlphaGraphic(bgImage, 100);
+	iVideo->renderGraphic(bgImage, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+	iVideo->renderGraphic(gPaused, SCREEN_WIDTH / 2 - 489 / 2, SCREEN_HEIGHT / 2 - 422 / 2, 489, 422);
+	iVideo->renderGraphic(gSelector, 350, 310 + 52 * selected, 33, 36);
 }
 
 void PauseMenu::update()
@@ -11,6 +14,7 @@ void PauseMenu::update()
 	if (iInputM->getEvents(QUIT))
 	{
 		iSceneD->changeScene(GAME);
+		iInputM->switchGameMode(true);
 	}
 	else if (iInputM->getEvents(GOUP) || iInputM->getEvents(SHOOTUP))
 	{
@@ -61,6 +65,7 @@ void PauseMenu::update()
 			iInputM->switchGameMode(true);
 			break;
 		case EXIT:
+			iAudio->haltChannel();
 			iSceneD->changeScene(MAIN);
 			iSceneD->getCurrentScene()->init();
 			break;
@@ -78,4 +83,7 @@ void PauseMenu::init()
 {
 	selected = P_OPTIONS;
 	iInputM->switchGameMode(false);
+	bgImage = iResourceM->loadAndGetGraphicID("Assets/Menus/screenshot.bmp", true);
+	gSelector = iResourceM->loadAndGetGraphicID("Assets/Menus/selector.png");
+	gPaused = iResourceM->loadAndGetGraphicID("Assets/Menus/paused.png");
 }

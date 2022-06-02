@@ -15,10 +15,10 @@ int main(int argc, char* args[]) {
 	iSceneD->getCurrentScene()->init();
 	while (true)
 	{
-		iVideo->clearScreen();
-
 		iInputM->getInput();
 		iSceneD->getCurrentScene()->update();
+
+		iVideo->clearScreen();
 
 		iSceneD->getCurrentScene()->render();
 

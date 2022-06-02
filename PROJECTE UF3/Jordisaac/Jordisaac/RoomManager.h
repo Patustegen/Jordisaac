@@ -13,6 +13,8 @@ class RoomManager
 	int aRoom;
 	int aLevel;
 	int music;
+	int bgI;
+	bool currentGame;
 protected:
 	RoomManager();
 public:
@@ -26,5 +28,9 @@ public:
 	int getActualLevel() { return aLevel; };
 	void changeRoom(int aR, int nMove, Player* p);
 	void createNewLevel(int lDiff);
+	bool hasGame() { return currentGame; };
+	void endGame() { currentGame = false; };
+	int getMusicID() { return music; };
+	int getbgID() { return bgI; };
 };
 

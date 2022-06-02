@@ -12,6 +12,7 @@ void GameOver::update()
 {
 	if (iInputM->getEvents(QUIT))
 	{
+		iAudio->haltChannel();
 		iSceneD->changeScene(MAIN);
 		iSceneD->getCurrentScene()->init();
 	}

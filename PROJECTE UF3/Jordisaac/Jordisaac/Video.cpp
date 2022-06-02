@@ -68,6 +68,13 @@ void Video::updateTime()
 	}
 	lastTime = currentTime;
 }
+void Video::saveScreenshot()
+{
+	SDL_Surface* surface = SDL_CreateRGBSurfaceWithFormat(0, SCREEN_WIDTH, SCREEN_HEIGHT, 32, SDL_PIXELFORMAT_ARGB8888);
+	SDL_RenderReadPixels(gRenderer, NULL, SDL_PIXELFORMAT_ARGB8888, surface->pixels, surface->pitch);
+	SDL_SaveBMP(surface, "Assets/Menus/screenshot.bmp");
+	SDL_FreeSurface(surface);
+}
 void Video::close() {
 }
 bool Video::onCollision(Rect* a, Rect* b) 

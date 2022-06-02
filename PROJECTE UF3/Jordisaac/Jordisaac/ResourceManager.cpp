@@ -23,18 +23,41 @@ void ResourceManager::removeGraphic(const char* file)
 	updateFirstFreeSlotGraphic();
 }
 
-Sint32 ResourceManager::loadAndGetGraphicID(const char* file)
+Sint32 ResourceManager::loadAndGetGraphicID(const char* file, bool bmp)
 {
-	std::map<std::string, Sint32>::iterator it = mIDMap.find(file);
-	if (it == mIDMap.end())
+	if (bmp)
 	{
-		if (addGraphic(file) == -1)
+		std::map<std::string, Sint32>::iterator it = mIDMap.find(file);
+		if (it == mIDMap.end())
 		{
-			return -1;
+			if (addGraphicBMP(file, mGraphicsVector.size()) == -1)
+			{
+				return -1;
+			}
 		}
+		else
+		{
+			if (addGraphicBMP(file, it->second) == -1)
+			{
+				return -1;
+			}
+		}
+		it = mIDMap.find(file);
+		return it->second;
 	}
-	it = mIDMap.find(file);
-	return it->second;
+	else
+	{
+		std::map<std::string, Sint32>::iterator it = mIDMap.find(file);
+		if (it == mIDMap.end())
+		{
+			if (addGraphic(file) == -1)
+			{
+				return -1;
+			}
+		}
+		it = mIDMap.find(file);
+		return it->second;
+	}
 }
 
 std::string ResourceManager::getGraphicPathByID(Sint32 ID)
@@ -114,9 +137,33 @@ ResourceManager::ResourceManager()
 	IMG_Init(IMG_INIT_PNG);
 }
 
+Sint32 ResourceManager::addGraphicBMP(const char* file, int pos)
+{
+	SDL_Surface* s = SDL_LoadBMP(file);
+	SDL_Texture* n = SDL_CreateTextureFromSurface(Video::getInstance()->getRenderer(), s);
+	SDL_FreeSurface(s);
+	if (n == NULL)
+	{
+		return -1;
+	}
+	if (pos == mGraphicsVector.size())
+	{
+		SDL_SetTextureBlendMode(n, SDL_BLENDMODE_BLEND);
+		mGraphicsVector.push_back(n);
+	}
+	else
+	{
+		SDL_DestroyTexture(mGraphicsVector.at(pos));
+		mGraphicsVector.at(pos) = n;
+	}
+	n = nullptr;
+	mIDMap.emplace(file, mFirstFreeSlot);
+	updateFirstFreeSlotGraphic();
+}
+
 Sint32 ResourceManager::addGraphic(const char* file)
 {
-	SDL_Texture* n = IMG_LoadTexture(Video::getInstance()->getRenderer(),file);
+	SDL_Texture* n = IMG_LoadTexture(Video::getInstance()->getRenderer(), file);
 	if (n == NULL)
 	{
 		return -1;

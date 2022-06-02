@@ -24,7 +24,6 @@ public:
 	MainMenu();
 	~MainMenu();
 private:
-	int bgImage;
 	int selector;
 	selected menuSelected;
 };

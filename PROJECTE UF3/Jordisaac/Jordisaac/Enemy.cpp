@@ -1,7 +1,6 @@
 #include "Enemy.h"
 
 
-
 void Enemy::init()
 {
 }

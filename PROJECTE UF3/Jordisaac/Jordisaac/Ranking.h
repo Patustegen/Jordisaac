@@ -15,7 +15,6 @@ public:
 
 	void init();
 private:
-	int gBG;
 	int gNums;
 	int gCharac;
 	int rPlayer[10];

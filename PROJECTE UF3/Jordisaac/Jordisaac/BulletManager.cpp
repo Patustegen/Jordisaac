@@ -22,6 +22,9 @@ bool BulletManager::preciseCollision(Rect* col, int t)
 		{
 			if (iVideo->onCollision(col,bullets[i]->getCol()))
 			{
+				delete bullets[i];
+				bullets.erase(bullets.begin() + i);
+				i--;
 				return true;
 			}
 		}

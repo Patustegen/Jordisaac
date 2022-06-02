@@ -53,6 +53,7 @@ Sint32 SoundManager::loadAndGetSoundID(const char* file)
 	{
 		if (addAudio(file) == -1)
 		{
+			std::cout << SDL_GetError();
 			return -1;
 		}
 	}

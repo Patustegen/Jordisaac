@@ -29,7 +29,7 @@ public:
 		\param file Filepath to the graphic
 		\return ID of the graphic
 	*/
-	Sint32 loadAndGetGraphicID(const char* file);
+	Sint32 loadAndGetGraphicID(const char* file, bool bmp = false);
 
 
 	//! Gets the graphic path given an ID graphic
@@ -110,6 +110,14 @@ private:
 		\return -1 if there's an error when loading
 	*/
 	Sint32 addGraphic(const char* file);
+
+
+	//! Loads from disc and adds a graphic to the ResourceManager 
+	/*!
+		\param file Filepath to the graphic
+		\return -1 if there's an error when loading
+	*/
+	Sint32 addGraphicBMP(const char* file, int pos);
 
 	//! Searches the first NULL in mGraphicsVector and updates mFirstFreeSlot to store its position
 	/*!

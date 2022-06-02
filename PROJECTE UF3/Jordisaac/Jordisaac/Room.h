@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-#include "Enemy.h"
+#include "Boss.h"
 #include "Player.h"
 
 #define DOOR_W 61
@@ -28,6 +28,7 @@ private:
 	Player* _player;
 	ROOM_TYPE roomType;
 	std::vector<Enemy*> enemies;
+	Boss* boss;
 	std::vector<BaseCharacter*> movCharacters;
 	std::vector<Door> colDoor;
 	int bg;

@@ -187,6 +187,7 @@ Pooter::Pooter(int x, int y)
 	paint = { col.x - 10, col.y - 15, 24, 25 };
 	hp = 6;
 	cooldown = 0;
+	points = 10;
 	load();
 }
 

@@ -27,6 +27,7 @@ public:
 	bool onCollision(Rect* a, Rect* b);
 	bool isInside(Rect* outside, Rect* inside);
 	void updateTime();
+	void saveScreenshot();
 	SDL_Renderer* getRenderer() { return gRenderer; };
 	void close();
 };

@@ -3,7 +3,9 @@
 
 Game::Game()
 {
-	bg = -1;
+	bgImage[0] = -1;
+	bgImage[1] = -1;
+	bgImage[2] = -1;
 	player = new Player();
 	ui = new UI();
 }
@@ -18,6 +20,7 @@ void Game::update()
 {
 	if (iInputM->getEvents(QUIT)) 
 	{
+		iVideo->saveScreenshot();
 		iSceneD->changeScene(PAUSE);
 		iSceneD->getCurrentScene()->init();
 	}
@@ -27,7 +30,9 @@ void Game::update()
 void Game::load()
 {
 	ui->load();
-	bg = iResourceM->loadAndGetGraphicID("Assets\\Rooms\\BasementDefault.png");
+	bgImage[0] = iResourceM->loadAndGetGraphicID("Assets\\Rooms\\BasementDefault.png");
+	bgImage[1] = iResourceM->loadAndGetGraphicID("Assets\\Rooms\\CavesDefault.png");
+	bgImage[2] = iResourceM->loadAndGetGraphicID("Assets\\Rooms\\DepthsDefault.png");
 }
 
 void Game::init()

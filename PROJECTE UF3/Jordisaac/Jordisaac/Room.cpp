@@ -16,31 +16,32 @@ void Room::init(Player* p)
 		case NORMAL:
 			if (!completed)
 			{
-				int max = rand() % 3 + 2;
+				int max = rand() % 3 + iRoomM->getActualLevel();
 				for (int i = 0; i < max; i++)
 				{
 					AttackFly* nFly = new AttackFly(rand()%400 + 200, rand()%200 + 200);
 					nFly->setPlayer(p);
 					enemies.push_back(nFly);
 				}
-				Pooter* nPoot = new Pooter(rand()%400 + 200, rand()%200 + 200);
-				nPoot->setPlayer(p);
-				enemies.push_back(nPoot);
+				for (int i = 0; i < 1 + iRoomM->getActualLevel(); i++)
+				{
+					Pooter* nPoot = new Pooter(rand()%400 + 200, rand()%200 + 200);
+					nPoot->setPlayer(p);
+					enemies.push_back(nPoot);
+				}
 			}
 			break;
 		case BOSS:
 			if (!completed)
 			{
 				iAudio->haltChannel();
-				int m = iSoundM->loadAndGetSoundID("Assets/Music/BossRoom.mp3");
-				iAudio->playAudio(iSoundM->getSoundByID(m), 0);
+				iAudio->playAudio(iSoundM->getSoundByID(bossMusic), 0);
 				bossType = rand() % 3;
 				bossType = 0;
-				Boss* nBoss = nullptr;
 				switch (bossType)
 				{
 				case 0:
-					nBoss = new Hollow();
+					boss = new Hollow();
 					break;
 				case 1:
 					break;
@@ -49,8 +50,7 @@ void Room::init(Player* p)
 				default:
 					break;
 				}
-				nBoss->init();
-				enemies.push_back(nBoss);
+				boss->init();
 			}
 			break;
 		case GOLDEN:
@@ -69,21 +69,6 @@ void Room::init(Player* p)
 		if (completed == false)
 		{
 			completed = true;
-			for (int i = 0; i < 13; i++)
-			{
-				if (i < 6)
-				{
-					iPickM->AddPickup(ROOM_MARGIN_X + i * 35, ROOM_MARGIN_Y + 10, NORMAL_PU, i);
-				}
-				else
-				{
-					iPickM->AddPickup(ROOM_MARGIN_X + i * 35, ROOM_MARGIN_Y + 60, NORMAL_PU, i);
-				}
-			}
-			for (int i = 0; i < 6; i++)
-			{
-				iPickM->AddPickup(ROOM_MARGIN_X + i * 35, SCREEN_HEIGHT - ROOM_MARGIN_Y - 60, CONS_PU, i);
-			}
 		}
 	}
 	movCharacters.push_back(_player);
@@ -97,10 +82,6 @@ void Room::init(Player* p)
 
 void Room::update()
 {
-	if (roomType == BOSS)
-	{
-		if (!iAudio->isPlaying(0)) iAudio->playAudio(iSoundM->getSoundByID(bossMusic), 0, -1);
-	}
 	_player->update();
 	iBulletM->update();
 	iBombM->update();
@@ -135,21 +116,69 @@ void Room::update()
 	}
 	else
 	{
-		for (int i = 0; i < enemies.size(); i++)
-		{
-			enemies[i]->update();
-			if (iVideo->onCollision(_player->getCol(), enemies[i]->getCol())) _player->getHurt();
-			if (enemies[i]->getHP() <= 0)
-			{
-				delete enemies[i];
-				enemies.erase(enemies.begin() + i);
-				i--;
-			}
-		}
-
-		bool swapped = false;
 		movCharacters.resize(0);
 		movCharacters.push_back(_player);
+		if (roomType == NORMAL)
+		{
+			for (int i = 0; i < enemies.size(); i++)
+			{
+				enemies[i]->update();
+				if (iVideo->onCollision(_player->getCol(), enemies[i]->getCol())) _player->getHurt();
+				if (enemies[i]->getHP() <= 0)
+				{
+					_player->giveScore(enemies[i]->getPoints());
+					delete enemies[i];
+					enemies.erase(enemies.begin() + i);
+					i--;
+				}
+			}
+			
+			if (enemies.size() == 0)
+			{
+				completed = true;
+				movCharacters.resize(0);
+				movCharacters.push_back(_player);
+				int type = rand() % 2;
+				if (type == 0)
+				{
+					int max = rand() % 2 + (_player->getStat(LUCK) / 2);
+					for (int i = 0; i < max; i++)
+					{
+						iPickM->AddPickup((SCREEN_WIDTH / 2) - (rand() % 15 - 10), (SCREEN_HEIGHT / 2) - (rand() % 15 - 10), NORMAL_PU);
+					}
+				}
+				else
+				{
+					iPickM->AddPickup((SCREEN_WIDTH / 2) - (rand() % 15 - 10), (SCREEN_HEIGHT / 2) - (rand() % 15 - 10), CONS_PU);
+				}
+			}
+		}
+		else if (roomType == BOSS)
+		{
+			boss->update();
+			if (boss->getHP() <= 0)
+			{
+				_player->giveScore(boss->getPoints());
+				delete boss;
+				completed = true;
+				int type = rand() % 2;
+				if (type == 0)
+				{
+					int max = rand() % 2 + (_player->getStat(LUCK) / 2);
+					for (int i = 0; i < max; i++)
+					{
+						int heart = rand() % 6 + 7;
+						iPickM->AddPickup((SCREEN_WIDTH / 2) - (rand() % 15 - 10), (SCREEN_HEIGHT / 2) - (rand() % 15 - 10), NORMAL_PU, heart);
+					}
+				}
+				else
+				{
+					iPickM->AddPickup((SCREEN_WIDTH / 2) - (rand() % 15 - 10), (SCREEN_HEIGHT / 2) - (rand() % 15 - 10), CONS_PU);
+				}
+			}
+			else movCharacters.push_back(boss);
+		}
+		bool swapped = false;
 		for (int i = 0; i < enemies.size(); i++) movCharacters.push_back(enemies[i]);
 		do
 		{
@@ -165,17 +194,6 @@ void Room::update()
 				}
 			}
 		} while (!swapped);
-		if (enemies.size() == 0)
-		{
-			completed = true;
-			movCharacters.resize(0);
-			movCharacters.push_back(_player);
-			int max = rand() % 2 + (_player->getStat(LUCK) / 2);
-			for (int i = 0; i < max; i++)
-			{
-				iPickM->AddPickup((SCREEN_WIDTH / 2) - (rand() % 15 - 10), (SCREEN_HEIGHT/ 2) - (rand() % 15 - 10), NORMAL_PU);
-			}
-		}
 	}
 }
 
@@ -274,16 +292,19 @@ void Room::damageAll()
 Room::Room(int nDoors, int roomID)
 {
 	bossType = -1;
+	bossMusic = -1;
 	int doorCount = 0;
 	roomType = NORMAL;
 	_player = nullptr;
+	boss = nullptr;
 	completed = false;
-	bossMusic = false;
 	movCharacters.resize(0);
 	colDoor.resize(0);
 	enemies.resize(0);
 	rID = roomID;
-	bg = iResourceM->loadAndGetGraphicID("Assets\\Rooms\\BasementDefault.png");
+	if(iRoomM->getbgID() == 0) bg = iResourceM->loadAndGetGraphicID("Assets\\Rooms\\BasementDefault.png");
+	else if (iRoomM->getbgID() == 1) bg = iResourceM->loadAndGetGraphicID("Assets\\Rooms\\CavesDefault.png");
+	else if (iRoomM->getbgID() == 2) bg = iResourceM->loadAndGetGraphicID("Assets\\Rooms\\DepthsDefault.png");
 	gDoor = iResourceM->loadAndGetGraphicID("Assets\\Rooms\\doorsImages.png");
 	gTDoor = iResourceM->loadAndGetGraphicID("Assets\\Rooms\\trapdoor.png");
 
@@ -376,19 +397,19 @@ Room::Room(int nDoors, int roomID)
 			colDoor.push_back(nDoor);
 		}
 	}
-	if (doorCount == 1  && (roomID != 0 && roomID != -1 && roomID != -10 && roomID != 1 && roomID != 10)) roomType = BOSS;
-	else if (doorCount == 1 && (roomID == -1 || roomID == -10 || roomID == 1 || roomID == 10)) roomType = GOLDEN;
-
-	if (roomType == BOSS)
+	if (doorCount == 1 && (roomID != 0 && roomID != -1 && roomID != -10 && roomID != 1 && roomID != 10 && roomID != -1000))
 	{
+		roomType = BOSS;
 		Door nDoor;
-		nDoor.col = { SCREEN_WIDTH / 2 - (int)(156.0f * 0.25f) / 2, SCREEN_HEIGHT / 2 - (int)(149.0f * 0.25f) / 2, (int)(156.0f * 0.25f), (int)(149.0f * 0.25f)};
+		nDoor.col = { SCREEN_WIDTH / 2 - (int)(156.0f * 0.25f) / 2, SCREEN_HEIGHT / 2 - (int)(149.0f * 0.25f) / 2, (int)(156.0f * 0.25f), (int)(149.0f * 0.25f) };
 		nDoor.paint = { nDoor.col.x, nDoor.col.y, 156, 149 };
 		nDoor.angle = 0.0;
 		nDoor.idChange = 10000;
 		colDoor.push_back(nDoor);
 		bossMusic = iSoundM->loadAndGetSoundID("Assets/Music/bossMusic.mp3");
 	}
+	else if (roomID == -1000) roomType = GOLDEN;
+
 }
 
 Room::Room()

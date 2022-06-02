@@ -1,4 +1,5 @@
 #include "Hollow.h"
+#include "Singletons.h"
 
 void Hollow::init()
 {
@@ -63,6 +64,7 @@ Hollow::Hollow()
 	{
 		mHBody[i] = new HollowBody();
 	}
+	points = 1000;
 }
 
 Hollow::~Hollow()
@@ -73,4 +75,7 @@ Hollow::~Hollow()
 		mHBody.erase(mHBody.begin() + i);
 		i--;
 	}
+	iAudio->haltChannel();
+	int m = iSoundM->loadAndGetSoundID("Assets/Music/win.mp3");
+	iAudio->playAudio(iSoundM->getSoundByID(m));
 }

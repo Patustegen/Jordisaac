@@ -21,6 +21,8 @@ public:
 
 	void init();
 private:
+	int gSelector;
+	int gPaused;
 	sPause selected;
 };
 

@@ -19,7 +19,18 @@ void MainMenu::update()
 			iSceneD->getCurrentScene()->init();
 			break;
 		case CONTINUE:
-			iSceneD->changeScene(GAME);
+			if (iRoomM->hasGame())
+			{
+				iAudio->haltChannel();
+				iSceneD->changeScene(GAME);
+				iInputM->switchGameMode(true);
+				iAudio->playAudio(iSoundM->getSoundByID(iRoomM->getMusicID()), 0, -1);
+			}
+			else
+			{
+				iSceneD->changeScene(CHARACTER);
+				iSceneD->getCurrentScene()->init();
+			}
 			break;
 		case S_RANKING:
 			iSceneD->changeScene(RANK);

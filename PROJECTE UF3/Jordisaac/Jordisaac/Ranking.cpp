@@ -6,19 +6,24 @@ using namespace std;
 
 void Ranking::render()
 {
-	iVideo->renderGraphic(gBG, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+	iVideo->renderGraphic(bgImage, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 	for (int i = 0; i < 10; i++)
 	{
-		iVideo->renderGraphic(gNums, 300, 65 + 40 * i, 8, 9, 8 *( i +1), 0, 2.5f, 2.5f);
 		if (i == 9)
 		{
 			iVideo->renderGraphic(gNums, 300, 65 + 40 * i, 8, 9, 8 *(( i +1) / 10), 0, 2.5f, 2.5f);
 			iVideo->renderGraphic(gNums, 300 + 20, 65 + 40 * i, 8, 9, 8 *(( i +1) % 10), 0, 2.5f, 2.5f);
 		}
+		else iVideo->renderGraphic(gNums, 300, 65 + 40 * i, 8, 9, 8 *( i +1), 0, 2.5f, 2.5f);
 		if (rPlayer[i] != -1)
 		{
 			iVideo->renderGraphic(gCharac, 370 + i %2 * 50, 65 + 40 * i - (90 * 0.3f) + (8 * 1.25f), 67, 90, 67 * rPlayer[i], 0, 0.6f,0.6f);
-			iVideo->renderGraphic(gNums, 500, 65 + 40 * i - (9 * 2) + (8 * 1.25f), 8, 9, 8 * rScore[i], 0, 2.0f, 2.0f);
+			int numbers = rScore[i];
+			for (int j = 0; j < 4; j++)
+			{
+				iVideo->renderGraphic(gNums, 600 - 20 * j, 70 + 40 * i - (9 * 2) + (8 * 1.25f), 8, 9, 8 * (numbers % 10), 0, 2.0f, 2.0f);
+				numbers /= 10;
+			}
 		}
 	}
 }
@@ -34,7 +39,7 @@ void Ranking::update()
 
 void Ranking::load()
 {
-	gBG = iResourceM->loadAndGetGraphicID("Assets/Menus/rankmenu.png");
+	bgImage = iResourceM->loadAndGetGraphicID("Assets/Menus/rankmenu.png");
 	gNums = iResourceM->loadAndGetGraphicID("Assets/UI/UINumbers.png");
 	gCharac = iResourceM->loadAndGetGraphicID("Assets/Characters/Choose.png");
 }
